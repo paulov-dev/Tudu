@@ -52,8 +52,10 @@ O **Tudu** é um aplicativo de gerenciamento de tarefas que permite aos usuário
 ### **3. Tecnologias Utilizadas**
 
 - **Frontend:** React.js
-- **Backend:** Node.js com Typescript (Express ou Fastify) **ou** C# (ASP.NET Core)
+- **Backend:** Node.js com Typescript (Express ou Fastify) **ou** C# (ASP.NET Web API)
+    Plataforma poderosa e escalável para APIs, com alto desempenho e segurança. Integração fácil com o ecossistema Microsoft e ferramentas como Visual Studio. Ideal para aplicações corporativas e ambientes       Windows.
 - **Banco de Dados:** SQL Server
+    Biblioteca para UIs dinâmicas e interativas, com componentização e Virtual DOM para alta performance. Fácil integração com APIs RESTful, permitindo interfaces modernas e eficientes.
 - **Autenticação:** JWT
 - **Estilização:** Material-UI ou TailwindCSS
 
