@@ -1,0 +1,12 @@
+@import url(../../../tokens/fontes.css);
+
+.textblue{
+    color: blue;
+
+    
+}
+
+.rodape-text{
+    font-size: 8px; 
+    font-family: var(--text);
+}

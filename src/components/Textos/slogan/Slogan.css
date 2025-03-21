@@ -1,0 +1,9 @@
+@import url(../../../tokens/fontes.css);
+
+p{
+    font-family: var(--title);
+    width: 25%;
+    margin-left: 3%;
+    /* background-color: red; */
+    margin-top: -1px;
+}

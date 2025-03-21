@@ -1,0 +1,19 @@
+.LoginButton-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* background-color: blue; */
+    
+}
+
+.LoginButton{
+    margin-top: 30px;
+    /* margin-bottom: 30px; */
+    width: 65%;
+    height: 6vh;
+    background-color: #0167ff ;
+    color: #fff;
+    border: 2px solid;
+    border-radius: 25px;
+}

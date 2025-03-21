@@ -1,0 +1,29 @@
+@import url(../../../tokens/colors.css);
+
+
+.AddEventButton-containe{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* background-color: blue; */
+    
+}
+
+.AddEventButton{
+    margin-top: 30px;
+    /* margin-bottom: 30px; */
+    width: 5vh;
+    height: 5vh;
+    background-color: var(--blue) ;
+    color: #fff;
+    border: 2px solid;
+    border-radius: 100%;
+    font-size: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.AddEventButton:hover{
+    background-color: var(--lightblue);
+    transform: scale(1.1);
+}

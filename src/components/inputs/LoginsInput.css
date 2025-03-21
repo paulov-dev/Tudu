@@ -1,0 +1,121 @@
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* background-color: blue; */
+}
+.custom-input {
+    /* flex-grow: 1;  */
+    padding-left: 20px;
+    height: 4vh;
+    /* font-size: 1.2em; */
+    font-size: 12px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    /* margin-left: 50px; */
+    margin-top: 15px;
+    width: 70%;
+}
+
+.input-icon {
+    position: fixed;
+    margin-top: 15px;
+    position: absolute;
+    left: 14.7%;
+    width: 15px;
+    height: 15px;
+    pointer-events: none; 
+    /* background-color: red; */
+
+}
+
+/* @media (max-width:459px){
+    .input-container {
+        width: 330px;
+    }
+    
+    .custom-input {
+        padding-left: 15px;
+        height: 3vh;
+        /* margin-left: 50px; */
+        /* margin-top: 15px; */
+        
+    /* } */
+    
+    /* .input-icon {
+        margin-top: 15px;
+    
+        width: 10px;
+        height: 10px;
+    
+    }
+    } */
+
+/* @media (min-width: 460px) and (max-width:645px){
+.input-container {
+    width: 330px;
+}
+
+.custom-input {
+    padding-left: 15px;
+    height: 3vh;
+    margin-left: 50px;
+    margin-top: 15px; */
+    
+/* } */
+/* 
+.input-icon {
+    margin-top: 15px;
+    left: 63px;
+    width: 10px;
+    height: 10px;
+
+}
+} */
+/* 
+@media (min-width: 646px) and (max-width:830px){
+    .input-container {
+        width: 400px;
+    }
+    
+    .custom-input {
+        padding-left: 20px;
+        height: 3vh;
+        
+        margin-left: 50px;
+        margin-top: 15px;
+    }
+    
+    .input-icon {
+        margin-top: 15px;
+        left: 63px;
+        width: 15px;
+        height: 15px;
+    
+    }
+    }
+
+    @media (min-width: 831px) and (max-width:1015px){
+        .input-container {
+            width: 40%;
+        }
+        
+        .custom-input {
+            padding-left: 20px;
+            margin-left: 50px;
+            margin-top: 15px;
+        }
+        
+        .input-icon {
+            margin-top: 15px;
+            left: 63px;
+            width: 15px;
+            height: 15px;
+        
+        }
+        } */
+
+

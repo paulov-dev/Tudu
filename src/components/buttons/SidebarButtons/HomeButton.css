@@ -1,0 +1,28 @@
+@import url(../../../tokens/colors.css);
+
+
+
+.home-button{
+    /* background-color: var(--lightblue); */
+    background-color: #3498db; 
+    margin-top: 30px;
+    /* margin-bottom: 30px; */
+    width: 6vh;
+    height: 6vh;
+    color: #fff;
+    border: 2px solid;
+    border-radius: 3px;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-button:hover{
+    transform: scale(1.1);  
+}
+
+.homeButton-Image{
+    width: 4vh;
+
+}
