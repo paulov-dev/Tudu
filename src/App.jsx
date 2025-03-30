@@ -1,6 +1,7 @@
 import './App.css'
 import CreateEvent from './pages/CreateEvent/CreateEvent';
 import Create from "./pages/iniciais/Create"; 
+import NavBarPage from './pages/NavBarPage/NavBarPage';
 
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     return (
     
     <div> 
-      <CreateEvent/> 
+      {/* <CreateEvent/>  */}
+      <NavBarPage></NavBarPage>
     </div>
 
 
