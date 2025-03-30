@@ -2,4 +2,11 @@
     --blue: #0167ff;
     --lightblue: #418dff;
 
+    /* Cores do Botão de prioridade */
+    --PriorityRed: #ff1717;
+    --PriorityYellow: #ffbe17;
+    --PriorityBlue: #17abff;
+
+    /* Cor da borda*/
+    --Borda:#969696;
 }

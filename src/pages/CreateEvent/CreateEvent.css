@@ -1,0 +1,81 @@
+.CreateEvent-container {
+    padding: 20px; /* Espaçamento interno do contêiner */
+    text-align: left; /* Alinha o conteúdo ao centro */
+  }
+
+
+
+.popup-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content{
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow:  0 4px 6px #000;
+    width: 50%;
+    height: 75%;
+    text-align: center;
+    align-items: center;
+}
+.Description-Title {
+    margin: 0; /* Remove qualquer margem padrão ao redor do título */
+    /* font-size: 18px; Define o tamanho da fonte do título */
+    font-weight: bold; /* Deixa o título em negrito */
+    /* background-color: red; */
+    left: 0;
+
+
+    
+  }
+
+.Desciption-input {
+  box-sizing: border-box; /* Inclui o padding e border no cálculo da largura total */
+  border-radius: 4px; /* Bordas arredondadas */
+  display: block; /* Faz o input ser tratado como bloco, permitindo centralizar */
+  margin-left: auto; /* Margem automática para alinhar à esquerda */
+  margin-right: auto; /* Margem automática para alinhar à direita */
+}
+
+
+
+
+.box-Priority-Button {
+    display: flex; /* Usando flexbox */
+    flex-direction: column; /* Alinha os itens na vertical (em uma coluna) */
+    align-items: flex-end; /* Alinha os itens à esquerda */
+    padding-right: 3%; /* Adiciona o padding à direita */
+    margin-top: 5%;
+    margin-bottom: 5%;
+    /* background-color: red; */
+  }
+  
+
+.PriorityButton{
+    display: flex; /* Usando flexbox */
+    flex-direction: column; /* Alinha os itens na vertical (em uma coluna) */
+    justify-content: flex-start; /* Alinha os itens ao topo do contêiner */
+    margin-top: 3%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,8 @@
+body{
+    background-color: #f8f8f8;
+}
+
+
 .boxCreate{
     background-color: #fff;
     /* margin-left: 200px; */
@@ -16,4 +21,8 @@
 .boxItens{
     padding-top: 60px;
     
+}
+
+.Desciption-container{
+    margin-top: 50px;
 }

@@ -7,6 +7,8 @@ import Slogan from '../../components/Textos/slogan/Slogan'
 import Rodape from '../../components/Textos/Rodape/Rodape'
 import AddEventButton from '../../components/buttons/AddEventButton/AddEventButton'
 import HomeButton from '../../components/buttons/SidebarButtons/HomeButton'
+import PriorityButton from '../../components/buttons/PriorityButton/PriorityButton'
+import Desciption from '../../components/inputs/Description/Description'
 
 function Create() {
 
@@ -37,6 +39,8 @@ function Create() {
 
       <AddEventButton></AddEventButton>
       <HomeButton></HomeButton>
+      <PriorityButton PriorityText="Prioridade baixa"></PriorityButton>
+      <Desciption></Desciption>
     
     </div>
 

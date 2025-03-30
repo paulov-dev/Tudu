@@ -1,4 +1,5 @@
 import './App.css'
+import CreateEvent from './pages/CreateEvent/CreateEvent';
 import Create from "./pages/iniciais/Create"; 
 
 
@@ -7,7 +8,7 @@ function App() {
     return (
     
     <div> 
-      <Create/> 
+      <CreateEvent/> 
     </div>
 
 

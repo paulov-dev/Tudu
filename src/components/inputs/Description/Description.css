@@ -1,0 +1,28 @@
+@import url(../../../tokens/colors.css);
+@import url(../../../tokens/fontes.css);
+
+.Desciption-container {
+    display: flex;
+    flex-direction: column; /* Para garantir que o texto e o input fiquem na coluna */
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    /* background-color: red; */
+  }
+
+.Desciption-input{
+    margin-top: 1.5vh;
+    height: 15vh;
+    width: 95%;
+    vertical-align: top;
+    padding: 8px;
+    resize: both; /* Permite redimensionar o campo verticalmente */
+    background-color: white;
+    border: 1.5px solid #ccc; 
+
+}
+
+.Description-Title{
+    /* font-size: 2vh; */
+    margin: 0;
+    padding-left: 3%;
+
+}
