@@ -1,35 +1,33 @@
 .input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    /* background-color: blue; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* background-color: blue; */
 }
 .custom-input {
-    /* flex-grow: 1;  */
-    padding-left: 20px;
-    height: 4vh;
-    /* font-size: 1.2em; */
-    font-size: 12px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    outline: none;
-    transition: all 0.3s ease-in-out;
-    /* margin-left: 50px; */
-    margin-top: 15px;
-    width: 93%;
+  padding-left: 50px; /* Espaço à esquerda do texto */
+  height: 4vh;
+  font-size: 15px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  margin-top: 15px;
+  left: 10%;
+  width: 78%;
+  box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
 }
 
 .input-icon {
-    position: fixed;
-    margin-top: 15px;
-    position: absolute;
-    left: 14.7%;
-    width: 15px;
-    height: 15px;
-    pointer-events: none; 
-    /* background-color: red; */
-
+  position: fixed;
+  margin-top: 15px;
+  position: absolute;
+  left: 15.7%;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  /* background-color: red; */
 }
 
 /* @media (max-width:459px){
@@ -41,11 +39,11 @@
         padding-left: 15px;
         height: 3vh;
         /* margin-left: 50px; */
-        /* margin-top: 15px; */
-        
-    /* } */
-    
-    /* .input-icon {
+/* margin-top: 15px; */
+
+/* } */
+
+/* .input-icon {
         margin-top: 15px;
     
         width: 10px;
@@ -64,7 +62,7 @@
     height: 3vh;
     margin-left: 50px;
     margin-top: 15px; */
-    
+
 /* } */
 /* 
 .input-icon {
@@ -117,5 +115,3 @@
         
         }
         } */
-
-
