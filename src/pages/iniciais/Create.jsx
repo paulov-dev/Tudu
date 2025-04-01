@@ -20,8 +20,7 @@ function Create() {
       <div className="boxCreate">
         <div className="boxItens">
           <div>
-            <LoginTitle LoginTitleChange="Entre na sua conta" />
-            <LoginTitleImagem />
+            <LoginTitle LoginTitleChange="Esqueceu a senha?" />
           </div>
 
           <div>
