@@ -1,35 +1,31 @@
 @import url(../../../tokens/fontes.css);
 
-
-.container{
-    display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    gap: 15px; /* Espaço entre a imagem e o texto */
-    /* background-color: red; */
-    width: 25%;
-    margin-top: 3%;
-    margin-left: 3%;
+.container {
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  gap: 15px; /* Espaço entre a imagem e o texto */
+  /* background-color: red; */
+  width: 25%;
+  margin-top: 3%;
+  margin-left: 3%;
 }
 
-.container-text{
-    display: flex;
-    flex-direction: column; /* Coloca os textos um abaixo do outro */
-    
+.container-text {
+  display: flex;
+  flex-direction: column; /* Coloca os textos um abaixo do outro */
 }
-h1{
-    color:#0167ff;
-    font-family: var(--title);
-}
-
-h4{
-    margin-top: -25px;
-    font-weight: bold;
-    font-family: var(--title);
-    
+h1 {
+  color: #0167ff;
+  font-family: var(--title);
 }
 
-.logoImg{
-    width: 60px;
-    height: 60px;
-    
+h4 {
+  margin-top: -25px;
+  font-weight: bold;
+  font-family: var(--title);
+}
+
+.logoImg {
+  width: 60px;
+  height: 60px;
 }

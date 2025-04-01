@@ -4,8 +4,10 @@ import "./LoginTitle.css";
 function LoginTitle({ LoginTitleChange }) {
   return (
     <div>
-      <div className="container-text">
-        <h1>{LoginTitleChange ? LoginTitleChange : "Crie uma conta"}</h1>
+      <div className="container-text-loginTitle">
+        <h1 className="text-loginTitle">
+          {LoginTitleChange ? LoginTitleChange : "Crie uma conta"}
+        </h1>
       </div>
     </div>
   );
