@@ -1,22 +1,16 @@
-import './App.css'
-import CreateEvent from './pages/CreateEvent/CreateEvent';
-import Create from "./pages/iniciais/Create"; 
-import NavBarPage from './pages/NavBarPage/NavBarPage';
-
+import "./App.css";
+import CreateEvent from "./pages/CreateEvent/CreateEvent";
+import Create from "./pages/iniciais/Create";
+import NavBarPage from "./pages/NavBarPage/NavBarPage";
 
 function App() {
-
-    return (
-    
-    <div> 
+  return (
+    <div>
       {/* <CreateEvent/>  */}
-      <NavBarPage></NavBarPage>
+      {/*<NavBarPage></NavBarPage>*/}
+      <Create />
     </div>
+  );
+}
 
-
-
-    )
-  }
-
-
-export default App
+export default App;

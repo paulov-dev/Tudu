@@ -1,0 +1,19 @@
+@import url(../../../tokens/fontes.css);
+
+.conteiner-text-loginTitle {
+  margin-bottom: 1rem; /* Espaçamento abaixo do título */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.logoImg {
+  width: 60px;
+  height: 60px;
+}
+
+.text-loginTitle {
+  font-family: var(--title); /* Tamanho grande */
+  font-weight: bold; /* Negrito */
+  color: #00255d; /* Azul escuro */
+}
