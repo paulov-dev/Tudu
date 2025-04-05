@@ -14,22 +14,21 @@
 .container-text{
     display: flex;
     flex-direction: column; /* Coloca os textos um abaixo do outro */
-    
 }
-h1{
+.Tudu{
     color:#0167ff;
     font-family: var(--title);
+    font-size: 30px;
 }
 
-h4{
-    margin-top: -25px;
+.Tudu-text{
     font-weight: bold;
     font-family: var(--title);
-    
+    font-size: 12px;
 }
 
-.logoImg{
-    width: 60px;
-    height: 60px;
+.logoImg-tudutile{
+    width: 80%;
+    height: 80%;
     
 }

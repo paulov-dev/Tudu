@@ -1,13 +1,12 @@
 import React from "react";
 import "./NavBarPage.css"
-import NavBar from "../../components/NavBar/NavBar";
-
+import BarraLateral from "../../components/NavBar/BarraLateral";
 
 function NavBarPage() {
 
     return (
         <div> 
-            <NavBar></NavBar>
+            <BarraLateral></BarraLateral>
         
         </div>
 
