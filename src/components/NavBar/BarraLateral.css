@@ -1,0 +1,124 @@
+/* Estilos principais da barra lateral */
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #f4f4f4;
+    padding-top: 20px;
+    position: fixed;
+    transition: width 0.3s ease;
+  }
+  
+  .sidebar.colapsada {
+    width: 80px; /* Tamanho colapsado */
+  }
+  
+  /* Estilos para o botão de expandir/colapsar */
+/* Estilo do botão de expandir/colapsar */
+/* Estilo do botão de expandir/colapsar */
+.toggle-button {
+    background-color: transparent; /* Remove a cor de fundo */
+    color: #0167ff; /* Cor do ícone */
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    position: absolute; /* Posiciona o botão no canto superior direito */
+    top: 10px; /* Distância do topo */
+    right: 10px; /* Distância da borda direita */
+
+  }
+  
+  /* Remove o fundo ao passar o mouse */
+  .toggle-button:hover {
+    background-color: transparent;
+    color: #014b9c; /* Alterando a cor do ícone no hover */
+  }
+  
+  /* Estilos para os ícones */
+  .toggle-button i {
+    font-size: 18px; /* Tamanho do ícone */
+    transition: transform 0.3s ease;
+  }
+  
+  .NavBar-Container{
+    margin-top: 15px;
+  }
+  /* Estilos dos itens de menu */
+  .menu-item {
+    padding: 10px;
+  }
+  
+  .menu-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
+    margin-bottom: -20px;
+    
+  }
+  
+  .menu-link:hover {
+    background-color: #cce0fd;
+    color: #0167ff;
+    font-weight: bold;
+    border-radius: 10px;
+    transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão no hover */
+  }
+  
+  /* Ocultar os spans quando a barra lateral estiver colapsada */
+  .sidebar.colapsada .menu-link span {
+    display: none;
+  }
+  
+  /* Estilos para os submenus */
+  .submenu {
+    padding-left: 20px;
+  }
+  
+  .submenu-item {
+    padding: 5px 0;
+  }
+  
+  .submenu-inner {
+    padding-left: 20px;
+  }
+  
+  .submenu-item {
+    cursor: pointer;
+    /* font-weight: bold; */
+    color: #333;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    margin-top: 23px;
+    margin-bottom: -20px;
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
+
+  }
+  
+  .submenu-item:hover {
+    color: #007bff;
+    background-color:  #cce0fd;
+    font-weight: bold;
+    border-radius: 13px;
+    transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão no hover */
+  }
+  /* Ocultar submenus quando a barra lateral estiver colapsada */
+.sidebar.colapsada .submenu {
+    display: none; /* Oculta o submenu quando a barra lateral está colapsada */
+  }
+
+.sidebar.colapsada  .Tudu{
+    display: none; /* Oculta o submenu quando a barra lateral está colapsada */
+  }
+
+  .sidebar.colapsada  .Tudu-text{
+    display: none; /* Oculta o submenu quando a barra lateral está colapsada */
+  }
+
+.sidebar.colapsada .logoImg-tudutile{
+    width: 5vh;
+    /* height: 100%; */
+}

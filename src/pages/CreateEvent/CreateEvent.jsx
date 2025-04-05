@@ -42,13 +42,6 @@ function CreateEvent() {
                     <button onClick={closePopup}>Fechar</button>
                     </div>
 
-
-
-
-
-
-
-
                 </div>
 
 

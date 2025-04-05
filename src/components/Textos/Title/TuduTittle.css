@@ -10,6 +10,28 @@
   margin-left: 3%;
 }
 
+
+.container-text{
+    display: flex;
+    flex-direction: column; /* Coloca os textos um abaixo do outro */
+}
+.Tudu{
+    color:#0167ff;
+    font-family: var(--title);
+    font-size: 30px;
+}
+
+.Tudu-text{
+    font-weight: bold;
+    font-family: var(--title);
+    font-size: 12px;
+}
+
+.logoImg-tudutile{
+    width: 80%;
+    height: 80%;
+    
+}
 .container-text {
   display: flex;
   flex-direction: column; /* Coloca os textos um abaixo do outro */
@@ -29,3 +51,4 @@ h4 {
   width: 60px;
   height: 60px;
 }
+
