@@ -11,6 +11,8 @@ import PriorityButton from "../../components/buttons/PriorityButton/PriorityButt
 import Desciption from "../../components/inputs/Description/Description";
 import LoginTitle from "../../components/Textos/Title/LoginTitle";
 import LoginTitleImagem from "../../components/imagem/LoginTitleImagem";
+import ParagrafoEsqueceuSenha from "../../components/Textos/ParagrafoEsqueceuSenha/ParagrafoEsqueceuSenha";
+import LoginTitleText from "../../components/Textos/Title/LoginTitleText";
 
 function Create() {
   return (
@@ -20,7 +22,7 @@ function Create() {
       <div className="boxCreate">
         <div className="boxItens">
           <div>
-            <LoginTitle LoginTitleChange="Esqueceu a senha?" />
+            <LoginTitle LoginTitleChange={"Esqueceu a senha?"} />
           </div>
 
           <div>

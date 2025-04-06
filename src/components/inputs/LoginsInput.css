@@ -1,4 +1,5 @@
 .input-container {
+  margin-top: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +16,7 @@
   transition: all 0.3s ease-in-out;
   margin-top: 15px;
   left: 10%;
-  width: 78%;
+  width: 67%;
   box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
 }
 
@@ -23,7 +24,7 @@
   position: fixed;
   margin-top: 15px;
   position: absolute;
-  left: 15.7%;
+  left: 20.7%;
   width: 18px;
   height: 18px;
   pointer-events: none;
