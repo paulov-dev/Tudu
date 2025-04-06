@@ -1,0 +1,11 @@
+.container-text-loginTitleText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.text-loginTitle {
+  font-family: var(--title); /* Tamanho grande */
+  font-weight: bold; /* Negrito */
+  color: #00255d; /* Azul escuro */
+}

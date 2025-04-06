@@ -15,14 +15,3 @@
   margin-top: -1px;
   font-weight: bold; /* <- essa linha faz o texto ficar em negrito */
 }
-.container-text-loginTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.text-loginTitle {
-  font-family: var(--title); /* Tamanho grande */
-  font-weight: bold; /* Negrito */
-  color: #00255d; /* Azul escuro */
-}
