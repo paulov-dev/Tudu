@@ -7,8 +7,9 @@ function App() {
   return (
     <div>
       {/* <CreateEvent/>  */}
-      {/*<NavBarPage></NavBarPage>*/}
-      <Create />
+      {/* <NavBarPage></NavBarPage> */}
+      <CreateEvent/>
+      {/*  */}
     </div>
   );
 }

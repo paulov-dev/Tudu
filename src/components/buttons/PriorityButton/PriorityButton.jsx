@@ -1,10 +1,10 @@
 import React from "react";
 import "./PriorityButton.css"; // Importando o arquivo CSS
 
-function PriorityButton({PriorityText, backgroundColor}) {
+function PriorityButton({PriorityText, backgroundColor, FunctionPrioritybtn}) {
     return (
         <div className="PriorityButton-container">
-            <button className="PriorityButton" style={{backgroundColor}}>{PriorityText}</button>
+            <button className="PriorityButton" style={{backgroundColor}} onClick={FunctionPrioritybtn}>{PriorityText}</button>
             
         </div>
     );

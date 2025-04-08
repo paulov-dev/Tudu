@@ -3,6 +3,9 @@ import "./CreateEvent.css"; // Importando o arquivo CSS
 import LoginsInput from "../../components/inputs/LoginsInput";
 import Desciption from "../../components/inputs/Description/Description";
 import PriorityButton from "../../components/buttons/PriorityButton/PriorityButton";
+import AddEventButton from "../../components/buttons/AddEventButton/AddEventButton";
+import BarraLateral from "../../components/NavBar/BarraLateral";
+import TabelaItens from "../../components/TabelaItens/TabelaItens";
 
 function CreateEvent() {
     // Cria o estado pra controlar o popup
@@ -21,13 +24,20 @@ function CreateEvent() {
 
     return (
         <div className="CreateEvent-container">
-            <button className="open-popup-btn" onClick={openPopup}>Abrir</button>
+
+            <BarraLateral/>
            
+            {/* <button className="open-popup-btn" onClick={openPopup}>Abrir</button> */}
+            <div className="Container-LoginInput"> 
+                <AddEventButton AddEvent={openPopup}></AddEventButton>
+                <LoginsInput textoInput="Pesquisa" IconLoginInput="fa-solid fa-magnifying-glass"></LoginsInput>
+            </div>
+            <TabelaItens></TabelaItens>
            {isOpen && (
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <div className="box-Input-Tarefa">
-                            <LoginsInput textoInput="Título da tarefa" urlImg={""}></LoginsInput>
+                            {/* <LoginsInput textoInput="Título da tarefa"></LoginsInput> */}
                         </div>                        
                         <Desciption></Desciption>
 
@@ -38,8 +48,11 @@ function CreateEvent() {
 
                         </div>
 
-
-                    <button onClick={closePopup}>Fechar</button>
+                    <div className="container-saveEventButton">     
+                    {/* <button onClick={closePopup}>Fechar</button> */}
+                        <PriorityButton PriorityText="Fechar" backgroundColor="var(--Borda)" FunctionPrioritybtn={closePopup}></PriorityButton>
+                        <PriorityButton PriorityText="Salvar" backgroundColor="var(--blue)" FunctionPrioritybtn={closePopup} className="saveEventButton"></PriorityButton>
+                    </div>
                     </div>
 
                 </div>

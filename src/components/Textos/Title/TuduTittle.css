@@ -36,19 +36,3 @@
   display: flex;
   flex-direction: column; /* Coloca os textos um abaixo do outro */
 }
-h1 {
-  color: #0167ff;
-  font-family: var(--title);
-}
-
-h4 {
-  margin-top: -25px;
-  font-weight: bold;
-  font-family: var(--title);
-}
-
-.logoImg {
-  width: 60px;
-  height: 60px;
-}
-

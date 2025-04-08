@@ -10,20 +10,20 @@
     
 }
 
-.AddEventButton{
-    margin-top: 30px;
+.open-popup-btn{
+    /* margin-top: 30px; */
     /* margin-bottom: 30px; */
-    width: 5vh;
-    height: 5vh;
+    width: 6vh;
+    height: 6vh;
     background-color: var(--blue) ;
     color: #fff;
     border: 2px solid;
-    border-radius: 100%;
+    border-radius: 5px;
     font-size: 20px;
     transition: transform 0.3s ease-in-out;
 }
 
-.AddEventButton:hover{
+.open-popup-btn:hover{
     background-color: var(--lightblue);
     transform: scale(1.1);
 }
