@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
+import AddEventButton from "../buttons/AddEventButton/AddEventButton";
+import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 
 function TabelaItens() {
   const [tarefas, setTarefas] = useState([]);
@@ -19,6 +21,32 @@ function TabelaItens() {
     }
   };
 
+  // Função para deletar uma tarefa
+  const deleteTarefa = async (id) => {
+    try {
+      const response = await fetch(`https://localhost:7274/api/Tarefa/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        // Atualiza a lista de tarefas após o delete
+        setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+      } else {
+        console.error("Erro ao deletar tarefa");
+      }
+    } catch (error) {
+      console.error("Erro ao deletar tarefa:", error);
+    }
+  };
+
+  // Função para editar uma tarefa
+  const editTarefa = (id) => {
+    const tarefa = tarefas.find(tarefa => tarefa.id === id);
+    // Aqui você pode abrir um modal ou redirecionar para outra página com os detalhes para editar
+    // Para fins de exemplo, vamos apenas exibir os dados no console
+    console.log('Editar tarefa:', tarefa);
+    // Implemente sua lógica de edição aqui (abrir modal, etc.)
+  };
+
   // Usamos useEffect para buscar as tarefas assim que o componente for montado
   useEffect(() => {
     fetchTarefas(); // Chama a função quando o componente é carregado
@@ -32,6 +60,7 @@ function TabelaItens() {
             <th>Data de entrega</th>
             <th>Título</th>
             <th>Status</th>
+            <th> Ação</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +71,18 @@ function TabelaItens() {
               <td className="status">
                 <span className={`status-indicador ${item.statusCor}`}></span>
                 {item.statusTexto}
+              </td>
+              <td> 
+                <PriorityButton 
+                  PriorityText="Editar" 
+                  backgroundColor="var(--blue)" 
+                  onClick={() => editTarefa(item.id)} // Editar tarefa
+                />
+                <PriorityButton 
+                  PriorityText="Deletar" 
+                  backgroundColor="red" 
+                  onClick={() => deleteTarefa(item.id)} // Deletar tarefa
+                />
               </td>
             </tr>
           ))}

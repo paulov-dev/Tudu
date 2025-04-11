@@ -54,3 +54,12 @@
 .cinza {
   background-color:var(--Borda);
 }
+
+.tabela td:last-child {
+  text-align: right; /* Alinha os botões à direita da coluna */
+  padding-right: 15px; /* Adiciona um pequeno espaçamento à direita */
+}
+
+.tabela th:last-child {
+  text-align: center; /* Opcional, para alinhar o título da coluna "Ação" centralizado */
+}
