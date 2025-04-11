@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CreateEvent.css"; // Importando o arquivo CSS
 import LoginsInput from "../../components/inputs/LoginsInput";
 import Desciption from "../../components/inputs/Description/Description";
@@ -14,7 +14,10 @@ function CreateEvent() {
     descricao: '',
     dataEntrega: ''
   });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [tarefas, setTarefas] = useState([]);
 
+  // Função para lidar com a mudança do input dos dados da tarefa
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTarefa({
@@ -22,6 +25,43 @@ function CreateEvent() {
       [name]: value
     });
   };
+
+  // Função para lidar com a pesquisa
+  const handleSearch = async (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    try {
+      const response = await fetch(`https://localhost:7071/api/Tarefas?titulo=${term}`);
+      if (response.ok) {
+        const data = await response.json();
+        setTarefas(data);
+      } else {
+        console.error("Erro ao buscar tarefas");
+      }
+    } catch (error) {
+      console.error("Erro na requisição", error);
+    }
+  };
+
+  // Pode ser interessante carregar todas as tarefas inicialmente
+  useEffect(() => {
+    const fetchTarefas = async () => {
+      try {
+        const response = await fetch("https://localhost:7071/api/Tarefas");
+        if (response.ok) {
+          const data = await response.json();
+          setTarefas(data);
+        } else {
+          console.error("Erro ao buscar todas as tarefas");
+        }
+      } catch (error) {
+        console.error("Erro na requisição", error);
+      }
+    };
+
+    fetchTarefas();
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +72,7 @@ function CreateEvent() {
 
   const closePopup = () => {
     setIsOpen(false);
-    console.log("fechado");
+    console.log("Fechado");
   };
 
   const AddEvent = async () => {
@@ -48,6 +88,11 @@ function CreateEvent() {
     if (response.ok) {
       const result = await response.json();
       alert('Tarefa criada com sucesso! ID: ' + result.id);
+      // Atualiza a lista após a inclusão
+      const novaLista = await fetch(`https://localhost:7071/api/Tarefas?titulo=${searchTerm}`);
+      if (novaLista.ok) {
+        setTarefas(await novaLista.json());
+      }
     } else {
       alert('Erro ao criar tarefa');
     }
@@ -60,21 +105,24 @@ function CreateEvent() {
       <BarraLateral />
 
       <div className="Container-LoginInput">
-        <AddEventButton AddEvent={openPopup}></AddEventButton>
+        <AddEventButton AddEvent={openPopup} />
+        {/* Adiciona onChange e value para o input de pesquisa
         <LoginsInput
           textoInput="Pesquisa"
           IconLoginInput="fa-solid fa-magnifying-glass"
-        ></LoginsInput>
+          value={searchTerm}
+          onChange={handleSearch}
+        /> */}
       </div>
 
-      <TabelaItens />
+      {/* Passa as tarefas filtradas para o componente que exibe a tabela */}
+      <TabelaItens tarefas={tarefas} />
 
       {isOpen && (
-        
         <div className="popup-overlay">
           <div className="popup-content">
             <div className="box-Input-Tarefa">
-              <h4></h4>
+              <h4>Nova Tarefa</h4>
               <LoginsInput
                 textoInput="Título da tarefa"
                 name="titulo"
@@ -84,7 +132,7 @@ function CreateEvent() {
             </div>
 
             <Desciption
-            description="Descrição"
+              description="Descrição"
               name="descricao"
               value={tarefa.descricao}
               onChange={handleChange}
@@ -96,9 +144,8 @@ function CreateEvent() {
                 value={tarefa.dataEntrega}
                 onChange={handleChange}
               />
-
               <div className="buttons">
-                {/* Aqui você pode colocar os botões de prioridade se quiser */}
+                {/* Aqui você pode colocar os botões de prioridade, se necessário */}
               </div>
             </div>
 
@@ -123,3 +170,4 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
+

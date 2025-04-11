@@ -110,7 +110,7 @@ function TabelaItens() {
           <tr>
             <th>Data de entrega</th>
             <th>Título</th>
-            <th>Status</th>
+            <th></th>
             <th>Ação</th>
           </tr>
         </thead>
