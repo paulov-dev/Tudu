@@ -13,7 +13,7 @@ function CreateEvent() {
     
         
       const [tarefa, setTarefa] = useState({
-        id: '',
+        // id: '',
         titulo: '',
         descricao: '',
         dataEntrega: '',
@@ -87,12 +87,12 @@ function CreateEvent() {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <div className="box-Input-Tarefa">
-                        <LoginsInput
+                        {/* <LoginsInput
                             textoInput="Id"
                             name="id"
                             value={tarefa.id}
                             onChange={handleChange}
-                        ></LoginsInput>
+                        ></LoginsInput> */}
 
                         <LoginsInput
                             textoInput="Título da tarefa"
@@ -111,7 +111,7 @@ function CreateEvent() {
                         <div className="box-Priority-Button">
                             <InputDate></InputDate>
                             <div className="buttons">
-                                <PriorityButton
+                                {/* <PriorityButton
                                     PriorityText="Muito Urgente"
                                     backgroundColor="var(--PriorityRed)"
                                     // onClick={() => setTarefa({ ...tarefa, statusTexto: "Muito Urgente", statusCor: "var(--PriorityRed)" })}
@@ -125,7 +125,7 @@ function CreateEvent() {
                                     PriorityText="Não Urgente"
                                     backgroundColor="var(--PriorityBlue)"
                                     // onClick={() => setTarefa({ ...tarefa, statusTexto: "Não Urgente", statusCor: "var(--PriorityBlue)" })}
-                                ></PriorityButton>
+                                ></PriorityButton> */}
                             </div>
                         </div>
 
