@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
 import AddEventButton from "../buttons/AddEventButton/AddEventButton";
 import PriorityButton from "../buttons/PriorityButton/PriorityButton";
-
+import LoginsInput from "../inputs/LoginsInput";
+import Desciption from "../inputs/Description/Description";
+import InputDate from "../inputs/InputDate/InputDate";
 function TabelaItens() {
   const [tarefas, setTarefas] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -135,6 +137,7 @@ function TabelaItens() {
               </td>
             </tr>
           ))}
+          
         </tbody>
       </table>
 
@@ -144,30 +147,31 @@ function TabelaItens() {
           <div className="popup-content">
             <h3>Editar Tarefa</h3>
             <div className="edit-field">
-              <label>Título:</label>
-              <input
-                type="text"
+              {/* <label>Título:</label> */}
+              <LoginsInput
+                textoInput="Editar título da tarefa"
                 name="titulo"
                 value={editingTarefa.titulo}
                 onChange={handleEditChange}
               />
             </div>
             <div className="edit-field">
-              <label>Descrição:</label>
-              <textarea
-                name="descricao"
-                value={editingTarefa.descricao}
-                onChange={handleEditChange}
-              />
+              {/* <label>Descrição:</label> */}
+              <Desciption
+              description="Editar descrição"
+              name="descricao"
+              value={editingTarefa.descricao}
+              onChange={handleEditChange} />
             </div>
+            
             <div className="edit-field">
-              <label>Data de entrega:</label>
-              <input
-                type="date"
+              {/* <label>Data de entrega:</label> */}
+              <InputDate
                 name="dataEntrega"
                 value={editingTarefa.dataEntrega}
                 onChange={handleEditChange}
               />
+
             </div>
             <div className="container-saveEventButton">
               <PriorityButton

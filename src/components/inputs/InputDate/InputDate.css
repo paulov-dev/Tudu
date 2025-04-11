@@ -18,7 +18,7 @@
     transition: all 0.3s ease-in-out;
     margin-top: 15px;
     left: 10%;
-    width:100%;
+    width:25%;
     box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
   }
   .InputDatecustom-input+ i {

@@ -70,9 +70,11 @@ function CreateEvent() {
       <TabelaItens />
 
       {isOpen && (
+        
         <div className="popup-overlay">
           <div className="popup-content">
             <div className="box-Input-Tarefa">
+              <h4></h4>
               <LoginsInput
                 textoInput="Título da tarefa"
                 name="titulo"
@@ -82,6 +84,7 @@ function CreateEvent() {
             </div>
 
             <Desciption
+            description="Descrição"
               name="descricao"
               value={tarefa.descricao}
               onChange={handleChange}
