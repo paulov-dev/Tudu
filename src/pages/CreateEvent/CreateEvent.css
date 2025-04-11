@@ -1,3 +1,4 @@
+@import url(../../tokens/colors.css);
 .CreateEvent-container {
 
     text-align: left;
@@ -39,8 +40,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    opacity: 50%;
+    background-color: var(--Borda);
+    opacity: 98%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,13 +81,15 @@
 
 .box-Priority-Button {
     display: flex; /* Usando flexbox */
-    flex-direction: column; /* Alinha os itens na vertical (em uma coluna) */
-    align-items: flex-end; /* Alinha os itens à esquerda */
+    /* flex-direction: column; Alinha os itens na vertical (em uma coluna) */
+    align-items: center; /* Alinha os itens à esquerda */
     padding-right: 3%; /* Adiciona o padding à direita */
     margin-top: 5%;
     margin-bottom: 5%;
     padding: 5px;
+    justify-content: space-between;
     /* background-color: red; */
+
   }
   
 
@@ -102,6 +105,9 @@
 }
 
 
+.box-Priority-Button InputDate {
+  margin-right: 20px;
+}
 
 
 

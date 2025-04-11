@@ -1,17 +1,17 @@
 import React from "react";
-import "./LoginsInput.css"; // Importando o arquivo CSS
+import "./LoginsInput.css";
 
-function LoginsInput({ textoInput, IconLoginInput}) {
+function LoginsInput({ textoInput, IconLoginInput, name, value, onChange }) {
   return (
     <div className="input-container">
-      {/* <span class="input-group-addon" img src="src\assets\icons\perfil.png"></span> */}
-      {/* <img src={urlImg} className="input-icon" /> */}
       <input
         type="text"
         className="custom-input"
-        placeholder={textoInput}>
-          
-        </input>
+        placeholder={textoInput}
+        name={name}
+        value={value}
+        onChange={onChange}
+      />
       <i className={IconLoginInput}></i>
     </div>
   );

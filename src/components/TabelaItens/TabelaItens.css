@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center; /* Centraliza verticalmente */
-  background-color: #f5f5f5; /* Cor de fundo opcional */
+  background-color: transparent; /* Cor de fundo opcional */
   font-family: var(--text); /* Aplica para os textos da tabela */
 }
 

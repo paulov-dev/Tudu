@@ -1,9 +1,10 @@
 .input-container {
   /* margin-top: 15px; */
+  margin-left: 2%;
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  width: 45vh;
+  width: 100%;
   position: relative;
   /* background-color: blue; */
 }

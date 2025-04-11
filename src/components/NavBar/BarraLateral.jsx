@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './BarraLateral.css'; // CSS para o estilo
 import TuduTitle from '../Textos/Title/TuduTitle';
 
+
 const BarraLateral = () => {
   // Estado para controlar o menu expandido e colapsado
   const [expandido, setExpandido] = useState(false); // Controla a visibilidade do segundo menu
@@ -36,7 +37,7 @@ const BarraLateral = () => {
         <div className='NavBar-Container'>
 
       <div className="menu-item">
-        <a href="#home" className="menu-link">
+        <a href="src\pages\iniciais\Create.jsx" className="menu-link">
           <i class="fa-solid fa-house"></i>
           <span>Home</span> 
         </a>

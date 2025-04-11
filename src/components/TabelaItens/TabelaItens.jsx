@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
 
-function TabelaItens({ dados = [] }) {
-  const dadosPadrao = [
-    {
-      dataEntrega: "12/03",
-      titulo: "Entrega apresentação",
-      statusTexto: "Em andamento",
-      statusCor: "azul",
-    },
-    {
-      dataEntrega: "16/03",
-      titulo: "Atividade Monica",
-      statusTexto: "Inativa",
-      statusCor: "cinza",
-    },
-  ];
+function TabelaItens() {
+  const [tarefas, setTarefas] = useState([]);
 
-  const tarefas = dados.length > 0 ? dados : dadosPadrao;
+  // Função para buscar as tarefas da API
+  const fetchTarefas = async () => {
+    try {
+      const response = await fetch('https://localhost:7274/api/Tarefa'); // Atualize a URL conforme necessário
+      if (response.ok) {
+        const data = await response.json();
+        setTarefas(data); // Atualiza o estado com os dados da API
+      } else {
+        console.error("Erro ao buscar tarefas");
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
+
+  // Usamos useEffect para buscar as tarefas assim que o componente for montado
+  useEffect(() => {
+    fetchTarefas(); // Chama a função quando o componente é carregado
+  }, []);
 
   return (
     <div className="tabela-container">

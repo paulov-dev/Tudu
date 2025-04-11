@@ -1,0 +1,35 @@
+.inputDate-container {
+    /* margin-top: 15px; */
+    margin-left: 2%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    width: 100%;
+    position: relative;
+    /* background-color: blue; */
+  }
+  .InputDatecustom-input{
+    padding-left: 10px; /* Espaço à esquerda do texto */
+    height: 5vh;
+    font-size: 15px;
+    border: 1.5px solid #ccc;
+    border-radius: 7px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px;
+    left: 10%;
+    width:100%;
+    box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
+  }
+  .InputDatecustom-input+ i {
+      position: fixed;
+      margin-top: 15px;
+      position: absolute;
+      left: 3vh;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+      color: #aaa;
+      
+    }
+  
