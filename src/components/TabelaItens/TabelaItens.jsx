@@ -9,7 +9,7 @@ function TabelaItens() {
   // Função para buscar as tarefas da API
   const fetchTarefas = async () => {
     try {
-      const response = await fetch('https://localhost:7274/api/Tarefa'); // Atualize a URL conforme necessário
+      const response = await fetch('https://localhost:7071/api/Tarefas'); // Atualize a URL conforme necessário
       if (response.ok) {
         const data = await response.json();
         setTarefas(data); // Atualiza o estado com os dados da API
@@ -24,7 +24,7 @@ function TabelaItens() {
   // Função para deletar uma tarefa
   const deleteTarefa = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7274/api/Tarefa/${id}`, {
+      const response = await fetch(`https://localhost:7071/api/Tarefas/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {

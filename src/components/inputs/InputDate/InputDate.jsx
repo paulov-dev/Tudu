@@ -1,18 +1,15 @@
 import React from "react";
 import "./InputDate.css";
 
-function InputDate({ textoInputDate, name, value, onChange }) {
+function InputDate({ name, value, onChange }) {
   return (
-    <div className="InputDate-container">
-      <input
-        type="datetime-local"
-        className="InputDatecustom-input"
-        placeholder={textoInputDate}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
+    <input
+      type="date"
+      className="input-date"
+      name={name}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 
