@@ -1,35 +1,38 @@
 .input-container {
-  margin-top: 15px;
+  /* margin-top: 15px; */
+  margin-left: 2%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   width: 100%;
+  position: relative;
   /* background-color: blue; */
 }
 .custom-input {
   padding-left: 50px; /* Espaço à esquerda do texto */
-  height: 4vh;
+  height: 5vh;
   font-size: 15px;
-  border: 2px solid #ccc;
-  border-radius: 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
   outline: none;
   transition: all 0.3s ease-in-out;
   margin-top: 15px;
   left: 10%;
-  width: 67%;
+  width: 95%;
   box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
 }
+.custom-input + i {
+    position: fixed;
+    margin-top: 15px;
+    position: absolute;
+    left: 3vh;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    color: #aaa;
+    
+  }
 
-.input-icon {
-  position: fixed;
-  margin-top: 15px;
-  position: absolute;
-  left: 20.7%;
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-  /* background-color: red; */
-}
 
 /* @media (max-width:459px){
     .input-container {
