@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './BarraLateral.css'; // CSS para o estilo
 import TuduTitle from '../Textos/Title/TuduTitle';
 
@@ -34,36 +35,41 @@ const BarraLateral = () => {
             <i className="fa-solid fa-chevron-right"></i> // Ícone de expandir
         )}
     </button>
-        <div className='NavBar-Container'>
-
+    <div className="NavBar-Container">
       <div className="menu-item">
-        <a href="src\pages\iniciais\Create.jsx" className="menu-link">
-          <i class="fa-solid fa-house"></i>
-          <span>Home</span> 
-        </a>
-      </div>
-
-      <div className="menu-item">
-        <div className="menu-link" onClick={toggleMenu}> 
-          <i class="fa-solid fa-border-all"></i>
-          <span>Boards</span>
+        <Link to="/Home" style={{ textDecoration: 'none' }}>
+          <a className="menu-link">
+            <i className="fa-solid fa-house"></i>
+            <span>Home</span>
+          </a>
+        </Link>
+        </div>
+        <div className="menu-item">
+          <div className="menu-link" onClick={toggleMenu}>
+            <i className="fa-solid fa-border-all"></i>
+            <span>Boards</span>
         </div>
         {expandido && (
-            <div className="submenu">
+          <div className="submenu">
             <div className="submenu-item">
-            <i class="fa-solid fa-clipboard-list"></i>
-              <span>Work Items</span>
+              <Link to="/WorkItems" style={{ textDecoration: 'none' }}>
+                <i className="fa-solid fa-clipboard-list"></i>
+                <span>Work Items</span>
+              </Link>
             </div>
             <div className="submenu-item">
               <div className="submenu-toggle">
-                <i class="fa-solid fa-table-list"></i>
-                <span>Backlogs</span>
+                <Link to="/Backlogs" style={{ textDecoration: 'none' }}>
+                  <i className="fa-solid fa-table-list"></i>
+                  <span>Backlogs</span>
+                </Link>
               </div>
             </div>
           </div>
         )}
-        </div>
       </div>
+      </div>
+
 
 
     </div>

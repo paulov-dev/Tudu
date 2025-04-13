@@ -106,13 +106,13 @@ function CreateEvent() {
 
       <div className="Container-LoginInput">
         <AddEventButton AddEvent={openPopup} />
-        {/* Adiciona onChange e value para o input de pesquisa
+        {/* Adiciona onChange e value para o input de pesquisa*/}
         <LoginsInput
           textoInput="Pesquisa"
           IconLoginInput="fa-solid fa-magnifying-glass"
           value={searchTerm}
           onChange={handleSearch}
-        /> */}
+        /> 
       </div>
 
       {/* Passa as tarefas filtradas para o componente que exibe a tabela */}
