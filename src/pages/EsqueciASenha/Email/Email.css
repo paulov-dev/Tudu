@@ -1,0 +1,58 @@
+body {
+    background-color: #f8f8f8;
+  }
+  
+  .boxCreate {
+    background-color: #fff;
+    /* margin-left: 200px; */
+    width: 27%;
+    height: 70vh;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
+  
+    position: fixed;
+    bottom: 10vh;
+    right: 90px;
+    padding: 10px;
+    /* margin-bottom: 1000px; */
+    border-radius: 7px;
+    height: 80vh;
+    /* width: 30%; */
+  }
+.title-container{
+    /* background-color: red; */
+    margin-top: 50px;
+    margin-left: 30px;
+    /* width: 100; */
+
+}
+
+  .boxItens {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Certifique-se que a boxCreate tenha uma altura definida */
+  }
+.paragrafoEmail-container{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* se quiser também centralizar verticalmente */
+
+}
+.NextButton-container{
+    /* background-color: red; */
+    margin-bottom: 40px;
+}
+
+.esqueceuasenha-container{
+    text-align: center;
+}
+.inputemail-container{
+    margin-bottom: 50px;
+}
+
+.slogan-container{
+    /* background-color: red; */
+   padding-top: 15px;
+   padding-left: 10px;
+}

@@ -9,8 +9,8 @@
 
 .text-ParagrafoEsqueceuSenha {
   font-family: var(--title);
-  width: 75%;
-  text-align: center;
+  width: 100%;
+  /* text-align: center; */
   color: gray;
   margin-top: -1px;
   font-weight: bold; /* <- essa linha faz o texto ficar em negrito */
