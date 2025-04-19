@@ -7,10 +7,11 @@ import LoginButton from '../../../components/buttons/LoginButtons/LoginButton'
 import Rodape from '../../../components/Textos/Rodape/Rodape';
 import ParagrafoEsqueceuSenha from '../../../components/Textos/ParagrafoEsqueceuSenha/ParagrafoEsqueceuSenha';
 import LoginTitleText from '../../../components/Textos/Title/LoginTitleText';
+import { Link } from "react-router-dom";
 
-import './Email.css';
+import './RedefinirSenha.css';
 
-function Email() {
+function RedefinirSenha() {
   return (
     <div>
 
@@ -19,19 +20,20 @@ function Email() {
         <div className='esqueceuasenha-container'>
             <LoginTitleText LoginTitleChange="Esqueceu a senha?"></LoginTitleText>
 
-            <div className='paragrafoEmail-container'>
-                <ParagrafoEsqueceuSenha></ParagrafoEsqueceuSenha>
+            <div className='paragrafoRedefinirSenha-container'>
+                <ParagrafoEsqueceuSenha textParagrafo={'Defina sua nova senha'}></ParagrafoEsqueceuSenha>
             </div>
         </div>
 
         {/* Entradas de dados do usuário */}
-        <div className='inputemail-container'>
-            <LoginsInput textoInput="E-mail" IconLoginInput='fa-solid fa-envelope' />
+        <div className='inputRedefinirSenha-container'>
+            <LoginsInput textoInput="Nova senha" IconLoginInput='fa-solid fa-lock' />
+            <LoginsInput textoInput="Confirme a senha" IconLoginInput='fa-solid fa-lock' />
         </div>
 
         {/* Botões de login e cadastro */}
         <div className='NextButton-container'>
-            <LoginButton textoLoginButton="Próximo" rota={"/Codigo"} />
+            <LoginButton textoLoginButton="Redefinir" rota="/" />
 
         </div>
         </div>
@@ -42,10 +44,15 @@ function Email() {
         <TuduTitle />
         <div className='slogan-container'>
         <Slogan texto=
-        {<> Não se preocupe! <br />
-        Vamos te ajudar.</>} />
+        {<>Agora digite a senha conforme as regras <br />
+        de segurança!</>} />
         </div>
       </div>
+
+      <div className="regras-container"> 
+                <p className="regras-text" > Confira nossas 
+                    <span className="textblue"> Regras de Segurança </span> </p>
+            </div>
       {/* Caixa de criação de evento */}
 
       {/* <Rodape></Rodape> */}
@@ -54,4 +61,4 @@ function Email() {
   );
 }
 
-export default Email;
+export default RedefinirSenha;
