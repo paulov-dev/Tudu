@@ -1,7 +1,7 @@
 import React from "react";
 import './Rodape.css';
 
-function Rodape () {
+function Rodape() {
     return(
         <div>
             <div className="container-rodape"> 

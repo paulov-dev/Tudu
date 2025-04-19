@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
 import Create from "./pages/iniciais/Create";
 import NavBarPage from "./pages/NavBarPage/NavBarPage";
-
+import Email from "./pages/EsqueciASenha/Email/Email";
 function App() {
   // const app = require('./server'); // Importa o arquivo server.js
 // Aqui você pode executar outras configurações ou inicializações de seu projeto
@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
 
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<CreateEvent />} />
           <Route path="/Home" element={<h1>Home</h1>} />
@@ -19,7 +19,9 @@ function App() {
           <Route path="/Backlogs" element={<h1>Backlogs</h1>} />
           <Route path="*" element={<h1>Não encontramos</h1>} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
+      <Email></Email>
+
 
     </div>
   );
