@@ -13,8 +13,8 @@
     font: var(--title);
     font-weight: bold;
     /* margin-bottom: 30px; */
-    width: 65%;
-    height: 6vh;
+    width: 30vh;
+    height: 5vh;
     background-color: #0167ff ;
     color: #fff;
     border: 2px solid;
