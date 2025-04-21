@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules e pastas geradas
 node_modules
 dist
 dist-ssr
@@ -23,4 +24,20 @@ dist-ssr
 *.sln
 *.sw?
 .vs/
-Teste_tasks/bin/
+
+# Diretórios e arquivos de compilação do .NET
+[Teste_tasks/]bin/
+[Teste_tasks/]obj/
+
+# Arquivos binários gerados
+*.dll
+*.exe
+*.pdb
+*.apphost.exe
+
+# Arquivos de cache de build
+*.cache
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
