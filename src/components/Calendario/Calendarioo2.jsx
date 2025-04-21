@@ -1,3 +1,4 @@
+import "./Calendario.css";
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -8,7 +9,7 @@ import EventModal from "./EventModal";
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 
-function Calendario() {
+function Calendarioo2() {
   const [eventos, setEventos] = useState([]);
   const [eventoSelecionado, SeteventoSelecionado] = useState(null);
 
@@ -93,4 +94,4 @@ function Calendario() {
   );
 }
 
-export default Calendario;
+export default Calendarioo2;
