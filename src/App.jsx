@@ -6,13 +6,14 @@ import NavBarPage from "./pages/NavBarPage/NavBarPage";
 import Email from "./pages/EsqueciASenha/Email/Email";
 import Codigo from "./pages/EsqueciASenha/Codigo/Codigo";
 import RedefinirSenha from "./pages/EsqueciASenha/RedefinirSenha/RedefinirSenha";
+import Calendario from "./components/Calendario/Calendario";
 function App() {
   // const app = require('./server'); // Importa o arquivo server.js
 // Aqui você pode executar outras configurações ou inicializações de seu projeto
 
   return (
     <div>
-
+{/* 
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Email></Email>} />
@@ -23,10 +24,8 @@ function App() {
           <Route path="/Backlogs" element={<h1>Backlogs</h1>} />
           <Route path="*" element={<h1>Não encontramos</h1>} />
         </Routes>
-      </BrowserRouter>
-      {/* <Email></Email> */}
-      {/* <Codigo></Codigo> */}
-      {/* <RedefinirSenha></RedefinirSenha> */}
+      </BrowserRouter> */}
+      <Calendario></Calendario>
 
 
     </div>

@@ -12,7 +12,10 @@ function CreateEvent() {
   const [tarefa, setTarefa] = useState({
     titulo: '',
     descricao: '',
-    dataEntrega: ''
+    dataInicio:'',
+    dataEntrega: '',
+    // color:'',
+    tipo:'atividade'
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [tarefas, setTarefas] = useState([]);
@@ -139,6 +142,11 @@ function CreateEvent() {
             />
 
             <div className="box-Priority-Button">
+            <InputDate
+                name="dataInicio"
+                value={tarefa.dataInicio}
+                onChange={handleChange}
+              />
               <InputDate
                 name="dataEntrega"
                 value={tarefa.dataEntrega}

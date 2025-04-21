@@ -12,7 +12,10 @@ function TabelaItens() {
     id: null,
     titulo: '',
     descricao: '',
-    dataEntrega: ''
+    dataInicio:'',
+    dataEntrega: '',
+    // color:'',
+    tipo:'atividade'
   });
 
   // Função para buscar as tarefas da API
@@ -94,7 +97,11 @@ function TabelaItens() {
       id: null,
       titulo: '',
       descricao: '',
-      dataEntrega: ''
+      dataInicio:'',
+      dataEntrega: '',
+      // color:'',
+      tipo:'atividade'
+      
     });
   };
 
@@ -166,6 +173,11 @@ function TabelaItens() {
             
             <div className="edit-field">
               {/* <label>Data de entrega:</label> */}
+              <InputDate
+                name="dataInicio"
+                value={editingTarefa.dataInicio}
+                onChange={handleEditChange}
+              />
               <InputDate
                 name="dataEntrega"
                 value={editingTarefa.dataEntrega}
