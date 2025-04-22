@@ -1,0 +1,44 @@
+@import url(../../../tokens/colors.css);
+.infobox{
+    background-color: #fff;
+    width: 35%;
+    height: 200px;
+    padding: 10px;
+    border-radius: 7px;
+    /* border: 0.3px #737373 solid; */
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, border 0.3s, box-shadow 0.3s, transform 0.5s; /* Transição suave para as propriedades */
+}
+
+.infobox:hover{
+    background-color: #f0f0f0; /* Cor de fundo muda ao passar o mouse */
+    /* border: 0.3px #0056b3 solid; Cor da borda muda */
+    /* box-shadow: 3px 3px 15px #0056b3; Sombra fica mais forte */
+    transform: scale(1.03); /* Aumenta o tamanho da div em 10% */
+
+}
+
+.icon-cicle{
+    margin-left: 10px;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background-color: var(--blue);
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+}
+
+.icon-cicle i{
+    
+    color: #fff;
+    /* align-items: center; */
+}
+
+.infotexts-box h3{
+    padding: 10px;
+}
+
+.infotexts-box p{
+    padding-right: 15px;
+}
