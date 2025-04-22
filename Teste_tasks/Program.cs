@@ -33,11 +33,18 @@ namespace Teste_tasks
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
-			builder.Services.AddTransient<ICustomEmailSender, EmailSender>();
-			builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("SendGrid"));
+			//builder.Services.AddTransient<ICustomEmailSender, EmailSender>();
+			//builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("SendGrid"));
 
-			// Adicione o serviço de email
-			builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("AuthMessageSenderOptions"));
+			//// Adicione o serviço de email
+			//builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("AuthMessageSenderOptions"));
+			//builder.Services.AddTransient<ICustomEmailSender, EmailSender>();
+
+			// para SMTP (confirmação de registro)
+			builder.Services.Configure<AuthMessageSenderOptions>(
+				builder.Configuration.GetSection("AuthMessageSenderOptions"));
+
+			// para SendGrid (reset de senha)
 			builder.Services.AddTransient<ICustomEmailSender, EmailSender>();
 
 			//builder.Services.AddTransient<UserDeletionService>();
@@ -104,6 +111,7 @@ namespace Teste_tasks
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.MapControllerRoute(

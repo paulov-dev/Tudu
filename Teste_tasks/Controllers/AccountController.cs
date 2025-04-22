@@ -5,6 +5,7 @@ using Teste_tasks.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Teste_tasks.Models;
 using Teste_tasks.ViewModels;
+using Teste_tasks.ViewsModels;
 
 
 
@@ -15,12 +16,14 @@ public class AccountController : ControllerBase
 	private readonly UserManager<Users> userManager;
 	private readonly SignInManager<Users> signInManager;
 	private readonly ICustomEmailSender emailSender;
+	private readonly ILogger<AccountController> _logger;
 
-	public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ICustomEmailSender emailSender)
+	public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, ICustomEmailSender emailSender, ILogger<AccountController> logger)
 	{
 		this.userManager = userManager;
 		this.signInManager = signInManager;
 		this.emailSender = emailSender;
+		this._logger = logger;
 	}
 
 	// Login endpoint
@@ -101,42 +104,152 @@ public class AccountController : ControllerBase
 	//	if (user == null)
 	//		return Unauthorized("Usuário não autenticado.");
 
-	//	var result = await userManager.ChangePasswordAsync(user, model.NewPassword);
+	//	var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 	//	if (result.Succeeded)
 	//		return Ok(new { Message = "Senha alterada com sucesso." });
 
 	//	return BadRequest(result.Errors);
 	//}
 
-	[HttpPost("change-password")]
-	public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+	//[HttpPost("change-password")]
+	//public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+	//{
+	//	if (!ModelState.IsValid)
+	//		return BadRequest(ModelState);
+
+	//	var user = await userManager.GetUserAsync(User);
+	//	if (user == null)
+	//		return Unauthorized("Usuário não autenticado.");
+
+	//	// 1) gera um token
+	//	var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+	//	// 2) reseta a senha usando o token
+	//	var result = await userManager.ResetPasswordAsync(user, token, model.NewPassword);
+
+	//	if (result.Succeeded)
+	//		return Ok(new { Message = "Senha alterada com sucesso." });
+
+	//	return BadRequest(result.Errors);
+	//}
+
+	// 1) Esqueci minha senha
+	// 1) solicita reset via e‑mail
+	//[HttpPost("forgot-password")]
+	//public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel model)
+	//{
+	//	if (!ModelState.IsValid)
+	//		return BadRequest(ModelState);
+
+	//	var user = await userManager.FindByEmailAsync(model.Email);
+	//	if (user == null /*|| !await _userManager.IsEmailConfirmedAsync(user)*/)
+	//	{
+	//		// retorna 200 pra não expor existência de conta
+	//		_logger.LogWarning("ForgotPassword: usuário não encontrado ou não confirmado: {Email}", model.Email);
+	//		return Ok();
+	//	}
+
+	//	var token = await userManager.GeneratePasswordResetTokenAsync(user);
+	//	var resetLink = Url.Action(
+	//		nameof(ResetPassword),
+	//		"Account",
+	//		new { token, email = model.Email },
+	//		Request.Scheme);
+
+	//	_logger.LogInformation("Reset link gerado: {Link}", resetLink);
+
+	//	await emailSender.SendEmailAsync(
+	//		user.Email,
+	//		"Redefinição de senha",
+	//		$"Clique aqui para redefinir sua senha: {resetLink}");
+
+	//	return Ok(new { Message = "Instruções para redefinir a senha foram enviadas por e-mail." });
+	//}
+
+	//// 2) redefine efetivamente a senha
+	//[HttpPost("reset-password")]
+	//public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
+	//{
+	//	if (!ModelState.IsValid)
+	//		return BadRequest(ModelState);
+
+	//	var user = await userManager.FindByEmailAsync(model.Email);
+	//	if (user == null)
+	//		return BadRequest("Usuário não encontrado.");
+
+	//	var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+	//	if (result.Succeeded)
+	//		return Ok(new { Message = "Senha redefinida com sucesso." });
+
+	//	return BadRequest(result.Errors);
+	//}
+
+	//[HttpGet("reset-password")]
+	//public IActionResult ResetPassword(string token, string email)
+	//{
+
+	//	var frontendBase = "http://localhost:5173/RedefinirSenha";
+	//	var url = $"{frontendBase}/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(email)}";
+	//	return Redirect(url);
+	//}
+
+	[HttpPost("forgot-password")]
+	public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel model)
 	{
 		if (!ModelState.IsValid)
 			return BadRequest(ModelState);
 
-		var user = await userManager.GetUserAsync(User);
-		if (user == null)
-			return Unauthorized("Usuário não autenticado.");
+		var user = await userManager.FindByEmailAsync(model.Email);
+		if (user == null /*|| !await _userManager.IsEmailConfirmedAsync(user)*/)
+		{
+			// retorna 200 pra não expor existência de conta
+			_logger.LogWarning("ForgotPassword: usuário não encontrado ou não confirmado: {Email}", model.Email);
+			return Ok();
+		}
 
-		// 1) gera um token
 		var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-		// 2) reseta a senha usando o token
-		var result = await userManager.ResetPasswordAsync(user, token, model.NewPassword);
+		// 🔧 Gera link para a página do front-end (React)
+		var resetLink = $"http://localhost:5174/RedefinirSenha?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(model.Email)}";
 
+		_logger.LogInformation("Reset link gerado: {Link}", resetLink);
+
+		await emailSender.SendEmailAsync(
+			user.Email,
+			"Redefinição de senha",
+			$"Clique aqui para redefinir sua senha: <a href=\"{resetLink}\">Redefinir Senha</a>");
+
+		return Ok(new { Message = "Instruções para redefinir a senha foram enviadas por e-mail." });
+	}
+
+	[HttpPost("reset-password")]
+	public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
+	{
+		if (!ModelState.IsValid)
+			return BadRequest(ModelState);
+
+		var user = await userManager.FindByEmailAsync(model.Email);
+		if (user == null)
+			return BadRequest("Usuário não encontrado.");
+
+		var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
 		if (result.Succeeded)
-			return Ok(new { Message = "Senha alterada com sucesso." });
+			return Ok(new { Message = "Senha redefinida com sucesso." });
 
 		return BadRequest(result.Errors);
 	}
 
 
-
-	//	[HttpPost]
-	//	public async Task<IActionResult> DeleteAllUsers()
-	//	{
-	//		await _userDeletionService.DeleteAllUsersAsync();
-	//		return Ok("Todos os usuários foram deletados com sucesso.");
-	//	}
 }
+
+
+
+
+//	[HttpPost]
+//	public async Task<IActionResult> DeleteAllUsers()
+//	{
+//		await _userDeletionService.DeleteAllUsersAsync();
+//		return Ok("Todos os usuários foram deletados com sucesso.");
+//	}
+
 

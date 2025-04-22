@@ -1,22 +1,6 @@
 [
   {
     "ContainingType": "AccountController",
-    "Method": "ChangePassword",
-    "RelativePath": "api/Account/change-password",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "Teste_tasks.ViewModels.ChangePasswordViewModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AccountController",
     "Method": "ConfirmEmail",
     "RelativePath": "api/Account/confirm-email",
     "HttpMethod": "GET",
@@ -32,6 +16,22 @@
         "Name": "token",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AccountController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/Account/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Teste_tasks.ViewModels.ForgotPasswordViewModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -63,6 +63,22 @@
       {
         "Name": "model",
         "Type": "Teste_tasks.ViewModels.RegisterViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AccountController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Account/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Teste_tasks.ViewsModels.ResetPasswordViewModel",
         "IsRequired": true
       }
     ],

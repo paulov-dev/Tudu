@@ -95,7 +95,7 @@
         }
       }
     },
-    "/api/Account/change-password": {
+    "/api/Account/forgot-password": {
       "post": {
         "tags": [
           "Account"
@@ -104,17 +104,48 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordViewModel"
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordViewModel"
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangePasswordViewModel"
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Account/reset-password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
               }
             }
           }
@@ -314,23 +345,16 @@
   },
   "components": {
     "schemas": {
-      "ChangePasswordViewModel": {
+      "ForgotPasswordViewModel": {
         "required": [
-          "confirmPassword",
-          "newPassword"
+          "email"
         ],
         "type": "object",
         "properties": {
-          "newPassword": {
-            "maxLength": 100,
-            "minLength": 6,
-            "type": "string",
-            "format": "password"
-          },
-          "confirmPassword": {
+          "email": {
             "minLength": 1,
             "type": "string",
-            "format": "password"
+            "format": "email"
           }
         },
         "additionalProperties": false
@@ -383,6 +407,38 @@
           "dataNascimento": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPasswordViewModel": {
+        "required": [
+          "confirmPassword",
+          "email",
+          "newPassword",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "newPassword": {
+            "maxLength": 100,
+            "minLength": 6,
+            "type": "string",
+            "format": "password"
+          },
+          "confirmPassword": {
+            "minLength": 1,
+            "type": "string",
+            "format": "password"
           }
         },
         "additionalProperties": false
