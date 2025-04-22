@@ -3,6 +3,8 @@ import TuduTitle from "../../components/Textos/Title/TuduTitle";
 import Email from "../EsqueciASenha/Email/Email";
 import "./Home.css";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Cadastro from "../Cadastro/Cadastro";
+import Login from "../Login/Login";
 
 
 function Home() {

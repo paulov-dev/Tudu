@@ -1,14 +1,16 @@
 import React from "react";
 import './Slogan.css';
 
-function Slogan({ texto = "Organize com praticidade, realize com eficiência!" }) {
+function Slogan() {
     return (
-        <div>
-            <div>
-                <p>{texto}</p>
-            </div>
-        </div>
+      <div className="slogan-wrapper">
+        <p>
+          Organize com praticidade,<br />
+          realize com eficiência!
+        </p>
+      </div>
     );
-}
+  }
+  
 
 export default Slogan;

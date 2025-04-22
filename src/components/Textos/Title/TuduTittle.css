@@ -5,7 +5,7 @@
   align-items: center; /* Centraliza verticalmente */
   gap: 15px; /* Espaço entre a imagem e o texto */
   /* background-color: red; */
-  width: 25%;
+  width: 30%;
   /* margin-top: 3%; */
   margin-left: 3%;
 }
@@ -18,17 +18,17 @@
 .Tudu{
     color:#0167ff;
     font-family: var(--title);
-    font-size: 30px;
+    font-size: 50px;
 }
 
 .Tudu-text{
     font-weight: bold;
     font-family: var(--title);
-    font-size: 12px;
+    font-size: 18px;
 }
 
 .logoImg-tudutile{
-    width: 80%;
+    width: 70%;
     height: 80%;
     
 }

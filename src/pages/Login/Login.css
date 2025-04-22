@@ -1,0 +1,75 @@
+.login-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.left-panel {
+  flex: 1;
+  max-width: 85%;
+}
+
+.left-panel .slogan-container {
+  margin-top: 20px;
+  line-height: 1.4;
+}
+
+.rodape-container {
+  margin-top: 550px;
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* ===== Painel Direito ===== */
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.boxLogin {
+  background-color: #fff;
+  width: 200%;
+  max-width: 500px;
+  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 7px;
+  box-sizing: border-box;
+  margin-right: 110px;
+}
+
+.boxItens {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.social-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.inputs-container > * + * {
+  margin-top: 15px;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.or-text {
+  margin-top: 25px;
+  gap: 15px;
+  color: #555;
+}

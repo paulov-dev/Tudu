@@ -1,21 +1,22 @@
 .logoImgGoogle {
   width: 26px;
-  height: 24px;
+  height: 23px;
 
-  justify-content: center;
+  
   gap: 2px; /* Espaçamento entre os ícones */
 }
 .logoImgApple {
   width: 26px;
-  height: 28px;
+  height: 27px;
 
-  justify-content: center;
+  
   gap: 10px; /* Espaçamento entre os ícones */
 }
 .logoImgMicrosoft {
-  width: 26px;
+  width: 30px;
   height: 26px;
+  
 
-  justify-content: center;
+  
   gap: 2px; /* Espaçamento entre os ícones */
 }
