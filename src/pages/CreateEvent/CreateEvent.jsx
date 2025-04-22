@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./CreateEvent.css"; // Importando o arquivo CSS
+import "./CreateEvent.css";
 import LoginsInput from "../../components/inputs/LoginsInput";
 import Desciption from "../../components/inputs/Description/Description";
 import PriorityButton from "../../components/buttons/PriorityButton/PriorityButton";
@@ -12,10 +12,13 @@ function CreateEvent() {
   const [tarefa, setTarefa] = useState({
     titulo: '',
     descricao: '',
-    dataEntrega: ''
+    dataEntrega: '',
+    dataInicio: '',
+    // tipo: 'atividade'
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [tarefas, setTarefas] = useState([]);
+  const [refresh, setRefresh] = useState(false); // Estado para forçar atualização
 
   // Função para lidar com a mudança do input dos dados da tarefa
   const handleChange = (e) => {
@@ -27,12 +30,20 @@ function CreateEvent() {
   };
 
   // Função para lidar com a pesquisa
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
+    fetchTarefas(term);
+  };
 
+  // Função para buscar tarefas
+  const fetchTarefas = async (term = "") => {
     try {
-      const response = await fetch(`https://localhost:7071/api/Tarefas?titulo=${term}`);
+      const url = term 
+        ? `https://localhost:7071/api/Tarefas?titulo=${term}`
+        : "https://localhost:7071/api/Tarefas";
+      
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setTarefas(data);
@@ -44,61 +55,76 @@ function CreateEvent() {
     }
   };
 
-  // Pode ser interessante carregar todas as tarefas inicialmente
+  // Carrega todas as tarefas inicialmente e quando o estado refresh mudar
   useEffect(() => {
-    const fetchTarefas = async () => {
-      try {
-        const response = await fetch("https://localhost:7071/api/Tarefas");
-        if (response.ok) {
-          const data = await response.json();
-          setTarefas(data);
-        } else {
-          console.error("Erro ao buscar todas as tarefas");
-        }
-      } catch (error) {
-        console.error("Erro na requisição", error);
-      }
-    };
-
-    fetchTarefas();
-  }, []);
+    fetchTarefas(searchTerm);
+  }, [refresh, searchTerm]);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const openPopup = () => {
     setIsOpen(true);
-    console.log("Aberto");
   };
 
   const closePopup = () => {
     setIsOpen(false);
-    console.log("Fechado");
+  };
+
+  const formatarData = (dataString) => {
+    if (!dataString) return '';
+    
+    // Garante que a data está no formato correto para o backend
+    // O formato ideal seria "YYYY-MM-DDThh:mm:ss"
+    const data = new Date(dataString);
+    return data.toISOString();
   };
 
   const AddEvent = async () => {
-    console.log("Tentando salvar a tarefa", tarefa);
-    const response = await fetch('https://localhost:7071/api/Tarefas', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(tarefa),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      alert('Tarefa criada com sucesso! ID: ' + result.id);
-      // Atualiza a lista após a inclusão
-      const novaLista = await fetch(`https://localhost:7071/api/Tarefas?titulo=${searchTerm}`);
-      if (novaLista.ok) {
-        setTarefas(await novaLista.json());
-      }
-    } else {
-      alert('Erro ao criar tarefa');
+    if (!tarefa.titulo || !tarefa.dataInicio || !tarefa.dataEntrega) {
+      alert('Preencha o título, a data de início e a data de entrega!');
+      return;
     }
-
+  
+    const tarefaFormatada = {
+      ...tarefa,
+      dataInicio: formatarData(tarefa.dataInicio),
+      dataEntrega: formatarData(tarefa.dataEntrega)
+    };
+  
+    try {
+      const response = await fetch('https://localhost:7071/api/Tarefas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tarefaFormatada),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        alert('Tarefa criada com sucesso! ID: ' + result.id);
+  
+        setTarefa({
+          titulo: '',
+          descricao: '',
+          dataEntrega: '',
+          dataInicio: '',
+          tipo: 'atividade'
+        });
+  
+        setRefresh(!refresh);
+      } else {
+        const errorText = await response.text();
+        alert('Erro ao criar tarefa: ' + errorText);
+      }
+    } catch (error) {
+      console.error("Erro ao salvar tarefa:", error);
+      alert('Erro ao criar tarefa: ' + error.message);
+    }
+  
     setIsOpen(false);
   };
+  
 
   return (
     <div className="CreateEvent-container">
@@ -106,7 +132,6 @@ function CreateEvent() {
 
       <div className="Container-LoginInput">
         <AddEventButton AddEvent={openPopup} />
-        {/* Adiciona onChange e value para o input de pesquisa*/}
         <LoginsInput
           textoInput="Pesquisa"
           IconLoginInput="fa-solid fa-magnifying-glass"
@@ -115,8 +140,8 @@ function CreateEvent() {
         /> 
       </div>
 
-      {/* Passa as tarefas filtradas para o componente que exibe a tabela */}
-      <TabelaItens tarefas={tarefas} />
+      {/* Passa as tarefas para o componente TabelaItens */}
+      <TabelaItens tarefasList={tarefas} onUpdate={() => setRefresh(!refresh)} />
 
       {isOpen && (
         <div className="popup-overlay">
@@ -139,13 +164,22 @@ function CreateEvent() {
             />
 
             <div className="box-Priority-Button">
+              <p>Data inicial</p>
+              <InputDate
+                name="dataInicio"
+                value={tarefa.dataInicio}
+                onChange={handleChange}
+              />
+              
+              <p>Data entrega</p>
               <InputDate
                 name="dataEntrega"
                 value={tarefa.dataEntrega}
                 onChange={handleChange}
               />
+
               <div className="buttons">
-                {/* Aqui você pode colocar os botões de prioridade, se necessário */}
+                {/* Botões de prioridade, se necessário */}
               </div>
             </div>
 
@@ -170,4 +204,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

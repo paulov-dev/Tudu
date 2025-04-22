@@ -37,10 +37,10 @@ const BarraLateral = () => {
     </button>
     <div className="NavBar-Container">
       <div className="menu-item">
-        <Link to="/Home" style={{ textDecoration: 'none' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <a className="menu-link">
             <i className="fa-solid fa-house"></i>
-            <span>Home</span>
+            <span>Calendario</span>
           </a>
         </Link>
         </div>
