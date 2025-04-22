@@ -14,20 +14,22 @@ function App() {
 
   return (
     <div>
-{/* 
+
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Email></Email>} />
+          {/* <Route path="/" element={<Email></Email>} />
           <Route path="/Codigo" element={<Codigo></Codigo>} />
-          <Route path="/RedefinirSenha" element={<RedefinirSenha />} />
+          <Route path="/RedefinirSenha" element={<RedefinirSenha />} /> */}
+          <Route path="/" element={<Calendarioo2></Calendarioo2>} />
+          {/* <Route path="/Tarefa" element={} /> */}
           <Route path="/Home" element={<h1>Home</h1>} />
-          <Route path="/WorkItems" element={<h1>Work Items</h1>} />
+          <Route path="/WorkItems" element={<CreateEvent></CreateEvent>} />
           <Route path="/Backlogs" element={<h1>Backlogs</h1>} />
           <Route path="*" element={<h1>Não encontramos</h1>} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
       {/* <Calendario></Calendario> */}
-      <Calendarioo2></Calendarioo2>
+      {/* <Calendarioo2></Calendarioo2> */}
 
 
     </div>
