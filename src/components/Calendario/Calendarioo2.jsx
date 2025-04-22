@@ -8,6 +8,7 @@ import EventModal from "./EventModal";
 import LoginButton from "../buttons/LoginButtons/LoginButton";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -138,11 +139,16 @@ function Calendarioo2() {
 
   return (
     <div className="calendar-container">
-      <div className="botaoalternar">
-        <LoginButton textoLoginButton="WorkItems" rota={'/WorkItems'} />
-        <button onClick={forceRefresh} className="refresh-button">
+      <div className="botao-atualizar">
+        {/* <LoginButton textoLoginButton="WorkItems" rota={'/WorkItems'} /> */}
+        <PriorityButton
+                PriorityText="Atualizar Calendário"
+                backgroundColor="var(--lightblue)"
+                FunctionPrioritybtn={forceRefresh}
+              />
+       {/* <button onClick={forceRefresh} className="refresh-button">
           Atualizar Calendário
-        </button>
+        </button>*/}
       </div>
       <DragAndDropCalendar
         defaultDate={moment().toDate()}
