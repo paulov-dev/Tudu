@@ -1,32 +1,43 @@
 import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
-import AddEventButton from "../buttons/AddEventButton/AddEventButton";
 import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 import LoginsInput from "../inputs/LoginsInput";
 import Desciption from "../inputs/Description/Description";
 import InputDate from "../inputs/InputDate/InputDate";
-function TabelaItens() {
+
+function TabelaItens({ tarefasList, onUpdate }) {
   const [tarefas, setTarefas] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTarefa, setEditingTarefa] = useState({
     id: null,
     titulo: '',
     descricao: '',
-    dataEntrega: ''
+    dataEntrega: '',
+    dataInicio: '',
+    tipo: 'atividade'
   });
 
-  // Função para buscar as tarefas da API
+  // Atualiza o estado local quando as props mudam
+  useEffect(() => {
+    if (tarefasList && Array.isArray(tarefasList)) {
+      setTarefas(tarefasList);
+    }
+  }, [tarefasList]);
+
+  // Função para buscar as tarefas da API (caso não receba via props)
   const fetchTarefas = async () => {
-    try {
-      const response = await fetch('https://localhost:7071/api/Tarefas');
-      if (response.ok) {
-        const data = await response.json();
-        setTarefas(data);
-      } else {
-        console.error("Erro ao buscar tarefas");
+    if (!tarefasList) {
+      try {
+        const response = await fetch('https://localhost:7071/api/Tarefas');
+        if (response.ok) {
+          const data = await response.json();
+          setTarefas(data);
+        } else {
+          console.error("Erro ao buscar tarefas");
+        }
+      } catch (error) {
+        console.error("Erro na requisição:", error);
       }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
     }
   };
 
@@ -38,6 +49,8 @@ function TabelaItens() {
       });
       if (response.ok) {
         setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+        // Notifica o componente pai para atualizar
+        if (onUpdate) onUpdate();
       } else {
         console.error("Erro ao deletar tarefa: ", response.status);
       }
@@ -64,21 +77,41 @@ function TabelaItens() {
     });
   };
 
+  // Função para formatar a data
+  const formatarData = (dataString) => {
+    if (!dataString) return '';
+    
+    // Garante que a data está no formato correto para o backend
+    const data = new Date(dataString);
+    return data.toISOString();
+  };
+
   // Função para atualizar a tarefa editada
   const updateTarefa = async () => {
     try {
+      // Formata as datas antes de enviar
+      const tarefaFormatada = {
+        ...editingTarefa,
+        dataInicio: formatarData(editingTarefa.dataInicio),
+        dataEntrega: formatarData(editingTarefa.dataEntrega)
+      };
+
       const response = await fetch(`https://localhost:7071/api/Tarefas/${editingTarefa.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editingTarefa)
+        body: JSON.stringify(tarefaFormatada)
       });
+      
       if (response.ok) {
         // Atualiza a lista de tarefas localmente
         setTarefas(tarefas.map(t => t.id === editingTarefa.id ? editingTarefa : t));
         setIsEditing(false);
         alert('Tarefa atualizada com sucesso!');
+        
+        // Notifica o componente pai para atualizar
+        if (onUpdate) onUpdate();
       } else {
         console.error("Erro ao atualizar tarefa");
       }
@@ -94,20 +127,32 @@ function TabelaItens() {
       id: null,
       titulo: '',
       descricao: '',
-      dataEntrega: ''
+      dataEntrega: '',
+      dataInicio: '',
+      tipo: 'atividade'
     });
   };
 
-  // Buscando as tarefas quando o componente for montado
+  // Formata a data para exibição
+  const formatarDataExibicao = (data) => {
+    if (!data) return '';
+    const dataObj = new Date(data);
+    return dataObj.toLocaleDateString();
+  };
+
+  // Buscando as tarefas quando o componente for montado (se necessário)
   useEffect(() => {
-    fetchTarefas();
-  }, []);
+    if (!tarefasList) {
+      fetchTarefas();
+    }
+  }, [tarefasList]);
 
   return (
     <div className="tabela-container">
       <table className="tabela">
         <thead>
           <tr>
+            <th>Data de inicio</th>
             <th>Data de entrega</th>
             <th>Título</th>
             <th></th>
@@ -117,11 +162,12 @@ function TabelaItens() {
         <tbody>
           {tarefas.map(item => (
             <tr key={item.id}>
-              <td>{item.dataEntrega}</td>
+              <td>{formatarDataExibicao(item.dataInicio)}</td>
+              <td>{formatarDataExibicao(item.dataEntrega)}</td>
               <td>{item.titulo}</td>
               <td className="status">
-                <span className={`status-indicador ${item.statusCor}`}></span>
-                {item.statusTexto}
+                <span className={`status-indicador ${item.statusCor || ''}`}></span>
+                {item.statusTexto || ''}
               </td>
               <td>
                 <PriorityButton 
@@ -137,7 +183,6 @@ function TabelaItens() {
               </td>
             </tr>
           ))}
-          
         </tbody>
       </table>
 
@@ -147,7 +192,6 @@ function TabelaItens() {
           <div className="popup-content">
             <h3>Editar Tarefa</h3>
             <div className="edit-field">
-              {/* <label>Título:</label> */}
               <LoginsInput
                 textoInput="Editar título da tarefa"
                 name="titulo"
@@ -156,22 +200,27 @@ function TabelaItens() {
               />
             </div>
             <div className="edit-field">
-              {/* <label>Descrição:</label> */}
               <Desciption
-              description="Editar descrição"
-              name="descricao"
-              value={editingTarefa.descricao}
-              onChange={handleEditChange} />
+                description="Editar descrição"
+                name="descricao"
+                value={editingTarefa.descricao}
+                onChange={handleEditChange} 
+              />
             </div>
             
             <div className="edit-field">
-              {/* <label>Data de entrega:</label> */}
+              <p>Data inicial</p>
+              <InputDate
+                name="dataInicio"
+                value={editingTarefa.dataInicio}
+                onChange={handleEditChange}
+              />
+              <p>Data de entrega</p>
               <InputDate
                 name="dataEntrega"
                 value={editingTarefa.dataEntrega}
                 onChange={handleEditChange}
               />
-
             </div>
             <div className="container-saveEventButton">
               <PriorityButton
