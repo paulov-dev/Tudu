@@ -6,8 +6,21 @@ import LoginButton from '../../../components/buttons/LoginButtons/LoginButton';
 import ParagrafoEsqueceuSenha from '../../../components/Textos/ParagrafoEsqueceuSenha/ParagrafoEsqueceuSenha';
 import LoginTitleText from '../../../components/Textos/Title/LoginTitleText';
 import './Email.css';
+import Popup from '../../../components/Popup/Popup';
 
 function Email() {
+
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const openPopup = () => {
+      setIsOpen(true);
+    };
+  
+    const closePopup = () => {
+      setIsOpen(false);
+    };
+
+
   const [email, setEmail] = useState('');
   const [mensagem, setMensagem] = useState('');
 
@@ -21,19 +34,24 @@ function Email() {
 
       if (response.ok) {
         setMensagem('Verifique seu e-mail para redefinir sua senha.');
+        setIsOpen(true);
       } else {
         setMensagem('Ocorreu um erro. Tente novamente.');
       }
     } catch (error) {
       console.error('Erro:', error);
       setMensagem('Erro de conexão com o servidor.');
+      
     }
   };
 
   return (
     <div>
+
       <div className="boxCreate">
         <div className="boxItens">
+
+          
           <div className='esqueceuasenha-container'>
             <LoginTitleText LoginTitleChange="Esqueceu a senha?" />
             <div className='paragrafoEmail-container'>
@@ -52,9 +70,9 @@ function Email() {
 
           <div className='NextButton-container'>
             <button onClick={handleSubmit}>Proximo</button>
-
-
-            {mensagem && <p style={{ marginTop: '10px', color: 'green' }}>{mensagem}</p>}
+            <div className='mensagem'>
+                {mensagem && <p style={{ marginTop: '10px', color: 'green' }}>{mensagem}</p>}
+            </div>
           </div>
         </div>
       </div>
@@ -64,7 +82,17 @@ function Email() {
         <div className='slogan-container'>
           <Slogan texto={<>Não se preocupe! <br />Vamos te ajudar.</>} />
         </div>
-      </div>
+      </div>        
+      
+      <div className="popup-container">
+          {isOpen && (
+            <Popup
+            titulo="Link enviado!"
+            texto="Um link foi enviado para seu e-mail para poder ser validado. 
+            Assim que recebe-lo, clique no link para ser validado. Em seguida, você será redirecionado para redefinir sua senha."
+            funcao={closePopup}
+            ></Popup>)}
+        </div>
     </div>
   );
 }

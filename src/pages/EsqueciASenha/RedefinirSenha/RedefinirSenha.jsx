@@ -9,6 +9,7 @@ import LoginTitleText from '../../../components/Textos/Title/LoginTitleText';
 import './RedefinirSenha.css';
 
 function RedefinirSenha() {
+  
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [mensagem, setMensagem] = useState('');

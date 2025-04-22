@@ -1,58 +1,88 @@
-body {
-    background-color: #f8f8f8;
-  }
-  
-  .boxCreate {
-    background-color: #fff;
-    /* margin-left: 200px; */
-    width: 27%;
-    height: 70vh;
-    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
-  
-    position: fixed;
-    bottom: 10vh;
-    right: 90px;
-    padding: 10px;
-    /* margin-bottom: 1000px; */
-    border-radius: 7px;
-    height: 80vh;
-    /* width: 30%; */
-  }
-.title-container{
-    /* background-color: red; */
-    margin-top: 50px;
-    margin-left: 30px;
-    /* width: 100; */
-
+.boxCreate {
+  background-color: #fff;
+  width: 27%;
+  height: 70vh;
+  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 10vh;
+  right: 90px;
+  padding: 10px;
+  border-radius: 7px;
+  height: 80vh;
 }
 
-  .boxItens {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%; /* Certifique-se que a boxCreate tenha uma altura definida */
-  }
-.paragrafoEmail-container{
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* se quiser também centralizar verticalmente */
-
-}
-.NextButton-container{
-    /* background-color: red; */
-    margin-bottom: 40px;
+.title-container {
+  margin-top: 50px;
+  margin-left: 30px;
 }
 
-.esqueceuasenha-container{
-    text-align: center;
-}
-.inputemail-container{
-    margin-bottom: 50px;
+.boxItens {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Certifique-se que a boxCreate tenha uma altura definida */
 }
 
-.slogan-container{
-    /* background-color: red; */
-   padding-top: 15px;
-   padding-left: 10px;
+.paragrafoEmail-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NextButton-container {
+  display: flex;              /* Usando flexbox */
+  justify-content: center;     /* Centraliza o botão horizontalmente */
+  align-items: center;         /* Centraliza o botão verticalmente */
+  margin-bottom: 40px;
+}
+
+.esqueceuasenha-container {
+  text-align: center;
+}
+
+.inputemail-container {
+  margin-bottom: 50px;
+}
+
+.slogan-container {
+  padding-top: 15px;
+  padding-left: 10px;
+}
+.NextButton-container {
+  display: flex;
+  flex-direction: column;       /* Empilha o botão e a mensagem */
+  justify-content: flex-start;  /* Alinha os itens no início do container (parte superior) */
+  align-items: center;          /* Centraliza o conteúdo horizontalmente */
+  margin-bottom: 40px;
+  height: 100%;                 /* Garante que ocupe toda a altura disponível */
+}
+
+.NextButton-container button {
+  background-color: var(--blue);
+  width: 25vh;
+  height: 3vh;
+  border: 0;
+  border-radius: 3px;
+  font-family: var(--text);
+  font-size: 1.5vh;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;             /* Empurra o botão para o fundo do contêiner */
+}
+
+.NextButton-container button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mensagem {
+  /* margin-top: 10px; */
+  color: green;
+  width: 100%;
+  text-align: center;
+  /* font-size: 1.2vh; Tamanho do texto pode ser ajustado conforme necessário */
 }

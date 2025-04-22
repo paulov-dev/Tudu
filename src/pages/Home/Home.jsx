@@ -6,8 +6,6 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 
 
 function Home() {
-  // const Home = require('./server'); // Importa o arquivo server.js
-// Aqui você pode executar outras configurações ou inicializações de seu projeto
 
   return (
     <div>
