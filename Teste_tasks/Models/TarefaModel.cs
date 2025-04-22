@@ -8,6 +8,8 @@
 		public string? Descricao { get; set; }
 		public DateTime DataEntrega { get; set; }
 
+		public DateTime DataInicio { get; set; }
+
 		//public StatusTarefa Status { get; set; }
 
 	}

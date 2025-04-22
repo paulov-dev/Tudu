@@ -405,6 +405,10 @@
           "dataEntrega": {
             "type": "string",
             "format": "date-time"
+          },
+          "dataInicio": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
