@@ -40,7 +40,14 @@ function Cadastro() {
             <div className="inputs-container">
               <LoginsInput textoInput="Email" IconLoginInput="fa-solid fa-envelope" />
               <LoginsInput textoInput="Senha" IconLoginInput="fa-solid fa-lock" type="password" />
+
+              {/* wrapper novo */}
+              <div className="checkbox-container">
+                <input type="checkbox" id="lembrar" />
+                <label htmlFor="lembrar">Lembrar de mim</label>
+              </div>
             </div>
+
 
             {/* Botões */}
             <div className="buttons-container">

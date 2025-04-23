@@ -72,9 +72,26 @@ body {
   gap: 12px;
   margin-bottom: 20px;
 }
+.input-nascimento{
+  margin-top: 15px;
+  color: #504f4f;
+  margin-left: 2%;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  position: relative;
+  padding-left: 10px;
+  height: 5vh;
+  font-size: 15px;
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+}
 
-.inputs-container > * + * {
-  margin-top: 10px;
+.inputs-container {
+  margin-top: 40px;
 }
 
 .buttons-container {
@@ -85,7 +102,7 @@ body {
 }
 
  .or-text {
-  margin-top: 25px;
-  gap: 15px;
+  margin-top: 10px;
+  gap: 5px;
   color: #555;
 }

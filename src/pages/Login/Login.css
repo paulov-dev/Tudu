@@ -89,3 +89,26 @@ body {
   gap: 15px;
   color: #555;
 }
+/* Faz do wrapper um flex row, com gap entre checkbox e texto */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;          /* espaço horizontal entre box e label */
+  margin: 12px 0;    /* espaço vertical entre campos e esse bloco */
+  font-size: 14px;
+  color: #444;
+  margin-left: 13px;
+  margin-top: 20px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #007bff;
+  cursor: pointer;
+}
+
+.checkbox-container label {
+  cursor: pointer;
+}
+/* teste */

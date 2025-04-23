@@ -43,10 +43,10 @@ function Cadastro() {
               <LoginsInput textoInput="Email" IconLoginInput="fa-solid fa-envelope" />
               <LoginsInput textoInput="Senha" IconLoginInput="fa-solid fa-lock" type="password" />
               <input
-                  type="date"
-                  className="input-nascimento"
+  type="date"
+  className="input-nascimento"
+/>
 
-                  />
             </div>
 
             {/* Botões */}
