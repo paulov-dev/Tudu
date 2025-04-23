@@ -7,42 +7,46 @@ import LoginsInput from '../../components/inputs/LoginsInput';
 import LoginButton from '../../components/buttons/LoginButtons/LoginButton';
 import Rodape from '../../components/Textos/Rodape/Rodape';
 
-import './Login.css'; // Novo CSS específico do Login
+import './Login.css';
 
-function Login() {
+function Cadastro() {
   return (
-    <div className="login-page">
+    <div className="cadastro-page">
 
-      {/* Painel esquerdo */}
+      {/* Painel esquerdo: logo, slogan, termos e rodapé */}
       <div className="left-panel">
         <TuduTitle />
         <div className="slogan-container">
           <Slogan />
+        </div>
+        <div className="terms-container">
         </div>
         <div className="rodape-container">
           <Rodape />
         </div>
       </div>
 
-      {/* Painel direito com formulário */}
+      {/* Painel direito: formulário de cadastro */}
       <div className="right-panel">
-        <div className="boxLogin">
+        <div className="boxCreate">
           <div className="boxItens">
+            {/* Título e ícones sociais */}
             <div className="social-header">
               <LoginTitleText LoginTitleChange="Entrar na sua conta" />
               <LoginTitleImagem />
             </div>
 
+            {/* Inputs: usuário, email, senha */}
             <div className="inputs-container">
               <LoginsInput textoInput="Email" IconLoginInput="fa-solid fa-envelope" />
               <LoginsInput textoInput="Senha" IconLoginInput="fa-solid fa-lock" type="password" />
             </div>
 
+            {/* Botões */}
             <div className="buttons-container">
-              <p style={{ fontSize: '12px', marginTop: '10px' }}>Esqueceu a senha?</p>
-              <LoginButton textoLoginButton="Entrar" rota="/Home" />
+              <LoginButton textoLoginButton="Cadastrar" rota="/Cadastro" />
               <div className="or-text">Ou</div>
-              <LoginButton textoLoginButton="Cadastrar" rota="/Cadastro" variant="outline" />
+              <LoginButton textoLoginButton="Entrar" rota="/Login" variant="outline" />
             </div>
           </div>
         </div>
@@ -52,4 +56,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Cadastro;

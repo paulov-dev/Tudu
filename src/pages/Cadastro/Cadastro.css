@@ -20,9 +20,10 @@ body {
   max-width: 85%;
 }
 
-.left-panel .slogan-container {
+.slogan-container {
   margin-top: 20px;
   line-height: 1.4;
+  font-size: 1.5rem;
 }
 
 .left-panel .terms-container {
@@ -33,7 +34,7 @@ body {
 }
 
 .rodape-container {
-  margin-top: 550px;
+  margin-top: 95%;
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
