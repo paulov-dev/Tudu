@@ -74,14 +74,14 @@ body {
 }
 
 .inputs-container > * + * {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .buttons-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
  .or-text {

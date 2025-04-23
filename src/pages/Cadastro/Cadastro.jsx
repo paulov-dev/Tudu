@@ -4,6 +4,7 @@ import Slogan from '../../components/Textos/slogan/Slogan';
 import LoginTitleText from '../../components/Textos/Title/LoginTitleText';
 import LoginTitleImagem from '../../components/imagem/LoginTitleImagem';
 import LoginsInput from '../../components/inputs/LoginsInput';
+import InputDate from '../../components/inputs/InputDate/InputDate';
 import LoginButton from '../../components/buttons/LoginButtons/LoginButton';
 import Rodape from '../../components/Textos/Rodape/Rodape';
 
@@ -41,6 +42,11 @@ function Cadastro() {
               <LoginsInput textoInput="Nome de usuário" IconLoginInput="fa-solid fa-user" />
               <LoginsInput textoInput="Email" IconLoginInput="fa-solid fa-envelope" />
               <LoginsInput textoInput="Senha" IconLoginInput="fa-solid fa-lock" type="password" />
+              <input
+                  type="date"
+                  className="input-nascimento"
+
+                  />
             </div>
 
             {/* Botões */}
