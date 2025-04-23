@@ -222,6 +222,7 @@ public class AccountController : ControllerBase
 		return Ok(new { Message = "Instruções para redefinir a senha foram enviadas por e-mail." });
 	}
 
+
 	[HttpPost("reset-password")]
 	public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
 	{
