@@ -1,11 +1,11 @@
 import React from "react";
 import "./LoginsInput.css";
 
-function LoginsInput({ textoInput, IconLoginInput, name, value, onChange }) {
+function LoginsInput({ textoInput, IconLoginInput, name, value, onChange, type="text"}) {
   return (
     <div className="input-container">
       <input
-        type="text"
+        type={type}
         className="custom-input"
         placeholder={textoInput}
         name={name}

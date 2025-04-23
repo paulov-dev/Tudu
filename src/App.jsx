@@ -10,6 +10,8 @@ import Calendario from "./components/Calendario/Calendario";
 import Calendarioo2 from "./components/Calendario/Calendarioo2";
 import CalendarioPage from "./pages/Calendario/CalendarioPage";
 import Home from "./pages/Home/Home";
+import Cadastro from "./pages/Cadastro/Cadastro";
+import Login from "./pages/Login/Login";
 function App() {
   // const app = require('./server'); // Importa o arquivo server.js
 // Aqui você pode executar outras configurações ou inicializações de seu projeto
@@ -20,6 +22,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home></Home>} />
+          <Route path="/Login" element={<Login></Login>} /> 
+          <Route path="/Cadastro" element={<Cadastro></Cadastro>} /> 
           <Route path="/Email" element={<Email></Email>} />
           <Route path="/Codigo" element={<Codigo></Codigo>} />
           <Route path="/RedefinirSenha" element={<RedefinirSenha />} />

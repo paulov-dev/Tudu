@@ -3,6 +3,8 @@ import TuduTitle from "../../components/Textos/Title/TuduTitle";
 import Email from "../EsqueciASenha/Email/Email";
 import "./Home.css";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Cadastro from "../Cadastro/Cadastro";
+import Login from "../Login/Login";
 
 
 function Home() {
@@ -16,10 +18,10 @@ function Home() {
                 <TuduTitle></TuduTitle>
             </div>
             <div className="homebutton-container">
-                <Link to={"./Email"}>
+                <Link to={"/Login"}>
                     <button>Entrar</button>
                 </Link>
-                <Link to={"./Email"}>
+                <Link to={"/Cadastro"}>
                 <button style={{ backgroundColor: "#fff", border: "1.5px solid #0167FF", color: "#0167FF" }}>Cadastrar</button>
 
 

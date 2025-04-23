@@ -1,9 +1,10 @@
 @import url(../../../tokens/fontes.css);
 
-p{
-    font-family: var(--title);
-    /* width: 50%; */
-    margin-left: 3%;
-    /* background-color: red; */
-    margin-top: -1px;
+.slogan-wrapper p {
+  font-family: var(--title);
+  margin-left: 3%;
+  margin-top: -1px;
+  line-height: 1.4;
+  /* font-size: 35px; ajuste conforme o visual */
+  white-space: normal; /* deixa quebra de linha funcionar normalmente */
 }
