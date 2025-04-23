@@ -1,0 +1,120 @@
+@import url(../../tokens/colors.css);
+.CreateEvent-container {
+
+    text-align: left;
+}
+
+.open-popup-btn{
+  position: fixed;
+  right: 10vh;
+  margin-top: 10px;
+
+}
+.Container-LoginInput{
+  position: absolute; 
+  display: flex;
+  margin-right: 20vh;
+  margin-top: 30px; 
+  justify-content: space-between;
+  right: 0;
+
+}
+
+  
+.container-saveEventButton{
+  display: flex; 
+  justify-content: space-between; 
+  width: 100%; 
+  height: 100px;
+  padding: 5px;
+}
+
+
+.saveEventButton{
+  position: absolute;
+  right: 0;
+}
+.popup-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--Borda);
+    opacity: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content{
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow:  0 4px 6px #000;
+    width: 50%;
+    height: 75%;
+    text-align: center;
+    align-items: center;
+}
+.Description-Title {
+    margin: 0; /* Remove qualquer margem padrão ao redor do título */
+    /* font-size: 18px; Define o tamanho da fonte do título */
+    font-weight: bold; /* Deixa o título em negrito */
+    /* background-color: red; */
+    left: 0;
+
+
+    
+  }
+
+.Desciption-input {
+  box-sizing: border-box; /* Inclui o padding e border no cálculo da largura total */
+  border-radius: 4px; /* Bordas arredondadas */
+  display: block; /* Faz o input ser tratado como bloco, permitindo centralizar */
+  margin-left: auto; /* Margem automática para alinhar à esquerda */
+  margin-right: auto; /* Margem automática para alinhar à direita */
+}
+
+
+
+
+.box-Priority-Button {
+    display: flex; /* Usando flexbox */
+    /* flex-direction: column; Alinha os itens na vertical (em uma coluna) */
+    align-items: center; /* Alinha os itens à esquerda */
+    padding-right: 3%; /* Adiciona o padding à direita */
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 5px;
+    justify-content: space-between;
+    /* background-color: red; */
+
+  }
+  
+
+.PriorityButton{
+    display: flex; /* Usando flexbox */
+    flex-direction: column; /* Alinha os itens na vertical (em uma coluna) */
+    justify-content: flex-start; /* Alinha os itens ao topo do contêiner */
+    margin-top: 3%;
+}
+
+.tabela{
+  margin-left: 150px;
+}
+
+
+.box-Priority-Button InputDate {
+  margin-right: 20px;
+}
+
+.inputDate-container {
+margin-left: 50px;
+}
+
+
+
+
+
+

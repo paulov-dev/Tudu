@@ -1,0 +1,65 @@
+@import url(../../tokens/fontes.css);
+
+.tabela-container {
+  height: 70vh; /* Altura total da tela */
+  width: 100vw; /* Largura total da tela */
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  background-color: transparent; /* Cor de fundo opcional */
+  font-family: var(--text); /* Aplica para os textos da tabela */
+}
+
+.tabela {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tabela thead th {
+  text-align: left;
+  padding: 10px 15px;
+  font-weight: bold;
+  border-bottom: 2px solid #e0e0e0;
+  font-family: var(--title);
+}
+
+.tabela tbody td {
+  padding: 12px 15px;
+  background-color: white;
+  vertical-align: middle;
+  font-family: var(--text);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.status-indicador {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.azul {
+  background-color: var(--blue);
+}
+
+.cinza {
+  background-color:var(--Borda);
+}
+
+.tabela td:last-child {
+  text-align: right; /* Alinha os botões à direita da coluna */
+  padding-right: 15px; /* Adiciona um pequeno espaçamento à direita */
+}
+
+.tabela th:last-child {
+  text-align: center; /* Opcional, para alinhar o título da coluna "Ação" centralizado */
+}

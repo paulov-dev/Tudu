@@ -10,24 +10,22 @@ import InputDate from "../../components/inputs/InputDate/InputDate";
 
 function CreateEvent() {
   const [tarefa, setTarefa] = useState({
-    titulo: "",
-    descricao: "",
-    dataInicio: "",
-    dataEntrega: "",
-    status: "A fazer",           // ADICIONADO: inicializa status
-    prioridade: "Não urgente",   // ADICIONADO: inicializa prioridade
+    titulo: '',
+    descricao: '',
+    dataEntrega: '',
+    dataInicio: '',
+    // tipo: 'atividade'
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [tarefas, setTarefas] = useState([]);
   const [refresh, setRefresh] = useState(false); // Estado para forçar atualização
-  const [isOpen, setIsOpen] = useState(false);
 
   // Função para lidar com a mudança do input dos dados da tarefa
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTarefa({
       ...tarefa,
-      [name]: value      // já genérico, agora também captura status e prioridade
+      [name]: value
     });
   };
 
@@ -41,9 +39,10 @@ function CreateEvent() {
   // Função para buscar tarefas
   const fetchTarefas = async (term = "") => {
     try {
-      const url = term
+      const url = term 
         ? `https://localhost:7071/api/Tarefas?titulo=${term}`
         : "https://localhost:7071/api/Tarefas";
+      
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
@@ -61,79 +60,84 @@ function CreateEvent() {
     fetchTarefas(searchTerm);
   }, [refresh, searchTerm]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const openPopup = () => {
     setIsOpen(true);
   };
+
   const closePopup = () => {
     setIsOpen(false);
   };
 
   const formatarData = (dataString) => {
-    if (!dataString) return "";
+    if (!dataString) return '';
+    
     // Garante que a data está no formato correto para o backend
+    // O formato ideal seria "YYYY-MM-DDThh:mm:ss"
     const data = new Date(dataString);
     return data.toISOString();
   };
 
   const AddEvent = async () => {
     if (!tarefa.titulo || !tarefa.dataInicio || !tarefa.dataEntrega) {
-      alert("Preencha o título, a data de início e a data de entrega!");
+      alert('Preencha o título, a data de início e a data de entrega!');
       return;
     }
-
+  
     const tarefaFormatada = {
       ...tarefa,
       dataInicio: formatarData(tarefa.dataInicio),
-      dataEntrega: formatarData(tarefa.dataEntrega),
-      // status e prioridade já incluídos em tarefa
+      dataEntrega: formatarData(tarefa.dataEntrega)
     };
-
+  
     try {
-      const response = await fetch("https://localhost:7071/api/Tarefas", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tarefaFormatada), // inclui status e prioridade
+      const response = await fetch('https://localhost:7071/api/Tarefas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tarefaFormatada),
       });
-
+  
       if (response.ok) {
         const result = await response.json();
-        alert("Tarefa criada com sucesso! ID: " + result.id);
-
+        alert('Tarefa criada com sucesso! ID: ' + result.id);
+  
         setTarefa({
-          titulo: "",
-          descricao: "",
-          dataEntrega: "",
-          dataInicio: "",
-          status: "A fazer",         // RESET: status volta ao padrão
-          prioridade: "Não urgente", // RESET: prioridade volta ao padrão
+          titulo: '',
+          descricao: '',
+          dataEntrega: '',
+          dataInicio: '',
+          tipo: 'atividade'
         });
-
+  
         setRefresh(!refresh);
       } else {
         const errorText = await response.text();
-        alert("Erro ao criar tarefa: " + errorText);
+        alert('Erro ao criar tarefa: ' + errorText);
       }
     } catch (error) {
       console.error("Erro ao salvar tarefa:", error);
-      alert("Erro ao criar tarefa: " + error.message);
+      alert('Erro ao criar tarefa: ' + error.message);
     }
-
+  
     setIsOpen(false);
   };
+  
 
   return (
     <div className="CreateEvent-container">
       <BarraLateral />
 
-      {/* --- ALTERADO: área de busca com layout flexível --- */}
-      <div className="search-area">
+      <div className="Container-LoginInput">
         <AddEventButton AddEvent={openPopup} />
         <LoginsInput
           textoInput="Pesquisa"
           IconLoginInput="fa-solid fa-magnifying-glass"
           value={searchTerm}
           onChange={handleSearch}
-        />
+        /> 
       </div>
 
       {/* Passa as tarefas para o componente TabelaItens */}
@@ -141,12 +145,9 @@ function CreateEvent() {
 
       {isOpen && (
         <div className="popup-overlay">
-          {/* --- ALTERADO: popup-content com flex column para layout consistente --- */}
           <div className="popup-content">
-            <h4>Nova Tarefa</h4>
-
-            {/* título */}
-            <div className="form-row">
+            <div className="box-Input-Tarefa">
+              <h4>Nova Tarefa</h4>
               <LoginsInput
                 textoInput="Título da tarefa"
                 name="titulo"
@@ -155,64 +156,36 @@ function CreateEvent() {
               />
             </div>
 
-            {/* descrição */}
-            <div className="form-row">
-              <Desciption
-                description="Descrição"
-                name="descricao"
-                value={tarefa.descricao}
+            <Desciption
+              description="Descrição"
+              name="descricao"
+              value={tarefa.descricao}
+              onChange={handleChange}
+            />
+
+            <div className="box-Priority-Button">
+              <p>Data inicial</p>
+              <InputDate
+                name="dataInicio"
+                value={tarefa.dataInicio}
                 onChange={handleChange}
               />
-            </div>
+              
+              <p>Data entrega</p>
+              <InputDate
+                name="dataEntrega"
+                value={tarefa.dataEntrega}
+                onChange={handleChange}
+              />
 
-            {/* --- ALTERADO: duas colunas para datas lado a lado --- */}
-            <div className="form-row two-cols">
-              <div className="field">
-                <label>Data de início</label>
-                <InputDate
-                  name="dataInicio"
-                  value={tarefa.dataInicio}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="field">
-                <label>Data de entrega</label>
-                <InputDate
-                  name="dataEntrega"
-                  value={tarefa.dataEntrega}
-                  onChange={handleChange}
-                />
+              <div className="buttons">
+                {/* Botões de prioridade, se necessário */}
               </div>
             </div>
 
-            {/* --- ADICIONADO: duas colunas para selects Status e Prioridade --- */}
-            <div className="form-row two-cols">
-              <div className="field">
-                <label>Status</label>
-                <select name="status" value={tarefa.status} onChange={handleChange}>
-                  <option>A fazer</option>
-                  <option>Em processo</option>
-                  <option>Concluido</option>
-                </select>
-              </div>
-              <div className="field">
-                <label>Prioridade</label>
-                <select
-                  name="prioridade"
-                  value={tarefa.prioridade}
-                  onChange={handleChange}
-                >
-                  <option>Muito urgente</option>
-                  <option>Pouco urgente</option>
-                  <option>Não urgente</option>
-                </select>
-              </div>
-            </div>
-
-            {/* --- ALTERADO: botões alinhados à direita em buttons-row --- */}
-            <div className="form-row buttons-row">
+            <div className="container-saveEventButton">
               <PriorityButton
-                PriorityText="Cancelar"
+                PriorityText="Fechar"
                 backgroundColor="var(--Borda)"
                 FunctionPrioritybtn={closePopup}
               />
@@ -220,6 +193,7 @@ function CreateEvent() {
                 PriorityText="Salvar"
                 backgroundColor="var(--blue)"
                 FunctionPrioritybtn={AddEvent}
+                className="saveEventButton"
               />
             </div>
           </div>
@@ -230,4 +204,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

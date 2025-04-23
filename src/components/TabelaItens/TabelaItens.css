@@ -6,8 +6,8 @@
   display: flex;
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center; /* Centraliza verticalmente */
-  background-color: transparent; /* Cor de fundo opcional */
-  font-family: var(--text); /* Aplica para os textos da tabela */
+  background-color: transparent;
+  font-family: var(--text);
 }
 
 .tabela {
@@ -35,31 +35,133 @@
   font-family: var(--text);
 }
 
-.status {
+.actions {
+  text-align: right; /* Alinha botões à direita */
+}
+
+/* --- Modal de edição: reuse estilos do CreateEvent --- */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.status-indicador {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 8px;
+.popup-content {
+  background: #fff;
+  width: 500px;              /* MESMO WIDTH do CreateEvent */
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
 }
 
-.azul {
+.popup-content h3 {
+  margin-bottom: 20px;
+  font-family: var(--title);
+}
+
+.form-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row.two-cols {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.field > label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-family: var(--text);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;                /* ocupa toda a largura do .field */
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  margin-top: 15px;
+  padding-left: 10px;         /* Espaço à esquerda do texto */
+  /* NÃO inclua left aqui */
+}
+.buttons-row button {
+  /* reduz o padding para deixá-los mais baixos e estreitos */
+  padding: 8px 16px;
+  /* diminui o tamanho da fonte */
+  font-size: 0.875rem;
+  /* define uma largura flexível mas com mínimo */
+  min-width: 100px;
+  /* garante a mesma altura para ambos */
+  height: 36px;
+  /* opcional: borda arredondada levemente menor */
+  border-radius: 4px;
+}
+
+.buttons-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* ou flex-end, se preferir */
+  gap: 16px;                       /* distância entre os botões */
+  margin-top: 24px;                /* afasta dos campos acima */
+}
+
+.buttons-row button:first-child {
+  background-color: var(--Borda);
+  width: 48%;
+}
+
+.buttons-row button:last-child {
   background-color: var(--blue);
+  width: 48%;
 }
 
-.cinza {
-  background-color:var(--Borda);
+.Desciption-input {
+  height: 120px; /* Mantém altura do textarea */
 }
 
-.tabela td:last-child {
-  text-align: right; /* Alinha os botões à direita da coluna */
-  padding-right: 15px; /* Adiciona um pequeno espaçamento à direita */
+/* 1. Tamanho unificado de popups */
+.popup-content {
+  width: 500px;            /* define largura fixa idêntica */
+  max-width: 90vw;         /* responsivo em telas pequenas */
+  height: auto;            /* altura cresce conforme conteúdo */
+  padding: 30px 40px;      /* mantém padding uniforme */
 }
 
-.tabela th:last-child {
-  text-align: center; /* Opcional, para alinhar o título da coluna "Ação" centralizado */
+/* 2. Mesma fonte e tamanho para todos os inputs, inclusive date */
+.popup-content input,
+.popup-content select,
+.popup-content textarea {
+  font-family: var(--text);    /* mesma família de texto */
+  font-size: 1rem;             /* 16px padrão, ajuste se quiser menor */
 }
+
+/* 3. Campos de data um pouco menores e consistentes */
+.popup-content .field input[type="date"],
+.popup-content .field input[type="text"] { /* caso date seja text styled */
+  height: 36px;                 /* uniformiza altura */
+  padding: 0 12px;              /* padding horizontal */
+  font-size: 1rem;              /* mesmo tamanho de fonte */
+}
+
+/* 4. Remove larguras conflitantes e deixe os dois selects iguais */
+.popup-content .field select {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 1rem;
+}
+
