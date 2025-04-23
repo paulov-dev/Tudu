@@ -10,7 +10,9 @@
 
 		public DateTime DataInicio { get; set; }
 
-		//public StatusTarefa Status { get; set; }
+		public string StatusTarefa { get; set; }
+
+		public string Prioridade { get; set; }
 
 	}
 }

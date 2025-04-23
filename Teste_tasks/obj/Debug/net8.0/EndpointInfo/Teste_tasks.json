@@ -465,6 +465,14 @@
           "dataInicio": {
             "type": "string",
             "format": "date-time"
+          },
+          "statusTarefa": {
+            "type": "string",
+            "nullable": true
+          },
+          "prioridade": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
