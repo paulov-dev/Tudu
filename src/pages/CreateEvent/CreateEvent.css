@@ -1,116 +1,153 @@
 @import url(../../tokens/colors.css);
+
 .CreateEvent-container {
-
-    text-align: left;
+  text-align: left;
 }
 
-.open-popup-btn{
-  position: fixed;
-  right: 10vh;
-  margin-top: 10px;
-
-}
-.Container-LoginInput{
-  position: absolute; 
-  display: flex;
-  margin-right: 20vh;
-  margin-top: 30px; 
-  justify-content: space-between;
-  right: 0;
-
-}
-
-  
-.container-saveEventButton{
-  display: flex; 
-  justify-content: space-between; 
-  width: 100%; 
-  height: 100px;
-  padding: 5px;
-}
-
-
-.saveEventButton{
+/* --- NOVO: flex row para botão + busca --- */
+.search-area {
   position: absolute;
-  right: 0;
-}
-.popup-overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--Borda);
-    opacity: 98%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  top: 30px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
 }
 
-.popup-content{
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 7px;
-    box-shadow:  0 4px 6px #000;
-    width: 50%;
-    height: 75%;
-    text-align: center;
-    align-items: center;
-}
-.Description-Title {
-    margin: 0; /* Remove qualquer margem padrão ao redor do título */
-    /* font-size: 18px; Define o tamanho da fonte do título */
-    font-weight: bold; /* Deixa o título em negrito */
-    /* background-color: red; */
-    left: 0;
-
-
-    
-  }
-
-.Desciption-input {
-  box-sizing: border-box; /* Inclui o padding e border no cálculo da largura total */
-  border-radius: 4px; /* Bordas arredondadas */
-  display: block; /* Faz o input ser tratado como bloco, permitindo centralizar */
-  margin-left: auto; /* Margem automática para alinhar à esquerda */
-  margin-right: auto; /* Margem automática para alinhar à direita */
+/* sombra e full-screen overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* --- ALTERADO: popup centrado com largura fixa e flex column --- */
+.popup-content {
+  background: #fff;
+  width: 500px;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
 
+.popup-content h4 {
+  margin-bottom: 20px;
+  font-family: var(--title);
+}
 
+/* --- NOVO: linha de formulário como coluna --- */
+.form-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
-.box-Priority-Button {
-    display: flex; /* Usando flexbox */
-    /* flex-direction: column; Alinha os itens na vertical (em uma coluna) */
-    align-items: center; /* Alinha os itens à esquerda */
-    padding-right: 3%; /* Adiciona o padding à direita */
-    margin-top: 5%;
-    margin-bottom: 5%;
-    padding: 5px;
-    justify-content: space-between;
-    /* background-color: red; */
-
-  }
+/* --- NOVO: duas colunas lado a lado --- */
+.form-row.two-cols {
+  flex-direction: row;
+  gap: 20px;
   
-
-.PriorityButton{
-    display: flex; /* Usando flexbox */
-    flex-direction: column; /* Alinha os itens na vertical (em uma coluna) */
-    justify-content: flex-start; /* Alinha os itens ao topo do contêiner */
-    margin-top: 3%;
 }
 
-.tabela{
-  margin-left: 150px;
+/* --- NOVO: cada .field ocupa metade --- */
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.field > label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-family: var(--text);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;                /* ocupa toda a largura do .field */
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  margin-top: 15px;
+  padding-left: 10px;         /* Espaço à esquerda do texto */
+  /* NÃO inclua left aqui */
+}
+
+.buttons-row button {
+  /* reduz o padding para deixá-los mais baixos e estreitos */
+  padding: 8px 16px;
+  /* diminui o tamanho da fonte */
+  font-size: 0.875rem;
+  /* define uma largura flexível mas com mínimo */
+  min-width: 100px;
+  /* garante a mesma altura para ambos */
+  height: 36px;
+  /* opcional: borda arredondada levemente menor */
+  border-radius: 4px;
+}
+
+.buttons-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* ou flex-end, se preferir */
+  gap: 16px;                       /* distância entre os botões */
+  margin-top: 24px;                /* afasta dos campos acima */
+}
+
+.buttons-row button:first-child {
+  background-color: var(--Borda);
+  width: 48%;
+}
+
+.buttons-row button:last-child {
+  background-color: var(--blue);
+  width: 48%;
 }
 
 
-.box-Priority-Button InputDate {
-  margin-right: 20px;
+
+/* mantém altura do textarea da descrição */
+.Desciption-input {
+  height: 120px;
+  
 }
 
-.inputDate-container {
-margin-left: 50px;
+/* 1. Tamanho unificado de popups */
+.popup-content {
+  width: 500px;            /* define largura fixa idêntica */
+  max-width: 90vw;         /* responsivo em telas pequenas */
+  height: auto;            /* altura cresce conforme conteúdo */
+  padding: 30px 40px;      /* mantém padding uniforme */
+  
+}
+
+/* 2. Mesma fonte e tamanho para todos os inputs, inclusive date */
+.popup-content input,
+.popup-content select,
+.popup-content textarea {
+  font-family: var(--text);    /* mesma família de texto */
+  font-size: 1rem;             /* 16px padrão, ajuste se quiser menor */
+}
+
+/* 3. Campos de data um pouco menores e consistentes */
+.popup-content .field input[type="date"],
+.popup-content .field input[type="text"] { /* caso date seja text styled */
+  height: 36px;                 /* uniformiza altura */
+  padding: 0 12px;              /* padding horizontal */
+  font-size: 1rem;              /* mesmo tamanho de fonte */
+}
+
+/* 4. Remove larguras conflitantes e deixe os dois selects iguais */
+.popup-content .field select {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 1rem;
 }
 
 
