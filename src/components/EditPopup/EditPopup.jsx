@@ -3,51 +3,85 @@ import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 import LoginsInput from "../inputs/LoginsInput";
 
 function EditPopup({ tarefa, onClose, onSave, onDelete }) {
-  const [editedTarefa, setEditedTarefa] = React.useState(tarefa);
+  // Função para formatar a data para o input type="date"
+  const formatDateForInput = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+  };
+
+  // Normaliza os dados iniciais
+  const [editedTarefa, setEditedTarefa] = React.useState(() => ({
+    ...tarefa,
+    status: tarefa.StatusTarefa || tarefa.statusTarefa || "A fazer",
+    prioridade: tarefa.Prioridade || tarefa.prioridade || "Não urgente",
+    dataInicio: formatDateForInput(tarefa.dataInicio),
+    dataEntrega: formatDateForInput(tarefa.dataEntrega),
+    // Remove campos duplicados
+    StatusTarefa: undefined,
+    Prioridade: undefined
+  }));
+
   const [confirmDelete, setConfirmDelete] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditedTarefa({ ...editedTarefa, [name]: value });
-  };
-
-  const handleStatusChange = (e) => {
-    setEditedTarefa({ ...editedTarefa, status: e.target.value });
-  };
-
-  const handlePriorityChange = (e) => {
-    setEditedTarefa({ ...editedTarefa, prioridade: e.target.value });
+    setEditedTarefa(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    
     try {
-      await onSave(editedTarefa);
-      onClose();
+      const tarefaFormatada = {
+        ...editedTarefa,
+        StatusTarefa: editedTarefa.statusTarefa,
+        Prioridade: editedTarefa.prioridade,
+        dataInicio: editedTarefa.dataInicio ? new Date(editedTarefa.dataInicio).toISOString() : null,
+        dataEntrega: editedTarefa.dataEntrega ? new Date(editedTarefa.dataEntrega).toISOString() : null,
+        status: undefined,
+        prioridade: undefined
+      };
+
+      // Adiciona verificação se onSave existe e é função
+      if (typeof onSave === 'function') {
+        await onSave(tarefaFormatada);
+      }
     } catch (err) {
-      setError("Erro ao salvar alterações");
+      setError("Erro ao salvar. Tente novamente.");
+      console.error("Erro:", err);
+      return; // Não fecha o popup em caso de erro
     } finally {
       setIsLoading(false);
+    }
+    
+    // Só fecha se tudo der certo
+    if (typeof onClose === 'function') {
+      onClose();
     }
   };
 
   const handleDelete = async () => {
-    if (!confirmDelete) {
-      setConfirmDelete(true);
-      return;
-    }
-    
     setIsLoading(true);
     try {
-      await onDelete(editedTarefa.id);
-      onClose();
+      // Adiciona verificação se onDelete existe e é função
+      if (typeof onDelete === 'function') {
+        await onDelete(editedTarefa.id);
+      }
     } catch (err) {
-      setError("Erro ao excluir tarefa");
+      setError("Erro ao excluir. Tente novamente.");
+      console.error("Erro:", err);
+      return; // Não fecha o popup em caso de erro
     } finally {
       setIsLoading(false);
+    }
+    
+    // Só fecha se tudo der certo
+    if (typeof onClose === 'function') {
+      onClose();
     }
   };
 
@@ -62,7 +96,7 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
             <LoginsInput
               textoInput="Título da tarefa"
               name="titulo"
-              value={editedTarefa.titulo}
+              value={editedTarefa.titulo || ''}
               onChange={handleChange}
               required
             />
@@ -83,20 +117,22 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
             <div className="field">
               <label>Data Início</label>
               <input
-                type="text"
+                type="date"
                 name="dataInicio"
                 value={editedTarefa.dataInicio || ''}
                 onChange={handleChange}
+                className="form-control"
                 required
               />
             </div>
             <div className="field">
               <label>Data Entrega</label>
               <input
-                type="text"
+                type="date"
                 name="dataEntrega"
                 value={editedTarefa.dataEntrega || ''}
                 onChange={handleChange}
+                className="form-control"
                 required
               />
             </div>
@@ -106,8 +142,10 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
             <div className="field">
               <label>Status</label>
               <select
+                name="status"
                 value={editedTarefa.status}
-                onChange={handleStatusChange}
+                onChange={handleChange}
+                className="form-control"
                 required
               >
                 <option value="A fazer">A fazer</option>
@@ -118,8 +156,10 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
             <div className="field">
               <label>Prioridade</label>
               <select
+                name="prioridade"
                 value={editedTarefa.prioridade}
-                onChange={handlePriorityChange}
+                onChange={handleChange}
+                className="form-control"
                 required
               >
                 <option value="Muito urgente">Muito urgente</option>
@@ -134,9 +174,8 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
               <>
                 <PriorityButton
                   type="button"
-                  PriorityText={isLoading ? "Confirmando..." : "Confirmar Exclusão"}
+                  PriorityText="Confirmar Exclusão"
                   backgroundColor="#e74c3c"
-                  textColor="#fff"
                   onClick={handleDelete}
                   disabled={isLoading}
                 />
@@ -144,7 +183,6 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
                   type="button"
                   PriorityText="Cancelar"
                   backgroundColor="#95a5a6"
-                  textColor="#333"
                   onClick={() => setConfirmDelete(false)}
                   disabled={isLoading}
                 />
@@ -155,23 +193,20 @@ function EditPopup({ tarefa, onClose, onSave, onDelete }) {
                   type="button"
                   PriorityText="Excluir"
                   backgroundColor="#e74c3c"
-                  textColor="#fff"
-                  onClick={handleDelete}
+                  onClick={() => setConfirmDelete(true)}
                   disabled={isLoading}
                 />
                 <PriorityButton
                   type="button"
                   PriorityText="Cancelar"
                   backgroundColor="#95a5a6"
-                  textColor="#333"
                   onClick={onClose}
                   disabled={isLoading}
                 />
                 <PriorityButton
                   type="submit"
-                  PriorityText={isLoading ? "Salvando..." : "Salvar"}
+                  PriorityText="Salvar"
                   backgroundColor="#3498db"
-                  textColor="#fff"
                   disabled={isLoading}
                 />
               </>
