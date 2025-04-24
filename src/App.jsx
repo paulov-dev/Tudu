@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
+import CreateCardsBacklog from "./pages/CreateCardsBacklog/CreateCardsBacklog";
 import Create from "./pages/iniciais/Create";
 import NavBarPage from "./pages/NavBarPage/NavBarPage";
 import Email from "./pages/EsqueciASenha/Email/Email";
@@ -31,7 +32,7 @@ function App() {
           {/* <Route path="/Tarefa" element={} /> */}
           <Route path="/Home" element={<Link to={<CreateEvent></CreateEvent>}><h1>Home</h1></Link>} />
           <Route path="/WorkItems" element={<CreateEvent></CreateEvent>} />
-          <Route path="/Backlogs" element={<h1>Backlogs</h1>} />
+          <Route path="/Backlogs" element={<CreateCardsBacklog></CreateCardsBacklog>} />
           <Route path="*" element={<h1>Não encontramos</h1>} />
         </Routes>
       </BrowserRouter>
