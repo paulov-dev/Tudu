@@ -10,6 +10,7 @@
         "dependencies": {
           "FluentEmail.SendGrid": "3.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.0",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.3",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.EntityFrameworkCore.Abstractions": "8.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0",
