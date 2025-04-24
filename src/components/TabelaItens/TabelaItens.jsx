@@ -34,10 +34,10 @@ function TabelaItens({ tarefasList, onUpdate }) {
         setTarefas(tarefas.filter((t) => t.id !== id));
         if (onUpdate) onUpdate();
       } else {
-        console.error("Erro ao deletar tarefa: ", response.status);
+        console.error("Erro ao excluir tarefa: ", response.status);
       }
     } catch (error) {
-      console.error("Erro ao deletar tarefa:", error);
+      console.error("Erro ao excluir tarefa:", error);
     }
   };
 
@@ -119,30 +119,32 @@ function TabelaItens({ tarefasList, onUpdate }) {
       <table className="tabela">
         <thead>
           <tr>
-            {/* <th>Data de início</th>*/}
-            <th>Data de entrega</th>
+            
             <th>Título</th>
             <th>Status</th>       {/* ADICIONADO: coluna status */}
             <th>Prioridade</th>   {/* ADICIONADO: coluna prioridade */}
+            <th>Data de início</th>
+            <th>Data de entrega</th>   
             <th>Ação</th>
           </tr>
         </thead>
         <tbody>
           {tarefas.map((item) => (
             <tr key={item.id}>
-              {/* <td>{formatarDataExibicao(item.dataInicio)}</td>*/}
-              <td>{formatarDataExibicao(item.dataEntrega)}</td>
+              
               <td>{item.titulo}</td>
               <td>{item.status}</td>       {/* exibe status */}
               <td>{item.prioridade}</td>   {/* exibe prioridade */}
+              <td>{formatarDataExibicao(item.dataInicio)}</td>
+              <td>{formatarDataExibicao(item.dataEntrega)}</td>
               <td className="actions">
                 <PriorityButton
-                  PriorityText="Editar"
+                  PriorityText="Alterar"
                   backgroundColor="var(--blue)"
                   FunctionPrioritybtn={() => openEditModal(item.id)}
                 />
                 <PriorityButton
-                  PriorityText="Deletar"
+                  PriorityText="Excluir"
                   backgroundColor="red"
                   FunctionPrioritybtn={() => deleteTarefa(item.id)}
                 />
@@ -156,12 +158,12 @@ function TabelaItens({ tarefasList, onUpdate }) {
       {isEditing && (
         <div className="popup-overlay">
           <div className="popup-content">
-            <h3>Editar Tarefa</h3>
+            <h3>Alterar Tarefa</h3>
 
             {/* título */}
             <div className="form-row">
               <LoginsInput
-                textoInput="Editar título da tarefa"
+                textoInput="Alterar título da tarefa"
                 name="titulo"
                 value={editingTarefa.titulo}
                 onChange={handleEditChange}
@@ -171,7 +173,7 @@ function TabelaItens({ tarefasList, onUpdate }) {
             {/* descrição */}
             <div className="form-row">
               <Desciption
-                description="Editar descrição"
+                description="Alterar descrição"
                 name="descricao"
                 value={editingTarefa.descricao}
                 onChange={handleEditChange}
