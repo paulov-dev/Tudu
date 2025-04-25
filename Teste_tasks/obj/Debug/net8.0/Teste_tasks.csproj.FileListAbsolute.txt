@@ -296,7 +296,6 @@ C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\refint\
 C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\Teste_tasks.pdb
 C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\Teste_tasks.genruntimeconfig.cache
 C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\ref\Teste_tasks.dll
-C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\bin\Debug\net8.0\appsettings.json
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\bin\Debug\net8.0\Teste_tasks.exe
@@ -443,3 +442,4 @@ C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\obj\Debug\ne
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\obj\Debug\net8.0\Teste_tasks.pdb
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\obj\Debug\net8.0\Teste_tasks.genruntimeconfig.cache
 C:\Users\sanle\OneDrive\Área de Trabalho\TUDU 2.0\Tudu\Teste_tasks\obj\Debug\net8.0\ref\Teste_tasks.dll
+C:\Users\Maria\source\repos\paulov-dev\Tudu\Teste_tasks\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

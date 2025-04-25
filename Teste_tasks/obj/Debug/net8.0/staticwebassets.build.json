@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "PGT+BXtaovCLE61HZCTpJy9MQ7gvcNgl9/9B1V+N1nw=",
+  "Hash": "04EUsE9aY9Q4D70mSgO7SmfWb6AU62eiZZLwoIU5bmg=",
   "Source": "Teste_tasks",
   "BasePath": "_content/Teste_tasks",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
