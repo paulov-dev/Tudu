@@ -14,14 +14,19 @@ function TabelaItens({ tarefasList, onUpdate }) {
     descricao: "",
     dataInicio: "",
     dataEntrega: "",
-    status: "A fazer",         // ADICIONADO: estado inicial status
-    prioridade: "Não urgente", // ADICIONADO: estado inicial prioridade
+    StatusTarefa: "A fazer",
+    Prioridade: "Não urgente"
   });
 
-  // Atualiza o estado local quando as props mudam
   useEffect(() => {
-    if (tarefasList && Array.isArray(tarefasList)) {
-      setTarefas(tarefasList);
+    if (tarefasList) {
+      setTarefas(tarefasList.map(t => ({
+        ...t,
+        status: t.StatusTarefa || t.status,
+        prioridade: t.Prioridade || t.prioridade,
+        StatusTarefa: t.StatusTarefa,
+        Prioridade: t.Prioridade
+      })));
     }
   }, [tarefasList]);
 
@@ -31,87 +36,52 @@ function TabelaItens({ tarefasList, onUpdate }) {
         method: "DELETE",
       });
       if (response.ok) {
-        setTarefas(tarefas.filter((t) => t.id !== id));
-        if (onUpdate) onUpdate();
-      } else {
-        console.error("Erro ao deletar tarefa: ", response.status);
+        onUpdate();
       }
     } catch (error) {
-      console.error("Erro ao deletar tarefa:", error);
+      console.error("Erro ao excluir tarefa:", error);
     }
   };
 
-  const openEditModal = (id) => {
-    const tarefa = tarefas.find((t) => t.id === id);
-    if (tarefa) {
-      setEditingTarefa(tarefa);
-      setIsEditing(true);
-    }
+  const openEditModal = (tarefa) => {
+    setEditingTarefa({
+      ...tarefa,
+      StatusTarefa: tarefa.StatusTarefa || tarefa.status,
+      Prioridade: tarefa.Prioridade || tarefa.prioridade
+    });
+    setIsEditing(true);
   };
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditingTarefa({
       ...editingTarefa,
-      [name]: value // já genérico: agora abrange status/prioridade
+      [name]: value
     });
-  };
-
-  const formatarData = (dataString) => {
-    if (!dataString) return "";
-    const data = new Date(dataString);
-    return data.toISOString();
   };
 
   const updateTarefa = async () => {
     const tarefaFormatada = {
       ...editingTarefa,
-      dataInicio: formatarData(editingTarefa.dataInicio),
-      dataEntrega: formatarData(editingTarefa.dataEntrega)
-      // status e prioridade já no objeto
+      dataInicio: editingTarefa.dataInicio ? new Date(editingTarefa.dataInicio).toISOString() : null,
+      dataEntrega: editingTarefa.dataEntrega ? new Date(editingTarefa.dataEntrega).toISOString() : null,
+      StatusTarefa: editingTarefa.StatusTarefa,
+      Prioridade: editingTarefa.Prioridade
     };
     try {
-      const response = await fetch(
-        `https://localhost:7071/api/Tarefas/${editingTarefa.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(tarefaFormatada) // inclui status/prioridade
-        }
-      );
+      const response = await fetch(`https://localhost:7071/api/Tarefas/${editingTarefa.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tarefaFormatada)
+      });
+      
       if (response.ok) {
-        setTarefas(
-          tarefas.map((t) =>
-            t.id === editingTarefa.id ? editingTarefa : t
-          )
-        );
+        onUpdate();
         setIsEditing(false);
-        alert("Tarefa atualizada com sucesso!");
-        if (onUpdate) onUpdate();
-      } else {
-        console.error("Erro ao atualizar tarefa");
       }
     } catch (error) {
-      console.error("Erro na requisição de atualização:", error);
+      console.error("Erro ao atualizar tarefa:", error);
     }
-  };
-
-  const closeEditModal = () => {
-    setIsEditing(false);
-    setEditingTarefa({
-      id: null,
-      titulo: "",
-      descricao: "",
-      dataEntrega: "",
-      dataInicio: "",
-      status: "A fazer",          // RESET: volta ao padrão
-      prioridade: "Não urgente"    // RESET: volta ao padrão
-    });
-  };
-
-  const formatarDataExibicao = (data) => {
-    if (!data) return "";
-    return new Date(data).toLocaleDateString();
   };
 
   return (
@@ -119,30 +89,30 @@ function TabelaItens({ tarefasList, onUpdate }) {
       <table className="tabela">
         <thead>
           <tr>
-            {/* <th>Data de início</th>*/}
-            <th>Data de entrega</th>
             <th>Título</th>
-            <th>Status</th>       {/* ADICIONADO: coluna status */}
-            <th>Prioridade</th>   {/* ADICIONADO: coluna prioridade */}
-            <th>Ação</th>
+            <th>Status</th>
+            <th>Prioridade</th>
+            <th>Data de início</th>
+            <th>Data de entrega</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {tarefas.map((item) => (
             <tr key={item.id}>
-              {/* <td>{formatarDataExibicao(item.dataInicio)}</td>*/}
-              <td>{formatarDataExibicao(item.dataEntrega)}</td>
               <td>{item.titulo}</td>
-              <td>{item.status}</td>       {/* exibe status */}
-              <td>{item.prioridade}</td>   {/* exibe prioridade */}
+              <td>{item.StatusTarefa || item.statusTarefa}</td>
+              <td>{item.Prioridade || item.prioridade}</td>
+              <td>{item.dataInicio ? new Date(item.dataInicio).toLocaleDateString() : ''}</td>
+              <td>{item.dataEntrega ? new Date(item.dataEntrega).toLocaleDateString() : ''}</td>
               <td className="actions">
                 <PriorityButton
                   PriorityText="Editar"
                   backgroundColor="var(--blue)"
-                  FunctionPrioritybtn={() => openEditModal(item.id)}
+                  FunctionPrioritybtn={() => openEditModal(item)}
                 />
                 <PriorityButton
-                  PriorityText="Deletar"
+                  PriorityText="Excluir"
                   backgroundColor="red"
                   FunctionPrioritybtn={() => deleteTarefa(item.id)}
                 />
@@ -152,37 +122,31 @@ function TabelaItens({ tarefasList, onUpdate }) {
         </tbody>
       </table>
 
-      {/* Modal de Edição */}
       {isEditing && (
         <div className="popup-overlay">
           <div className="popup-content">
             <h3>Editar Tarefa</h3>
-
-            {/* título */}
             <div className="form-row">
               <LoginsInput
-                textoInput="Editar título da tarefa"
+                textoInput="Título"
                 name="titulo"
                 value={editingTarefa.titulo}
                 onChange={handleEditChange}
               />
             </div>
-
-            {/* descrição */}
             <div className="form-row">
               <Desciption
-                description="Editar descrição"
+                description="Descrição"
                 name="descricao"
                 value={editingTarefa.descricao}
                 onChange={handleEditChange}
               />
             </div>
-
-            {/* duas colunas datas */}
             <div className="form-row two-cols">
               <div className="field">
                 <label>Data de início</label>
-                <InputDate
+                <input
+                  type="date"
                   name="dataInicio"
                   value={editingTarefa.dataInicio}
                   onChange={handleEditChange}
@@ -190,33 +154,32 @@ function TabelaItens({ tarefasList, onUpdate }) {
               </div>
               <div className="field">
                 <label>Data de entrega</label>
-                <InputDate
+                <input
+                  type="date"
                   name="dataEntrega"
                   value={editingTarefa.dataEntrega}
                   onChange={handleEditChange}
                 />
               </div>
             </div>
-
-            {/* duas colunas selects */}
             <div className="form-row two-cols">
               <div className="field">
                 <label>Status</label>
                 <select
-                  name="status"
-                  value={editingTarefa.status}
+                  name="StatusTarefa"
+                  value={editingTarefa.StatusTarefa}
                   onChange={handleEditChange}
                 >
                   <option>A fazer</option>
                   <option>Em processo</option>
-                  <option>Concluido</option>
+                  <option>Concluído</option>
                 </select>
               </div>
               <div className="field">
                 <label>Prioridade</label>
                 <select
-                  name="prioridade"
-                  value={editingTarefa.prioridade}
+                  name="Prioridade"
+                  value={editingTarefa.Prioridade}
                   onChange={handleEditChange}
                 >
                   <option>Muito urgente</option>
@@ -225,13 +188,11 @@ function TabelaItens({ tarefasList, onUpdate }) {
                 </select>
               </div>
             </div>
-
-            {/* botões */}
-            <div className="form-row buttons-row">
+            <div className="buttons-row">
               <PriorityButton
                 PriorityText="Cancelar"
                 backgroundColor="var(--Borda)"
-                FunctionPrioritybtn={closeEditModal}
+                FunctionPrioritybtn={() => setIsEditing(false)}
               />
               <PriorityButton
                 PriorityText="Salvar"

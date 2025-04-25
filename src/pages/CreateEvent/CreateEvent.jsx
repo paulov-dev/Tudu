@@ -14,31 +14,23 @@ function CreateEvent() {
     descricao: "",
     dataInicio: "",
     dataEntrega: "",
-    status: "A fazer",           // ADICIONADO: inicializa status
-    prioridade: "Não urgente",   // ADICIONADO: inicializa prioridade
+    StatusTarefa: "A fazer",         // Alterado para PascalCase
+    Prioridade: "Não urgente"        // Alterado para PascalCase
   });
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [tarefas, setTarefas] = useState([]);
-  const [refresh, setRefresh] = useState(false); // Estado para forçar atualização
+  const [refresh, setRefresh] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Função para lidar com a mudança do input dos dados da tarefa
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTarefa({
       ...tarefa,
-      [name]: value      // já genérico, agora também captura status e prioridade
+      [name]: value
     });
   };
 
-  // Função para lidar com a pesquisa
-  const handleSearch = (e) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-    fetchTarefas(term);
-  };
-
-  // Função para buscar tarefas
   const fetchTarefas = async (term = "") => {
     try {
       const url = term
@@ -48,104 +40,76 @@ function CreateEvent() {
       if (response.ok) {
         const data = await response.json();
         setTarefas(data);
-      } else {
-        console.error("Erro ao buscar tarefas");
       }
     } catch (error) {
-      console.error("Erro na requisição", error);
+      console.error("Erro ao buscar tarefas:", error);
     }
   };
 
-  // Carrega todas as tarefas inicialmente e quando o estado refresh mudar
   useEffect(() => {
     fetchTarefas(searchTerm);
   }, [refresh, searchTerm]);
 
-  const openPopup = () => {
-    setIsOpen(true);
-  };
-  const closePopup = () => {
-    setIsOpen(false);
-  };
-
   const formatarData = (dataString) => {
     if (!dataString) return "";
-    // Garante que a data está no formato correto para o backend
-    const data = new Date(dataString);
-    return data.toISOString();
+    return new Date(dataString).toISOString();
   };
 
   const AddEvent = async () => {
     if (!tarefa.titulo || !tarefa.dataInicio || !tarefa.dataEntrega) {
-      alert("Preencha o título, a data de início e a data de entrega!");
+      alert("Preencha todos os campos obrigatórios!");
       return;
     }
 
     const tarefaFormatada = {
       ...tarefa,
       dataInicio: formatarData(tarefa.dataInicio),
-      dataEntrega: formatarData(tarefa.dataEntrega),
-      // status e prioridade já incluídos em tarefa
+      dataEntrega: formatarData(tarefa.dataEntrega)
     };
 
     try {
       const response = await fetch("https://localhost:7071/api/Tarefas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tarefaFormatada), // inclui status e prioridade
+        body: JSON.stringify(tarefaFormatada)
       });
 
       if (response.ok) {
-        const result = await response.json();
-        alert("Tarefa criada com sucesso! ID: " + result.id);
-
+        alert("Tarefa criada com sucesso!");
         setTarefa({
           titulo: "",
           descricao: "",
-          dataEntrega: "",
           dataInicio: "",
-          status: "A fazer",         // RESET: status volta ao padrão
-          prioridade: "Não urgente", // RESET: prioridade volta ao padrão
+          dataEntrega: "",
+          StatusTarefa: "A fazer",
+          Prioridade: "Não urgente"
         });
-
         setRefresh(!refresh);
-      } else {
-        const errorText = await response.text();
-        alert("Erro ao criar tarefa: " + errorText);
       }
     } catch (error) {
-      console.error("Erro ao salvar tarefa:", error);
-      alert("Erro ao criar tarefa: " + error.message);
+      console.error("Erro ao criar tarefa:", error);
     }
-
     setIsOpen(false);
   };
 
   return (
     <div className="CreateEvent-container">
       <BarraLateral />
-
-      {/* --- ALTERADO: área de busca com layout flexível --- */}
       <div className="search-area">
-        <AddEventButton AddEvent={openPopup} />
+        <AddEventButton AddEvent={() => setIsOpen(true)} />
         <LoginsInput
-          textoInput="Pesquisa"
-          IconLoginInput="fa-solid fa-magnifying-glass"
+          textoInput="Pesquisar tarefas..."
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      {/* Passa as tarefas para o componente TabelaItens */}
       <TabelaItens tarefasList={tarefas} onUpdate={() => setRefresh(!refresh)} />
 
       {isOpen && (
         <div className="popup-overlay">
-          {/* --- ALTERADO: popup-content com flex column para layout consistente --- */}
           <div className="popup-content">
             <h4>Nova Tarefa</h4>
-
-            {/* título */}
             <div className="form-row">
               <LoginsInput
                 textoInput="Título da tarefa"
@@ -154,8 +118,6 @@ function CreateEvent() {
                 onChange={handleChange}
               />
             </div>
-
-            {/* descrição */}
             <div className="form-row">
               <Desciption
                 description="Descrição"
@@ -164,8 +126,6 @@ function CreateEvent() {
                 onChange={handleChange}
               />
             </div>
-
-            {/* --- ALTERADO: duas colunas para datas lado a lado --- */}
             <div className="form-row two-cols">
               <div className="field">
                 <label>Data de início</label>
@@ -184,22 +144,24 @@ function CreateEvent() {
                 />
               </div>
             </div>
-
-            {/* --- ADICIONADO: duas colunas para selects Status e Prioridade --- */}
             <div className="form-row two-cols">
               <div className="field">
                 <label>Status</label>
-                <select name="status" value={tarefa.status} onChange={handleChange}>
+                <select
+                  name="StatusTarefa"
+                  value={tarefa.StatusTarefa}
+                  onChange={handleChange}
+                >
                   <option>A fazer</option>
                   <option>Em processo</option>
-                  <option>Concluido</option>
+                  <option>Concluído</option>
                 </select>
               </div>
               <div className="field">
                 <label>Prioridade</label>
                 <select
-                  name="prioridade"
-                  value={tarefa.prioridade}
+                  name="Prioridade"
+                  value={tarefa.Prioridade}
                   onChange={handleChange}
                 >
                   <option>Muito urgente</option>
@@ -208,13 +170,11 @@ function CreateEvent() {
                 </select>
               </div>
             </div>
-
-            {/* --- ALTERADO: botões alinhados à direita em buttons-row --- */}
-            <div className="form-row buttons-row">
+            <div className="buttons-row">
               <PriorityButton
                 PriorityText="Cancelar"
                 backgroundColor="var(--Borda)"
-                FunctionPrioritybtn={closePopup}
+                FunctionPrioritybtn={() => setIsOpen(false)}
               />
               <PriorityButton
                 PriorityText="Salvar"
@@ -230,4 +190,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

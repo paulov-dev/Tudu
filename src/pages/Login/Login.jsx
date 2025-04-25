@@ -1,5 +1,5 @@
-// pages/Cadastro.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TuduTitle from '../../components/Textos/Title/TuduTitle';
 import Slogan from '../../components/Textos/slogan/Slogan';
 import LoginTitleText from '../../components/Textos/Title/LoginTitleText';
@@ -10,11 +10,12 @@ import RequestButton from '../../components/buttons/RequestButton/RequestButton'
 import Rodape from '../../components/Textos/Rodape/Rodape';
 import './Login.css';
 
-function Cadastro() {
+function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [lembrar, setLembrar] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     console.log('Enviando dados para API:', { email, senha, lembrar });
@@ -31,6 +32,8 @@ function Cadastro() {
         const data = await response.json();
         console.log('Login realizado com sucesso:', data);
         alert(data.message || 'Login realizado com sucesso!');
+        // Redireciona para a página de calendário após sucesso
+        navigate('/Calendario');
       } else {
         const error = await response.text();
         console.error('Erro ao logar:', error);
@@ -107,4 +110,4 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;
+export default Login;
