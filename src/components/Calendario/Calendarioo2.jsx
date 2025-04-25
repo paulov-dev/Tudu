@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import eventosPadrao from "./eventosPadrao";
 import EventModal from "./EventModal";
 import LoginButton from "../buttons/LoginButtons/LoginButton";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -32,7 +33,7 @@ function Calendarioo2() {
             const dataEntrega = evento.dataEntrega ? new Date(evento.dataEntrega) : new Date();
             
             return {
-              id: evento.id,
+          id: evento.id,
               title: evento.titulo || 'Sem título',
               start: dataInicio,
               end: dataEntrega,
@@ -40,8 +41,8 @@ function Calendarioo2() {
               color: '#418dff',
             };
           });
-          setEventos(eventosFormatted);
-        } else {
+        setEventos(eventosFormatted);
+      } else {
           console.error("Dados inválidos recebidos da API");
         }
       } else {
@@ -54,7 +55,8 @@ function Calendarioo2() {
 
   useEffect(() => {
     fetchEventos();
-    
+  }, []); // Busca os eventos quando o componente for montado
+
     // Configura um intervalo para atualizar os eventos a cada 30 segundos
     const interval = setInterval(() => {
       fetchEventos();
@@ -81,15 +83,15 @@ function Calendarioo2() {
       // Primeiro atualiza a UI para feedback imediato
       const updatedEvents = eventos.map((e) => {
         if (e.id === event.id) {
-          return {
+        return {
             ...e,
-            start: new Date(start),
-            end: new Date(end),
-          };
-        }
+          start: new Date(start),
+          end: new Date(end),
+        };
+      }
         return e;
-      });
-      setEventos(updatedEvents);
+    });
+    setEventos(updatedEvents);
       
       // Depois atualiza no backend
       // Busca a tarefa original primeiro

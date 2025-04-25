@@ -14,5 +14,8 @@
 
 		public string Prioridade { get; set; }
 
+		public string UserId { get; set; }
+		public Users User { get; set; } 
+
 	}
 }

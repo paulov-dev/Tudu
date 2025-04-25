@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Teste_tasks.Models;
 using Teste_tasks.ViewModels;
 using Teste_tasks.ViewsModels;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -240,6 +241,14 @@ public class AccountController : ControllerBase
 		return BadRequest(result.Errors);
 	}
 
+	[HttpPost("logout")]
+	[Authorize] 
+	public async Task<IActionResult> Logout()
+	{
+		await signInManager.SignOutAsync();
+		_logger.LogInformation("Usuário não está mais conectado.");
+		return Ok(new { Message = "Logout realizado com sucesso." });
+	}
 
 }
 
