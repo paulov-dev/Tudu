@@ -15,21 +15,27 @@
     display: flex;
     flex-direction: column; /* Coloca os textos um abaixo do outro */
 }
-.Tudu{
-    color:#0167ff;
-    font-family: var(--title);
-    font-size: 50px;
+.Tudu {
+  color: #0167ff;
+  font-family: var(--title);
+  font-size: 2rem;
+  margin: 0; /* remove margens externas */
+  line-height: 1.1; /* diminui espaço entre linhas */
 }
 
-.Tudu-text{
-    font-weight: bold;
-    font-family: var(--title);
-    font-size: 18px;
+.Tudu-text {
+  width: 110%;
+  font-weight: bold;
+  font-family: var(--title);
+  font-size: 1rem;
+  margin: 0; /* remove margens externas */
+  line-height: 1.1; /* deixa mais compacto */
 }
+
 
 .logoImg-tudutile{
     width: 70%;
-    height: 80%;
+    height: 5vh;
     
 }
 .container-text {

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sanle\\OneDrive\\Área de Trabalho\\TUDU 2.0\\Tudu\\Teste_tasks\\Teste_tasks.csproj": {}
+    "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\CloneTudu\\Tudu\\Teste_tasks\\Teste_tasks.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sanle\\OneDrive\\Área de Trabalho\\TUDU 2.0\\Tudu\\Teste_tasks\\Teste_tasks.csproj": {
+    "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\CloneTudu\\Tudu\\Teste_tasks\\Teste_tasks.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sanle\\OneDrive\\Área de Trabalho\\TUDU 2.0\\Tudu\\Teste_tasks\\Teste_tasks.csproj",
+        "projectUniqueName": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\CloneTudu\\Tudu\\Teste_tasks\\Teste_tasks.csproj",
         "projectName": "Teste_tasks",
-        "projectPath": "C:\\Users\\sanle\\OneDrive\\Área de Trabalho\\TUDU 2.0\\Tudu\\Teste_tasks\\Teste_tasks.csproj",
-        "packagesPath": "C:\\Users\\sanle\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sanle\\OneDrive\\Área de Trabalho\\TUDU 2.0\\Tudu\\Teste_tasks\\obj\\",
+        "projectPath": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\CloneTudu\\Tudu\\Teste_tasks\\Teste_tasks.csproj",
+        "packagesPath": "C:\\Users\\gusta\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\CloneTudu\\Tudu\\Teste_tasks\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\sanle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gusta\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -130,7 +130,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

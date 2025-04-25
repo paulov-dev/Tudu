@@ -1,42 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TabelaCard.css";
 import CardItem from "./CardItem";
-import EditPopup from "../../EditPopup/EditPopup";
+import PriorityButton from "../../buttons/PriorityButton/PriorityButton";
+import LoginsInput from "../../inputs/LoginsInput";
+import Desciption from "../../inputs/Description/Description";
 
 function TabelaCard({ tarefasList, onUpdate }) {
-  const [editingTarefa, setEditingTarefa] = useState(null);
+  const [tarefas, setTarefas] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTarefa, setEditingTarefa] = useState({
+    id: null,
+    titulo: "",
+    descricao: "",
+    dataInicio: "",
+    dataEntrega: "",
+    StatusTarefa: "A fazer",
+    Prioridade: "Não urgente",
+  });
 
-  const handleSave = async (updatedTarefa) => {
+  // 🔄 USEEFFECT AJUSTADO: normaliza os campos vindos do backend (prioridade e status)
+  useEffect(() => {
+    if (tarefasList) {
+      const normalizadas = tarefasList.map(t => ({
+        ...t,
+        status: t.StatusTarefa || t.statusTarefa,
+        prioridade: t.Prioridade || t.prioridade,
+        StatusTarefa: t.StatusTarefa || t.status,
+        Prioridade: t.Prioridade || t.prioridade,
+      }));
+      setTarefas(normalizadas);
+    }
+  }, [tarefasList]);
+
+  const openEditModal = (tarefa) => {
+    setEditingTarefa({
+      ...tarefa,
+      StatusTarefa: tarefa.StatusTarefa || tarefa.status,
+      Prioridade: tarefa.Prioridade || tarefa.prioridade,
+    });
+    setIsEditing(true);
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditingTarefa({
+      ...editingTarefa,
+      [name]: value
+    });
+  };
+
+  const updateTarefa = async () => {
+    const tarefaFormatada = {
+      ...editingTarefa,
+      dataInicio: editingTarefa.dataInicio ? new Date(editingTarefa.dataInicio).toISOString() : null,
+      dataEntrega: editingTarefa.dataEntrega ? new Date(editingTarefa.dataEntrega).toISOString() : null,
+      StatusTarefa: editingTarefa.StatusTarefa,
+      Prioridade: editingTarefa.Prioridade,
+    };
     try {
-      // Mapeia os campos para o formato esperado pelo back-end
-      const tarefaFormatada = {
-        ...updatedTarefa,
-        StatusTarefa: updatedTarefa.status, // Corrige o nome do campo
-        Prioridade: updatedTarefa.prioridade,
-        // Garante que as datas estão no formato correto
-        DataInicio: updatedTarefa.dataInicio ? new Date(updatedTarefa.dataInicio).toISOString() : null,
-        DataEntrega: updatedTarefa.dataEntrega ? new Date(updatedTarefa.dataEntrega).toISOString() : null
-      };
-
-      const response = await fetch(`https://localhost:7071/api/Tarefas/${updatedTarefa.id}`, {
+      const response = await fetch(`https://localhost:7071/api/Tarefas/${editingTarefa.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tarefaFormatada),
       });
-      
       if (response.ok) {
         onUpdate();
-        setEditingTarefa(null);
-      } else {
-        const errorData = await response.json();
-        console.error("Erro da API:", errorData);
+        setIsEditing(false);
       }
     } catch (error) {
       console.error("Erro ao atualizar tarefa:", error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const deleteTarefa = async (id) => {
     try {
       const response = await fetch(`https://localhost:7071/api/Tarefas/${id}`, {
         method: "DELETE",
@@ -47,39 +83,115 @@ function TabelaCard({ tarefasList, onUpdate }) {
     }
   };
 
-  // Normaliza os dados recebidos da API
-  const normalizedTarefas = tarefasList.map(tarefa => ({
-    ...tarefa,
-    status: tarefa.StatusTarefa || tarefa.statusTarefa,
-    prioridade: tarefa.Prioridade || tarefa.prioridade
-  }));
-
   return (
     <div className="kanban-container">
       <div className="kanban-board">
         {['A fazer', 'Em processo', 'Concluído'].map((status) => (
           <div key={status} className="status-column">
             <h2>{status}</h2>
-            {normalizedTarefas
-              .filter(tarefa => (tarefa.StatusTarefa || tarefa.status) === status)
+            {/* ✅ AJUSTADO: usa somente `tarefa.status` pois foi normalizado no useEffect */}
+            {tarefas
+              .filter(tarefa => tarefa.status === status)
               .map(tarefa => (
                 <CardItem 
                   key={tarefa.id} 
                   tarefa={tarefa} 
-                  onClick={() => setEditingTarefa(tarefa)}
+                  onClick={() => openEditModal(tarefa)}
                 />
               ))}
           </div>
         ))}
       </div>
 
-      {editingTarefa && (
-        <EditPopup
-          tarefa={editingTarefa}
-          onClose={() => setEditingTarefa(null)}
-          onSave={handleSave}
-          onDelete={handleDelete}
-        />
+      {/* 🔧 POPUP INTERNO PARA EDIÇÃO */}
+      {isEditing && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Editar Tarefa</h3>
+            <div className="form-row">
+              <LoginsInput
+                textoInput="Título"
+                name="titulo"
+                value={editingTarefa.titulo}
+                onChange={handleEditChange}
+              />
+            </div>
+            <div className="form-row">
+              <Desciption
+                description="Descrição"
+                name="descricao"
+                value={editingTarefa.descricao}
+                onChange={handleEditChange}
+              />
+            </div>
+            <div className="form-row two-cols">
+              <div className="field">
+                <label>Data de início</label>
+                <input
+                  type="date"
+                  name="dataInicio"
+                  value={editingTarefa.dataInicio}
+                  onChange={handleEditChange}
+                />
+              </div>
+              <div className="field">
+                <label>Data de entrega</label>
+                <input
+                  type="date"
+                  name="dataEntrega"
+                  value={editingTarefa.dataEntrega}
+                  onChange={handleEditChange}
+                />
+              </div>
+            </div>
+            <div className="form-row two-cols">
+              <div className="field">
+                <label>Status</label>
+                <select
+                  name="StatusTarefa"
+                  value={editingTarefa.StatusTarefa}
+                  onChange={handleEditChange}
+                >
+                  <option>A fazer</option>
+                  <option>Em processo</option>
+                  <option>Concluído</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Prioridade</label>
+                <select
+                  name="Prioridade"
+                  value={editingTarefa.Prioridade}
+                  onChange={handleEditChange}
+                >
+                  <option>Muito urgente</option>
+                  <option>Pouco urgente</option>
+                  <option>Não urgente</option>
+                </select>
+              </div>
+            </div>
+            <div className="buttons-row">
+              <PriorityButton
+                PriorityText="Cancelar"
+                backgroundColor="var(--Borda)"
+                FunctionPrioritybtn={() => setIsEditing(false)}
+              />
+              <PriorityButton
+                PriorityText="Excluir"
+                backgroundColor="red"
+                FunctionPrioritybtn={() => {
+                  deleteTarefa(editingTarefa.id);
+                  setIsEditing(false);
+                }}
+              />
+              <PriorityButton
+                PriorityText="Salvar"
+                backgroundColor="var(--blue)"
+                FunctionPrioritybtn={updateTarefa}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
