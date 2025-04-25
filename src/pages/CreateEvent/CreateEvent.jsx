@@ -109,11 +109,11 @@ function CreateEvent() {
       <BarraLateral />
       <div className="search-area">
         <AddEventButton AddEvent={() => setIsOpen(true)} />
-        <LoginsInput
+        {/* <LoginsInput
           textoInput="Pesquisar tarefas..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        /> */}
       </div>
 
       <TabelaItens tarefasList={tarefas} onUpdate={() => setRefresh(!refresh)} />

@@ -59,7 +59,7 @@ function Home() {
                 <h3>Pronto para se organizar?</h3>
                 <p>Comece a gerenciar suas tarefas hoje mesmo e aumente sua produtividade. 
                 Experimente o TUDU gratuitamente!</p>
-                <Link to={"./WorkItems"}>
+                <Link to={"./Cadastro"}>
                     <button>Criar conta grátis</button>
                 </Link>
             </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './BarraLateral.css'; // CSS para o estilo
 import TuduTitle from '../Textos/Title/TuduTitle';
-
+import PriorityButton from '../buttons/PriorityButton/PriorityButton';
 
 const BarraLateral = () => {
   // Estado para controlar o menu expandido e colapsado
@@ -47,26 +47,37 @@ const BarraLateral = () => {
         <div className="menu-item">
           <div className="menu-link" onClick={toggleMenu}>
             <i className="fa-solid fa-border-all"></i>
-            <span>Boards</span>
+            <span>Listas</span>
         </div>
         {expandido && (
           <div className="submenu">
             <div className="submenu-item">
               <Link to="/WorkItems" style={{ textDecoration: 'none' }}>
                 <i className="fa-solid fa-clipboard-list"></i>
-                <span>Work Items</span>
+                <span>Lista</span>
               </Link>
             </div>
             <div className="submenu-item">
               <div className="submenu-toggle">
                 <Link to="/Backlogs" style={{ textDecoration: 'none' }}>
                   <i className="fa-solid fa-table-list"></i>
-                  <span>Backlogs</span>
+                  <span>Quadros</span>
                 </Link>
+
               </div>
+
             </div>
           </div>
-        )}
+        )}              <div className="botaologout">
+
+            <Link to="/">
+            <PriorityButton
+              PriorityText="Sair"
+              backgroundColor="grey"
+
+              
+            /></Link>
+                  </div>
       </div>
       </div>
 

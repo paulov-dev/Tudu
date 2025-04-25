@@ -138,14 +138,16 @@ function TabelaItens({ tarefasList, onUpdate }) {
               </td>
               <td className="actions">
                 <PriorityButton
-                  PriorityText="Editar"
+                  PriorityText="Alterar      "
                   backgroundColor="var(--blue)"
                   FunctionPrioritybtn={() => openEditModal(item)}
+                  icone="fa-solid fa-floppy-disk"
                 />
                 <PriorityButton
-                  PriorityText="Excluir"
+                  PriorityText="Apagar      "
                   backgroundColor="red"
                   FunctionPrioritybtn={() => deleteTarefa(item.id)}
+                  icone="fa-solid fa-trash"
                 />
               </td>
             </tr>
