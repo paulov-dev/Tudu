@@ -14,34 +14,29 @@ import Home from "./pages/Home/Home";
 import Cadastro from "./pages/Cadastro/Cadastro";
 import Login from "./pages/Login/Login";
 function App() {
-  // const app = require('./server'); // Importa o arquivo server.js
-// Aqui você pode executar outras configurações ou inicializações de seu projeto
-
   return (
     <div>
-{/* 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home></Home>} />
-          <Route path="/Login" element={<Login></Login>} /> 
-          <Route path="/Cadastro" element={<Cadastro></Cadastro>} /> 
-          <Route path="/Email" element={<Email></Email>} />
-          <Route path="/Codigo" element={<Codigo></Codigo>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Cadastro" element={<Cadastro />} />
+          <Route path="/Email" element={<Email />} />
+          <Route path="/Codigo" element={<Codigo />} />
           <Route path="/RedefinirSenha" element={<RedefinirSenha />} />
-          <Route path="/Calendario" element={<CalendarioPage></CalendarioPage>} />
-          {/* <Route path="/Tarefa" element={} /> */}
-          <Route path="/Home" element={<Link to={<CreateEvent></CreateEvent>}><h1>Home</h1></Link>} />
-          <Route path="/WorkItems" element={<CreateEvent></CreateEvent>} />
-          <Route path="/Backlogs" element={<CreateCardsBacklog></CreateCardsBacklog>} />
+          <Route path="/Calendario" element={<CalendarioPage />} />
+          <Route path="/Home" element={<h1>Home</h1>} />
+          <Route path="/WorkItems" element={<CreateEvent />} />
+          <Route path="/Backlogs" element={<CreateCardsBacklog />} />
           <Route path="*" element={<h1>Não encontramos</h1>} />
         </Routes>
       </BrowserRouter>
-      {/* <Calendario></Calendario> */}
-      {/* <Calendarioo2></Calendarioo2> */}
 
-
+      {/* <Calendario /> */}
+      {/* <Calendarioo2 /> */}
     </div>
   );
 }
+
 
 export default App;
