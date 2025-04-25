@@ -48,11 +48,29 @@ namespace Teste_tasks.Controllers
 		}
 
 		// POST: api/Tarefas
+		//[HttpPost]
+		//public async Task<ActionResult<TarefaModel>> PostTarefa(TarefaModel tarefa)
+		//{
+		//	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+		//	tarefa.UserId = userId; // Associa automaticamente ao usuário logado
+
+		//	_context.TarefaModel.Add(tarefa);
+		//	await _context.SaveChangesAsync();
+
+		//	return CreatedAtAction(nameof(GetTarefa), new { id = tarefa.Id }, tarefa);
+		//}
+
 		[HttpPost]
 		public async Task<ActionResult<TarefaModel>> PostTarefa(TarefaModel tarefa)
 		{
+			//  Atribua o UserId ANTES da validação:
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			tarefa.UserId = userId; // Associa automaticamente ao usuário logado
+			tarefa.UserId = userId;
+
+			if (!ModelState.IsValid) // Agora o UserId já está definido
+			{
+				return BadRequest(ModelState);
+			}
 
 			_context.TarefaModel.Add(tarefa);
 			await _context.SaveChangesAsync();

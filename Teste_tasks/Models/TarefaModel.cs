@@ -1,4 +1,9 @@
-﻿namespace Teste_tasks.Models
+﻿using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+
+namespace Teste_tasks.Models
 {
 	public class TarefaModel
 	{
@@ -14,7 +19,13 @@
 
 		public string Prioridade { get; set; }
 
+		[ValidateNever]
+		[JsonIgnore]
 		public string UserId { get; set; }
+
+		[ValidateNever]
+		[JsonIgnore]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public Users User { get; set; } 
 
 	}
