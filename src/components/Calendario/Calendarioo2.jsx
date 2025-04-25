@@ -1,17 +1,14 @@
 import "./Calendario.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import eventosPadrao from "./eventosPadrao";
 import EventModal from "./EventModal";
-import LoginButton from "../buttons/LoginButtons/LoginButton";
+import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 
-const DragAndDropCalendar = withDragAndDrop(Calendar);
+const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 
 function CalendarioTarefas() {
@@ -19,115 +16,88 @@ function CalendarioTarefas() {
   const [eventoSelecionado, setEventoSelecionado] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // **Estados controlados para data e view**
+  const [view, setView] = useState("month");
+  const [date, setDate] = useState(new Date());
+
   const fetchEventos = async () => {
     try {
-      const response = await fetch("https://localhost:7071/api/Tarefas");
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const eventosFormatted = data.map((evento) => {
-            const dataInicio = evento.dataInicio
-              ? new Date(evento.dataInicio)
-              : new Date();
-            const dataEntrega = evento.dataEntrega
-              ? new Date(evento.dataEntrega)
-              : new Date();
-
-            return {
-              id: evento.id,
-              title: evento.titulo || "Sem título",
-              start: dataInicio,
-              end: dataEntrega,
-              desc: evento.descricao || "Sem descrição",
-              color: "#418dff",
-            };
-          });
-          setEventos(eventosFormatted);
-        } else {
-          console.error("Dados inválidos recebidos da API");
-        }
-      } else {
-        console.error("Erro ao buscar tarefas");
+      const res = await fetch("https://localhost:7071/api/Tarefas", {
+        credentials: "include"
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Erro ao buscar tarefas:", res.status, text);
+        return;
       }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
+      const data = await res.json();
+      const formatted = data.map(evt => ({
+        id: evt.id,
+        title: evt.titulo || "—",
+        start: evt.dataInicio ? new Date(evt.dataInicio) : new Date(),
+        end: evt.dataEntrega ? new Date(evt.dataEntrega) : new Date(),
+        desc: evt.descricao || "",
+        color: "#418dff"
+      }));
+      setEventos(formatted);
+    } catch (err) {
+      console.error("Erro na requisição de tarefas:", err);
     }
   };
 
   useEffect(() => {
     fetchEventos();
-
-    const interval = setInterval(() => {
-      fetchEventos();
-    }, 30000);
-
+    const interval = setInterval(fetchEventos, 30000);
     return () => clearInterval(interval);
   }, [refreshKey]);
 
-  const forceRefresh = () => {
-    setRefreshKey((oldKey) => oldKey + 1);
-  };
+  const forceRefresh = () => setRefreshKey(k => k + 1);
 
-  const eventStyle = (event) => ({
-    style: {
-      backgroundColor: event.color || "#418dff",
-    },
+  const eventStyleGetter = event => ({
+    style: { backgroundColor: event.color }
   });
 
-  const MoverEventos = async (data) => {
-    const { start, end, event } = data;
+  const handleMoveResize = async ({ event, start, end }) => {
+    // Atualização local
+    setEventos(evts =>
+      evts.map(e => (e.id === event.id ? { ...e, start, end } : e))
+    );
 
     try {
-      const updatedEvents = eventos.map((e) => {
-        if (e.id === event.id) {
-          return {
-            ...e,
-            start: new Date(start),
-            end: new Date(end),
-          };
-        }
-        return e;
-      });
-      setEventos(updatedEvents);
+      // GET tarefa completa
+      const getRes = await fetch(
+        `https://localhost:7071/api/Tarefas/${event.id}`,
+        { credentials: "include" }
+      );
+      if (!getRes.ok) {
+        console.error("Erro ao buscar tarefa:", getRes.status);
+        return fetchEventos();
+      }
+      const tarefa = await getRes.json();
 
-      const response = await fetch(`https://localhost:7071/api/Tarefas/${event.id}`);
-      if (response.ok) {
-        const tarefa = await response.json();
-
-        const tarefaAtualizada = {
-          ...tarefa,
-          dataInicio: new Date(start).toISOString(),
-          dataEntrega: new Date(end).toISOString(),
-        };
-
-        const updateResponse = await fetch(`https://localhost:7071/api/Tarefas/${event.id}`, {
+      // PUT com datas atualizadas
+      const payload = {
+        ...tarefa,
+        dataInicio: start.toISOString(),
+        dataEntrega: end.toISOString()
+      };
+      const putRes = await fetch(
+        `https://localhost:7071/api/Tarefas/${event.id}`,
+        {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(tarefaAtualizada),
-        });
-
-        if (!updateResponse.ok) {
-          console.error("Erro ao atualizar tarefa após arrastar");
-          fetchEventos();
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(payload)
         }
-      } else {
-        console.error("Erro ao buscar tarefa para atualização");
+      );
+      if (!putRes.ok) {
+        console.error("Erro ao atualizar tarefa:", putRes.status);
         fetchEventos();
       }
-    } catch (error) {
-      console.error("Erro ao mover evento:", error);
+    } catch (err) {
+      console.error("Erro ao mover/redimensionar evento:", err);
       fetchEventos();
     }
-  };
-
-  const handleEventClick = (evento) => {
-    setEventoSelecionado(evento);
-  };
-
-  const handleEventClose = () => {
-    setEventoSelecionado(null);
   };
 
   return (
@@ -139,27 +109,41 @@ function CalendarioTarefas() {
           FunctionPrioritybtn={forceRefresh}
         />
       </div>
-      <DragAndDropCalendar
-        defaultDate={moment().toDate()}
-        defaultView="month"
+
+      <DnDCalendar
+        /** Agora controlado pelo state **/
+        date={date}
+        view={view}
+        onNavigate={newDate => setDate(newDate)}
+        onView={newView => setView(newView)}
+
         events={eventos}
         localizer={localizer}
         resizable
-        onEventDrop={MoverEventos}
-        onEventResize={MoverEventos}
-        onSelectEvent={handleEventClick}
-        eventPropGetter={eventStyle}
+        onEventDrop={handleMoveResize}
+        onEventResize={handleMoveResize}
+        onSelectEvent={evt => setEventoSelecionado(evt)}
+        eventPropGetter={eventStyleGetter}
+
+        /** As views que você quer exibir **/
         views={["month", "week", "day", "agenda"]}
         step={30}
         showMultiDayTimes
+
+        /** Exibe o toolbar padrão com botões de navegação */
+        toolbar
       />
-      <div className="info-container">
-        {eventoSelecionado && (
-          <EventModal evento={eventoSelecionado} onClose={handleEventClose} />
-        )}
-      </div>
+
+      {eventoSelecionado && (
+        <EventModal
+          evento={eventoSelecionado}
+          onClose={() => setEventoSelecionado(null)}
+        />
+      )}
     </div>
   );
 }
 
 export default CalendarioTarefas;
+
+

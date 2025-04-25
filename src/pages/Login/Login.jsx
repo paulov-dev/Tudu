@@ -9,6 +9,7 @@ import LoginButton from '../../components/buttons/LoginButtons/LoginButton';
 import RequestButton from '../../components/buttons/RequestButton/RequestButton';
 import Rodape from '../../components/Textos/Rodape/Rodape';
 import './Login.css';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -21,18 +22,22 @@ function Login() {
     console.log('Enviando dados para API:', { email, senha, lembrar });
     setLoading(true);
 
-    try {
+    try {  // corrigido aqui
       const response = await fetch('https://localhost:7071/api/Account/login', {
-        method: 'POST',
+        method: 'POST',  // corrigido aqui
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password: senha, rememberMe: lembrar }),
+        body: JSON.stringify({
+          email: email,
+          password: senha,
+          rememberMe: lembrar
+        }),
+        credentials: 'include'
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log('Login realizado com sucesso:', data);
         alert(data.message || 'Login realizado com sucesso!');
-        // Redireciona para a página de calendário após sucesso
         navigate('/Calendario');
       } else {
         const error = await response.text();
@@ -94,13 +99,17 @@ function Login() {
               </div>
 
               <div className="buttons-container">
-                <LoginButton textoLoginButton="Cadastrar" rota="/Cadastro" />
-                <div className="or-text">Ou</div>
-                <RequestButton
+              <RequestButton
                   label={loading ? 'Entrando...' : 'Entrar'}
                   onClick={handleLogin}
                   disabled={loading}
                 />
+                <div className="or-text">Ou</div>
+                <LoginButton textoLoginButton="Cadastrar" rota="/Cadastro" />
+
+                <Link to="/RedefinirSenha">Esqueci a senha</Link>
+                
+                
               </div>
             </div>
           </div>

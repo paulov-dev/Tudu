@@ -14,10 +14,10 @@ function CreateEvent() {
     descricao: "",
     dataInicio: "",
     dataEntrega: "",
-    StatusTarefa: "A fazer",         // Alterado para PascalCase
-    Prioridade: "Não urgente"        // Alterado para PascalCase
+    statusTarefa: "A fazer",
+    prioridade: "Não urgente"
   });
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const [tarefas, setTarefas] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -34,9 +34,13 @@ function CreateEvent() {
   const fetchTarefas = async (term = "") => {
     try {
       const url = term
-        ? `https://localhost:7071/api/Tarefas?titulo=${term}`
+        ? `https://localhost:7071/api/Tarefas/filtrar?titulo=${term}`
         : "https://localhost:7071/api/Tarefas";
-      const response = await fetch(url);
+
+      const response = await fetch(url, {
+        credentials: 'include'
+      });
+
       if (response.ok) {
         const data = await response.json();
         setTarefas(data);
@@ -71,25 +75,33 @@ function CreateEvent() {
       const response = await fetch("https://localhost:7071/api/Tarefas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tarefaFormatada)
+        body: JSON.stringify(tarefaFormatada),
+        credentials: 'include',
+        redirect: 'manual' // 👈 Impede seguir redirects automáticos
       });
 
       if (response.ok) {
-        alert("Tarefa criada com sucesso!");
         setTarefa({
           titulo: "",
           descricao: "",
           dataInicio: "",
           dataEntrega: "",
-          StatusTarefa: "A fazer",
-          Prioridade: "Não urgente"
+          statusTarefa: "A fazer",
+          prioridade: "Não urgente"
         });
         setRefresh(!refresh);
+        setIsOpen(false);
+      } else if (response.status === 401) {
+        alert("Você precisa estar logado para criar uma tarefa.");
+      } else {
+        const erro = await response.text();
+        console.error("Erro ao criar tarefa:", erro);
+        alert(`Erro ${response.status}: ${erro}`);
       }
     } catch (error) {
       console.error("Erro ao criar tarefa:", error);
+      alert("Erro ao conectar com o servidor.");
     }
-    setIsOpen(false);
   };
 
   return (
@@ -148,8 +160,8 @@ function CreateEvent() {
               <div className="field">
                 <label>Status</label>
                 <select
-                  name="StatusTarefa"
-                  value={tarefa.StatusTarefa}
+                  name="statusTarefa"
+                  value={tarefa.statusTarefa}
                   onChange={handleChange}
                 >
                   <option>A fazer</option>
@@ -160,8 +172,8 @@ function CreateEvent() {
               <div className="field">
                 <label>Prioridade</label>
                 <select
-                  name="Prioridade"
-                  value={tarefa.Prioridade}
+                  name="prioridade"
+                  value={tarefa.prioridade}
                   onChange={handleChange}
                 >
                   <option>Muito urgente</option>
@@ -190,3 +202,4 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
+

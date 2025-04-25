@@ -18,12 +18,11 @@ function TabelaCard({ tarefasList, onUpdate }) {
     Prioridade: "Não urgente",
   });
 
-  // 🔄 USEEFFECT AJUSTADO: normaliza os campos vindos do backend (prioridade e status)
   useEffect(() => {
     if (tarefasList) {
       const normalizadas = tarefasList.map(t => ({
         ...t,
-        status: t.StatusTarefa || t.statusTarefa,
+        status: t.StatusTarefa || t.status || t.statusTarefa,
         prioridade: t.Prioridade || t.prioridade,
         StatusTarefa: t.StatusTarefa || t.status,
         Prioridade: t.Prioridade || t.prioridade,
@@ -43,59 +42,83 @@ function TabelaCard({ tarefasList, onUpdate }) {
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditingTarefa({
-      ...editingTarefa,
-      [name]: value
-    });
+    setEditingTarefa(prev => ({ ...prev, [name]: value }));
   };
 
   const updateTarefa = async () => {
     const tarefaFormatada = {
       ...editingTarefa,
-      dataInicio: editingTarefa.dataInicio ? new Date(editingTarefa.dataInicio).toISOString() : null,
-      dataEntrega: editingTarefa.dataEntrega ? new Date(editingTarefa.dataEntrega).toISOString() : null,
+      dataInicio: editingTarefa.dataInicio
+        ? new Date(editingTarefa.dataInicio).toISOString()
+        : null,
+      dataEntrega: editingTarefa.dataEntrega
+        ? new Date(editingTarefa.dataEntrega).toISOString()
+        : null,
       StatusTarefa: editingTarefa.StatusTarefa,
       Prioridade: editingTarefa.Prioridade,
     };
+
     try {
-      const response = await fetch(`https://localhost:7071/api/Tarefas/${editingTarefa.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tarefaFormatada),
-      });
+      const response = await fetch(
+        `https://localhost:7071/api/Tarefas/${editingTarefa.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",   // ← envia cookie
+          body: JSON.stringify(tarefaFormatada)
+        }
+      );
+
       if (response.ok) {
         onUpdate();
         setIsEditing(false);
+      } else {
+        const err = await response.text();
+        console.error("Erro ao atualizar tarefa:", response.status, err);
+        alert(`Erro ${response.status}: ${err}`);
       }
     } catch (error) {
       console.error("Erro ao atualizar tarefa:", error);
+      alert("Falha na conexão ao atualizar tarefa.");
     }
   };
 
   const deleteTarefa = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7071/api/Tarefas/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) onUpdate();
+      const response = await fetch(
+        `https://localhost:7071/api/Tarefas/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include"   // ← envia cookie
+        }
+      );
+
+      if (response.ok) {
+        onUpdate();
+        setIsEditing(false);
+      } else {
+        const err = await response.text();
+        console.error("Erro ao excluir tarefa:", response.status, err);
+        alert(`Erro ${response.status}: ${err}`);
+      }
     } catch (error) {
       console.error("Erro ao excluir tarefa:", error);
+      alert("Falha na conexão ao excluir tarefa.");
     }
   };
 
   return (
     <div className="kanban-container">
       <div className="kanban-board">
-        {['A fazer', 'Em processo', 'Concluído'].map((status) => (
+        {['A fazer', 'Em processo', 'Concluído'].map(status => (
           <div key={status} className="status-column">
             <h2>{status}</h2>
-            {/* ✅ AJUSTADO: usa somente `tarefa.status` pois foi normalizado no useEffect */}
             {tarefas
-              .filter(tarefa => tarefa.status === status)
+              .filter(t => t.status === status)
               .map(tarefa => (
-                <CardItem 
-                  key={tarefa.id} 
-                  tarefa={tarefa} 
+                <CardItem
+                  key={tarefa.id}
+                  tarefa={tarefa}
                   onClick={() => openEditModal(tarefa)}
                 />
               ))}
@@ -103,7 +126,6 @@ function TabelaCard({ tarefasList, onUpdate }) {
         ))}
       </div>
 
-      {/* 🔧 POPUP INTERNO PARA EDIÇÃO */}
       {isEditing && (
         <div className="popup-overlay">
           <div className="popup-content">
@@ -179,10 +201,7 @@ function TabelaCard({ tarefasList, onUpdate }) {
               <PriorityButton
                 PriorityText="Excluir"
                 backgroundColor="red"
-                FunctionPrioritybtn={() => {
-                  deleteTarefa(editingTarefa.id);
-                  setIsEditing(false);
-                }}
+                FunctionPrioritybtn={() => deleteTarefa(editingTarefa.id)}
               />
               <PriorityButton
                 PriorityText="Salvar"
@@ -198,3 +217,4 @@ function TabelaCard({ tarefasList, onUpdate }) {
 }
 
 export default TabelaCard;
+
