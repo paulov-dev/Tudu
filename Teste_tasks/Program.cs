@@ -14,13 +14,13 @@ namespace Teste_tasks
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-			// 1) CORS (sua origem React)
+			
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy("AllowFrontend", policy =>
 				{
 					policy
-			// Aceita qualquer scheme e porta, desde que o host seja "localhost"
+			// Aceita qualquer local host
 			.SetIsOriginAllowed(origin =>
 			{
 				var uri = new Uri(origin);
@@ -40,7 +40,7 @@ namespace Teste_tasks
 			// 3) Identity + EF stores + Token Providers
 			builder.Services.AddIdentity<Users, IdentityRole>(options =>
 			{
-				// Suas regras de senha e confirmação
+				
 				options.Password.RequireNonAlphanumeric = true;
 				options.Password.RequiredLength = 8;
 				options.Password.RequireUppercase = true;
@@ -53,47 +53,47 @@ namespace Teste_tasks
 			.AddEntityFrameworkStores<AppDbContext>()
 			.AddDefaultTokenProviders();
 
-			// 4) Configuração de Cookie e interceptação do RedirectToLogin
+			// NÃO ALTERAR Configuração de Cookie e interceptação do RedirectToLogin
 			builder.Services.ConfigureApplicationCookie(options =>
 			{
-				// Permite envio em HTTP local e em fetch cross-site
+				// NÃO ALTERAR: Permite envio em HTTP local e em fetch cross-site
 				options.Cookie.SameSite = SameSiteMode.None;
 				options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 
 				options.Events.OnRedirectToLogin = context =>
 				{
-					// Se for chamada à API, devolve 401 em vez de redirect
+					
 					if (context.Request.Path.StartsWithSegments("/api"))
 					{
 						context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 						return Task.CompletedTask;
 					}
-					// Senão, redireciona normalmente
+				
 					context.Response.Redirect(context.RedirectUri);
 					return Task.CompletedTask;
 				};
 			});
 
-			// 5) Serviços de e-mail (SendGrid / SMTP)
+			
 			builder.Services.Configure<AuthMessageSenderOptions>(
 				builder.Configuration.GetSection("AuthMessageSenderOptions"));
 			builder.Services.AddTransient<ICustomEmailSender, EmailSender>();
 
-			// 6) Controllers e Swagger
+			
 			builder.Services.AddControllers();
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
 			var app = builder.Build();
 
-			// Aplica migrações
+			
 			using (var scope = app.Services.CreateScope())
 			{
 				var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 				db.Database.Migrate();
 			}
 
-			// Pipeline HTTP
+		
 			if (!app.Environment.IsDevelopment())
 			{
 				app.UseExceptionHandler("/Home/Error");
@@ -116,7 +116,7 @@ namespace Teste_tasks
 				app.UseSwaggerUI();
 			}
 
-			// Rotas
+			
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");

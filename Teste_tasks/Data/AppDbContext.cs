@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Teste_tasks.Data
 {
-	public class AppDbContext : IdentityDbContext<Users>  // <- ISSO É ESSENCIAL
+	public class AppDbContext : IdentityDbContext<Users>  
 	{
 		public AppDbContext(DbContextOptions<AppDbContext> options)
 			: base(options)
@@ -21,9 +21,9 @@ namespace Teste_tasks.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			base.OnModelCreating(modelBuilder); // Mantém as configurações padrão do Identity
+			base.OnModelCreating(modelBuilder); //  configurações padrão do Identity
 
-			// Configuração do relacionamento TarefaModel -> Users
+			// Configuração do relacionamento TarefaModel -> Users (explicar na sprint)
 			modelBuilder.Entity<TarefaModel>()
 				.HasOne(t => t.User)          // Uma tarefa pertence a um usuário
 				.WithMany()                  // Um usuário pode ter muitas tarefas

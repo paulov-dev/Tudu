@@ -11,7 +11,7 @@ namespace Teste_tasks
 		public AppDbContext CreateDbContext(string[] args)
 		{
 			var configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory()) // importante: garante que ele pegue o appsettings.json certo
+				.SetBasePath(Directory.GetCurrentDirectory()) // não mexer: garante que ele pegue o appsettings.json certo
 				.AddJsonFile("appsettings.json")
 				.Build();
 
