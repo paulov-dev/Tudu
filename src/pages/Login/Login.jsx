@@ -107,7 +107,7 @@ function Login() {
                 <div className="or-text">Ou</div>
                 <LoginButton textoLoginButton="Cadastrar" rota="/Cadastro" />
 
-                <Link to="/RedefinirSenha">Esqueci a senha</Link>
+                <Link to="/Email">Esqueci a senha</Link>
                 
                 
               </div>
