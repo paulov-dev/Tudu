@@ -19,10 +19,13 @@ namespace Teste_tasks
 			{
 				options.AddPolicy("AllowFrontend", policy =>
 				{
-					policy.WithOrigins(
-							"http://localhost:5173",
-							"http://localhost:5174"   // ← adiciona esta linha
-						)
+					policy
+			// Aceita qualquer scheme e porta, desde que o host seja "localhost"
+			.SetIsOriginAllowed(origin =>
+			{
+				var uri = new Uri(origin);
+				return uri.Host == "localhost";
+			})
 						.AllowAnyHeader()
 						.AllowAnyMethod()
 						.AllowCredentials();
