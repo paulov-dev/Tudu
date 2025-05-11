@@ -125,7 +125,14 @@ function TabelaItens({ tarefasList, onUpdate }) {
               <td>{item.titulo}</td>
               <td>
                 {item.dataEntrega
-                  ? new Date(item.dataEntrega).toLocaleDateString()
+                  ? new Date(item.dataEntrega).toLocaleString('pt-BR', {
+                    day:   '2-digit',
+                    month: '2-digit',
+                    year:  'numeric',
+                    hour:   '2-digit',
+                    minute: '2-digit'
+                  })
+                  
                   : ""}
               </td>              
               <td>{item.StatusTarefa}</td>

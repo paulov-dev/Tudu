@@ -155,4 +155,5 @@ namespace Teste_tasks.Controllers
 			return await query.ToListAsync();
 		}
 	}
+}
 	

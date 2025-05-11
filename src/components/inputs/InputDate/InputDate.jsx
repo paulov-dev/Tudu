@@ -5,7 +5,7 @@ function InputDate({ name, value, onChange }) {
   return (
     <div className="inputDate-container">
     <input
-      type="date"
+      type="datetime-local"
       className="InputDatecustom-input"
       name={name}
       value={value}
