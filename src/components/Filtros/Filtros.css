@@ -1,0 +1,30 @@
+@import url(../../tokens/fontes.css);
+
+.containerFiltros{
+    margin-top: 5px;
+    margin-left: 5vw;
+    background-color: #fff;
+    width: 90vw;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra na parte inferior */
+    /* height: 13vh; */
+    padding-bottom: 2vh;
+}
+
+.containerFiltros h1{
+    text-align: start;
+    padding-top: 10px;
+    padding-left: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: var(--text);
+}
+
+.containerDrop{
+    display: flex;
+    /* padding: 10px; */
+    padding-left: 20px;
+    width: 24%;
+    gap: 3vw;
+
+}

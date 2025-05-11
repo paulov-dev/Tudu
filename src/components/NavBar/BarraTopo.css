@@ -1,0 +1,31 @@
+/* Barra de navegação */
+* {
+  font-family: var(--title); /* Usando fonte definida em tokens */
+}
+
+.header-navigation {
+  /* color: #fff; */
+  width: 100vw;
+  box-shadow: none;  /* Removendo sombra */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;  /* Adicionando espaçamento ao redor */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra na parte inferior */
+  /* background: #87b7ff;
+background: linear-gradient(90deg, rgba(135, 183, 255, 1) 16%, rgba(33, 121, 252, 1) 55%, rgba(1, 103, 255, 1) 100%); */
+}
+
+.header-navigation .logo-container {
+  flex-grow: 1;
+}
+
+.linkNavigation {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;  /* Espaçamento entre os botões */
+}
+
+.linkNavigation .MuiButton-root {
+  text-transform: none;  /* Opcional: impede que o texto dos botões fique em maiúsculas */
+}

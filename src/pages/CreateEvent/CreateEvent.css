@@ -1,17 +1,25 @@
-
 @import url(../../tokens/colors.css);
-
+@import url(../../tokens/fontes.css);
 .CreateEvent-container {
   text-align: left;
 }
 
-/* --- NOVO: flex row para botão + busca --- */
-.search-area {
-  position: absolute;
-  top: 30px;
-  right: 20px;
+.container-infoCreate {
+  margin-top: 10px;
+  /* background-color: red; */
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.container-infoCreate h1 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.3rem;
+  font-family: var(--text);
 }
 
 /* sombra e full-screen overlay */

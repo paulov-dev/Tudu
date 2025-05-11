@@ -4,6 +4,7 @@ import BarraLateral from "../../components/NavBar/BarraLateral";
 import TabelaCard from "../../components/buttons/CardItem/TabelaCard";
 import LoginsInput from "../../components/inputs/LoginsInput";
 import AddEventButton from "../../components/buttons/AddEventButton/AddEventButton";
+import BarraTopo from "../../components/NavBar/BarraTopo";
 
 function CreateCardsBacklog() {
   const [tarefas, setTarefas] = useState([]);
@@ -54,7 +55,14 @@ function CreateCardsBacklog() {
 
   return (
     <div className="app-container">
-      <BarraLateral />
+
+      
+      {/* <BarraLateral /> */}
+      <BarraTopo></BarraTopo>
+      <div className="container-infoCreate ">
+        <h1>Modo quadros</h1>
+        <AddEventButton AddEvent={() => setRefresh(!refresh)} />
+      </div>
       <div className="main-content">
         {/* Se quiser habilitar busca, descomente */}
         {/* 

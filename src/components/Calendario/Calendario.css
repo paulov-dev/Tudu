@@ -3,13 +3,14 @@
 .calendar-container {
     /* background-color: red; */
     height: 95vh;
-    width: 180vh;
+    width: 100vw;
     padding: 10px;
     position: fixed;
     bottom: 0;
     right: 0;
-    margin-right: 10px;
-    margin-bottom: 100px;
+    top: 70px;
+    /* margin-right: 10px; */
+    /* margin-bottom: 100px; */
 }
 
 

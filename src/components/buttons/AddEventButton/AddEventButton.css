@@ -1,5 +1,5 @@
 @import url(../../../tokens/colors.css);
-
+@import url(../../../tokens/fontes.css);
 
 .AddEventButton-containe{
     display: flex;
@@ -13,14 +13,19 @@
 .open-popup-btn{
     /* margin-top: 30px; */
     /* margin-bottom: 30px; */
-    width: 6vh;
+    width: 100%;
     height: 6vh;
     background-color: var(--blue) ;
     color: #fff;
     border: 2px solid;
-    border-radius: 5px;
+    border-radius: 7px;
     font-size: 20px;
     transition: transform 0.3s ease-in-out;
+    font-family: var(--text);
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
 }
 
 .open-popup-btn:hover{

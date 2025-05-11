@@ -4,7 +4,7 @@ import "./LoginTitleImagem.css";
 function LoginTitleImagem() {
   return (
     <div>
-      <div>
+      <div className="LoginTitleImagem">
         <img
           src={"src/assets/icons/logo-google.png"}
           className="logoImgGoogle"
