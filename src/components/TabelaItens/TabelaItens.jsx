@@ -113,41 +113,37 @@ function TabelaItens({ tarefasList, onUpdate }) {
         <thead>
           <tr>
             <th>Título</th>
+            <th>Data de entrega</th>
             <th>Status</th>
             <th>Prioridade</th>
-            <th>Data de início</th>
-            <th>Data de entrega</th>
-            <th>Ações</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {tarefas.map((item) => (
             <tr key={item.id}>
               <td>{item.titulo}</td>
-              <td>{item.StatusTarefa}</td>
-              <td>{item.Prioridade}</td>
-              <td>
-                {item.dataInicio
-                  ? new Date(item.dataInicio).toLocaleDateString()
-                  : ""}
-              </td>
               <td>
                 {item.dataEntrega
                   ? new Date(item.dataEntrega).toLocaleDateString()
                   : ""}
-              </td>
+              </td>              
+              <td>{item.StatusTarefa}</td>
+              <td>{item.Prioridade}</td>
+
+
               <td className="actions">
                 <PriorityButton
-                  PriorityText="Alterar      "
-                  backgroundColor="var(--blue)"
+                  PriorityText=""
+                  backgroundColor="#17abff"
                   FunctionPrioritybtn={() => openEditModal(item)}
-                  icone="fa-solid fa-floppy-disk"
+                  icone="fa-solid fa-pencil"
                 />
                 <PriorityButton
-                  PriorityText="Apagar      "
-                  backgroundColor="red"
+                  PriorityText=""
+                  backgroundColor="#ff0101"
                   FunctionPrioritybtn={() => deleteTarefa(item.id)}
-                  icone="fa-solid fa-trash"
+                  icone="fa-solid fa-trash-can"
                 />
               </td>
             </tr>

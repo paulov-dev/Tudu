@@ -7,6 +7,8 @@ import AddEventButton from "../../components/buttons/AddEventButton/AddEventButt
 import BarraLateral from "../../components/NavBar/BarraLateral";
 import TabelaItens from "../../components/TabelaItens/TabelaItens";
 import InputDate from "../../components/inputs/InputDate/InputDate";
+import BarraTopo from "../../components/NavBar/BarraTopo";
+import Filtros from "../../components/Filtros/Filtros";
 
 function CreateEvent() {
   const [tarefa, setTarefa] = useState({
@@ -77,7 +79,7 @@ function CreateEvent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tarefaFormatada),
         credentials: 'include',
-        redirect: 'manual' // 👈 Impede seguir redirects automáticos
+        redirect: 'manual'
       });
 
       if (response.ok) {
@@ -106,15 +108,15 @@ function CreateEvent() {
 
   return (
     <div className="CreateEvent-container">
-      <BarraLateral />
-      <div className="search-area">
+      <BarraTopo />
+
+      {/* Cabeçalho com texto e botão */}
+      <div className="container-infoCreate ">
+        <h1>Gerenciar atividades</h1>
         <AddEventButton AddEvent={() => setIsOpen(true)} />
-        {/* <LoginsInput
-          textoInput="Pesquisar tarefas..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        /> */}
       </div>
+      
+      <Filtros></Filtros>
 
       <TabelaItens tarefasList={tarefas} onUpdate={() => setRefresh(!refresh)} />
 
@@ -122,6 +124,7 @@ function CreateEvent() {
         <div className="popup-overlay">
           <div className="popup-content">
             <h4>Nova Tarefa</h4>
+
             <div className="form-row">
               <LoginsInput
                 textoInput="Título da tarefa"
@@ -130,6 +133,7 @@ function CreateEvent() {
                 onChange={handleChange}
               />
             </div>
+
             <div className="form-row">
               <Desciption
                 description="Descrição"
@@ -138,6 +142,7 @@ function CreateEvent() {
                 onChange={handleChange}
               />
             </div>
+
             <div className="form-row two-cols">
               <div className="field">
                 <label>Data de início</label>
@@ -156,6 +161,7 @@ function CreateEvent() {
                 />
               </div>
             </div>
+
             <div className="form-row two-cols">
               <div className="field">
                 <label>Status</label>
@@ -182,6 +188,7 @@ function CreateEvent() {
                 </select>
               </div>
             </div>
+
             <div className="buttons-row">
               <PriorityButton
                 PriorityText="Cancelar"
@@ -202,4 +209,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

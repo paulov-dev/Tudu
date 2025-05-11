@@ -102,13 +102,13 @@ function CalendarioTarefas() {
 
   return (
     <div className="calendar-container">
-      <div className="botao-atualizar">
+      {/* <div className="botao-atualizar">
         <PriorityButton
           PriorityText="Atualizar Calendário"
           backgroundColor="var(--lightblue)"
           FunctionPrioritybtn={forceRefresh}
         />
-      </div>
+      </div> */}
 
       <DnDCalendar
         /** Agora controlado pelo state **/

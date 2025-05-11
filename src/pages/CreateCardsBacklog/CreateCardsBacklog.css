@@ -1,5 +1,5 @@
 .app-container {
-    display: flex;
+    /* display: flex; */
     min-height: 100vh;
     background: #f5f7fa;
   }
@@ -7,7 +7,8 @@
   .main-content {
     flex: 1;
     padding: 20px;
-    margin-left: 450px;
+    margin-left: 5vw;
+    /* margin-left: 450px; */
   }
   
   h1 {
