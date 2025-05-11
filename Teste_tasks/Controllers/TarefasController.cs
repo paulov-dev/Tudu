@@ -146,7 +146,7 @@ namespace Teste_tasks.Controllers
 
 			if (dataEntrega.HasValue)
 			{
-				query = query.Where(t => t.DataEntrega == dataEntrega);
+				query = query.Where(t => t.DataEntrega.Date == dataEntrega.Value.Date);
 			}
 
 			if (!string.IsNullOrEmpty(status))
