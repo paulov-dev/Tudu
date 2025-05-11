@@ -61,7 +61,7 @@ function CreateCardsBacklog() {
       <BarraTopo></BarraTopo>
       <div className="container-infoCreate ">
         <h1>Modo quadros</h1>
-        <AddEventButton AddEvent={() => setIsOpen(true)} />
+        <AddEventButton AddEvent={() => setRefresh(!refresh)} />
       </div>
       <div className="main-content">
         {/* Se quiser habilitar busca, descomente */}
