@@ -64,7 +64,7 @@ function TabelaCard({ tarefasList, onUpdate }) {
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",   // ← envia cookie
+          credentials: "include",
           body: JSON.stringify(tarefaFormatada)
         }
       );
@@ -89,7 +89,7 @@ function TabelaCard({ tarefasList, onUpdate }) {
         `https://localhost:7071/api/Tarefas/${id}`,
         {
           method: "DELETE",
-          credentials: "include"   // ← envia cookie
+          credentials: "include"
         }
       );
 
@@ -111,11 +111,55 @@ function TabelaCard({ tarefasList, onUpdate }) {
     <div className="kanban-container">
       <div className="kanban-board">
         {['A fazer', 'Em processo', 'Concluído'].map(status => (
-          <div key={status} className="status-column">
+          <div
+            key={status}
+            className="status-column"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={async (e) => {
+              const tarefaJson = e.dataTransfer.getData("application/json");
+              if (!tarefaJson) return;
+              const tarefa = JSON.parse(tarefaJson);
+
+              if (tarefa.status === status) return;
+
+              const atualizada = {
+                ...tarefa,
+                StatusTarefa: status,
+                status: status,
+              };
+
+              try {
+                const response = await fetch(`https://localhost:7071/api/Tarefas/${tarefa.id}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  credentials: "include",
+                  body: JSON.stringify({
+                    ...atualizada,
+                    dataInicio: tarefa.dataInicio,
+                    dataEntrega: tarefa.dataEntrega,
+                    Prioridade: tarefa.Prioridade || tarefa.prioridade,
+                  }),
+                });
+
+                if (response.ok) {
+                  onUpdate();
+                } else {
+                  const err = await response.text();
+                  console.error("Erro ao mover tarefa:", response.status, err);
+                  alert(`Erro ${response.status}: ${err}`);
+                }
+              } catch (error) {
+                console.error("Erro ao mover tarefa:", error);
+                alert("Falha na conexão ao atualizar status da tarefa.");
+              }
+            }}
+          >
             <h2>{status}</h2>
             {tarefas
-              .filter(t => t.status === status)
-              .map(tarefa => (
+              .filter((t) => t.status === status)
+              .map((tarefa) => (
                 <CardItem
                   key={tarefa.id}
                   tarefa={tarefa}
@@ -217,4 +261,3 @@ function TabelaCard({ tarefasList, onUpdate }) {
 }
 
 export default TabelaCard;
-
