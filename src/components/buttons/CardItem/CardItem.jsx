@@ -14,6 +14,10 @@ function CardItem({ tarefa, onClick }) {
     <div 
       className={`card-item ${getPriorityClass()}`}
       onClick={() => onClick(tarefa)}
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("application/json", JSON.stringify(tarefa));
+      }}
     >
       <div className="card-top-line"></div>
       <h3>{tarefa.titulo}</h3>
@@ -24,3 +28,4 @@ function CardItem({ tarefa, onClick }) {
 }
 
 export default CardItem;
+
