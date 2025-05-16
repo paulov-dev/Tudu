@@ -1,30 +1,50 @@
 @import url(../../tokens/fontes.css);
 
-.containerFiltros{
-    margin-top: 5px;
-    margin-left: 5vw;
-    background-color: #fff;
-    width: 90vw;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra na parte inferior */
-    /* height: 13vh; */
-    padding-bottom: 2vh;
+.containerFiltros {
+  margin: 20px auto;
+  padding: 20px 24px;
+  background-color: #fff;
+  width: 90%;
+  max-width: 1200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.containerFiltros h1{
-    text-align: start;
-    padding-top: 10px;
-    padding-left: 20px;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: var(--text);
+.containerFiltros h1 {
+  text-align: start;
+  padding-top: 10px;
+  padding-left: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: var(--text);
 }
 
-.containerDrop{
-    display: flex;
-    /* padding: 10px; */
-    padding-left: 20px;
-    width: 24%;
-    gap: 3vw;
+/* Organiza os campos lado a lado, responsivamente */
+.containerFiltros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
 
+/* Estilo dos grupos de campo (label + input/select) */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldGroup label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-family: var(--text);
+}
+
+.fieldGroup input,
+.fieldGroup select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-family: var(--text);
+  font-size: 1rem;
 }
