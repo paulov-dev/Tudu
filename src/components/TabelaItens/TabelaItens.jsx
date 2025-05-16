@@ -1,10 +1,27 @@
-// TabelaItens.jsx (atualizado)
-import React, { useState } from "react";
+// TabelaItens.jsx (integrado e mantendo edição completa)
+import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
 import PriorityButton from "../buttons/PriorityButton/PriorityButton";
+import LoginsInput from "../inputs/LoginsInput";
+import Description from "../inputs/Description/Description";
+import InputDate from "../inputs/InputDate/InputDate";
 
 export default function TabelaItens({ tarefasList, onUpdate }) {
-  const tarefas = tarefasList || [];
+  const [tarefas, setTarefas] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTarefa, setEditingTarefa] = useState(null);
+
+  useEffect(() => {
+    if (tarefasList) {
+      setTarefas(
+        tarefasList.map((t) => ({
+          ...t,
+          statusTarefa: t.statusTarefa || t.StatusTarefa,
+          prioridade: t.prioridade || t.Prioridade
+        }))
+      );
+    }
+  }, [tarefasList]);
 
   const deleteTarefa = async (id) => {
     try {
@@ -15,40 +32,55 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
       if (response.ok) onUpdate();
       else {
         const err = await response.text();
-        console.error("Erro ao excluir tarefa:", err);
         alert(`Erro ${response.status}: ${err}`);
       }
     } catch (error) {
-      console.error("Erro ao excluir tarefa:", error);
       alert("Falha na conexão ao excluir tarefa.");
     }
   };
 
-  const [editingTarefa, setEditingTarefa] = useState(null);
+  const openEditModal = (tarefa) => {
+    setEditingTarefa({
+      id: tarefa.id,
+      titulo: tarefa.titulo,
+      descricao: tarefa.descricao,
+      dataInicio: tarefa.dataInicio?.slice(0,16),
+      dataEntrega: tarefa.dataEntrega?.slice(0,16),
+      statusTarefa: tarefa.statusTarefa,
+      prioridade: tarefa.prioridade
+    });
+    setIsEditing(true);
+  };
 
-  const openEditModal = (tarefa) => setEditingTarefa(tarefa);
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditingTarefa((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const closeModal = () => setEditingTarefa(null);
-
-  const updateTarefa = async (updated) => {
+  const updateTarefa = async () => {
+    const body = {
+      ...editingTarefa,
+      dataInicio: editingTarefa.dataInicio ? new Date(editingTarefa.dataInicio).toISOString() : null,
+      dataEntrega: editingTarefa.dataEntrega ? new Date(editingTarefa.dataEntrega).toISOString() : null
+    };
     try {
       const response = await fetch(
-        `https://localhost:7071/api/Tarefas/${updated.id}`,
+        `https://localhost:7071/api/Tarefas/${editingTarefa.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify(updated),
+          body: JSON.stringify(body)
         }
       );
-      if (response.ok) { onUpdate(); closeModal(); }
-      else {
+      if (response.ok) {
+        onUpdate();
+        setIsEditing(false);
+      } else {
         const err = await response.text();
-        console.error("Erro ao atualizar tarefa:", err);
         alert(`Erro ${response.status}: ${err}`);
       }
     } catch (error) {
-      console.error("Erro ao atualizar tarefa:", error);
       alert("Falha na conexão ao atualizar tarefa.");
     }
   };
@@ -77,8 +109,8 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
                     })
                   : ''}
               </td>
-              <td>{item.statusTarefa || item.StatusTarefa}</td>
-              <td>{item.prioridade || item.Prioridade}</td>
+              <td>{item.statusTarefa}</td>
+              <td>{item.prioridade}</td>
               <td className="actions">
                 <PriorityButton
                   backgroundColor="#17abff"
@@ -96,15 +128,81 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
         </tbody>
       </table>
 
-      {editingTarefa && (
-        <EditModal
-          tarefa={editingTarefa}
-          onSave={updateTarefa}
-          onCancel={closeModal}
-        />
+      {isEditing && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Editar Tarefa</h3>
+            <LoginsInput
+              textoInput="Título"
+              name="titulo"
+              value={editingTarefa.titulo}
+              onChange={handleEditChange}
+            />
+            <Description
+              description="Descrição"
+              name="descricao"
+              value={editingTarefa.descricao}
+              onChange={handleEditChange}
+            />
+            <div className="form-row two-cols">
+              <div className="field">
+                <label>Data de início</label>
+                <InputDate
+                  name="dataInicio"
+                  value={editingTarefa.dataInicio}
+                  onChange={handleEditChange}
+                />
+              </div>
+              <div className="field">
+                <label>Data de entrega</label>
+                <InputDate
+                  name="dataEntrega"
+                  value={editingTarefa.dataEntrega}
+                  onChange={handleEditChange}
+                />
+              </div>
+            </div>
+            <div className="form-row two-cols">
+              <div className="field">
+                <label>Status</label>
+                <select
+                  name="statusTarefa"
+                  value={editingTarefa.statusTarefa}
+                  onChange={handleEditChange}
+                >
+                  <option>A fazer</option>
+                  <option>Em processo</option>
+                  <option>Concluído</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Prioridade</label>
+                <select
+                  name="prioridade"
+                  value={editingTarefa.prioridade}
+                  onChange={handleEditChange}
+                >
+                  <option>Muito urgente</option>
+                  <option>Pouco urgente</option>
+                  <option>Não urgente</option>
+                </select>
+              </div>
+            </div>
+            <div className="buttons-row">
+              <PriorityButton
+                PriorityText="Cancelar"
+                backgroundColor="var(--Borda)"
+                FunctionPrioritybtn={() => setIsEditing(false)}
+              />
+              <PriorityButton
+                PriorityText="Salvar"
+                backgroundColor="var(--blue)"
+                FunctionPrioritybtn={updateTarefa}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
 }
-
-// Note: Create a separate EditModal component handling form inputs and calling onSave(updatedTarefa).
