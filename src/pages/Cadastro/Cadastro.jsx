@@ -10,6 +10,7 @@ import LoginButton from '../../components/buttons/LoginButtons/LoginButton';
 import RequestButton from '../../components/buttons/RequestButton/RequestButton';
 import Rodape from '../../components/Textos/Rodape/Rodape';
 import './Cadastro.css';
+import InputDateDataNasc from '../../components/inputs/InputDate/InputDateDataNasc';
 
 function Cadastro() {
   const [username, setUsername] = useState('');
@@ -92,8 +93,8 @@ function Cadastro() {
                 value={senha}
                 onChange={e => setSenha(e.target.value)}
               />
-               <div className="input-nascimento-wrapper">
-                <InputDate
+                <div className="input-nascimento-wrapper">
+                <InputDateDataNasc
                   value={dataNasc}
                   onChange={e => setDataNasc(e.target.value)}
                 />

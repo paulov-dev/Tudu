@@ -1,69 +1,52 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import "./Filtros.css";  // Importando o arquivo CSS
-import { Dropdown } from './DropFiltro';
-import { MultiSelectDropdown } from "./MultiDrop";
+import React from 'react';
 
-import TuduTitle from "../Textos/Title/TuduTitle";
+export default function Filtros({ filtros, setFiltros }) {
+  const { titulo, dataEntrega, status, prioridade } = filtros;
 
-function Filtros() {
-    const options = [
-    { value: 'option1', label: 'Opção 1' },
-    { value: 'option2', label: 'Opção 2' },
-    { value: 'option3', label: 'Opção 3' },
-  ];
-
-  const handleSelect = (value) => {
-    console.log('Opção selecionada:', value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFiltros(prev => ({ ...prev, [name]: value }));
   };
-    const options2 = [
-        { value: 'op1', label: 'Opção 1' },
-        { value: 'op2', label: 'Opção 2' },
-        { value: 'op3', label: 'Opção 3' },
-    ];
 
-    const handleSelection = (selectedValues) => {
-        console.log('Opções selecionadas:', selectedValues);
-    };
-  
   return (
-    <div>
-       <div className="containerFiltros">
-            <h1>Buscar</h1>
-        <div className="containerDrop">
-            <MultiSelectDropdown
-                options={options2}
-                onSelect={handleSelection}
-                placeholder="Título"
-            />
-
-            <MultiSelectDropdown
-                options={options2}
-                onSelect={handleSelection}
-                placeholder="Data de entrega"
-            />
-
-            <MultiSelectDropdown
-                options={options2}
-                onSelect={handleSelection}
-                placeholder="Status"
-            />
-
-            <MultiSelectDropdown
-                options={options2}
-                onSelect={handleSelection}
-                placeholder="Prioridade"
-            />
-            
+    <div className="containerFiltros">
+      <div className="fieldGroup">
+        <label>Título:</label>
+        <input
+          type="text"
+          name="titulo"
+          value={titulo}
+          onChange={handleChange}
+          placeholder="Digite o título"
+        />
+      </div>
+      <div className="fieldGroup">
+        <label>Data de entrega:</label>
+        <input
+          type="date"
+          name="dataEntrega"
+          value={dataEntrega}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="fieldGroup">
+        <label>Status:</label>
+        <select name="status" value={status} onChange={handleChange}>
+          <option value="">Todos</option>
+          <option value="A fazer">A fazer</option>
+          <option value="Em processo">Em processo</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div className="fieldGroup">
+        <label>Prioridade:</label>
+        <select name="prioridade" value={prioridade} onChange={handleChange}>
+          <option value="">Todas</option>
+          <option value="Não Urgente">Não Urgente</option>
+          <option value="Pouco Urgente">Pouco Urgente</option>
+          <option value="Muito Urgente">Muito Urgente</option>
+        </select>
+      </div>
     </div>
-        
-        </div> 
-
-
-    </div>
-
   );
 }
-
-export default Filtros;
