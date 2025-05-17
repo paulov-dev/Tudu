@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Filtros.css";
 
 export default function Filtros({ filtros, setFiltros }) {
   const { titulo, dataEntrega, status, prioridade } = filtros;

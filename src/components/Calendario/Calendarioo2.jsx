@@ -1,6 +1,7 @@
 import "./Calendario.css";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import 'moment/locale/pt-br';
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import EventModal from "./EventModal";
@@ -8,15 +9,53 @@ import PriorityButton from "../buttons/PriorityButton/PriorityButton";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
-const DnDCalendar = withDragAndDrop(Calendar);
+// Definindo locale moment para pt-br (pode manter, mas a tradução será manual)
+moment.locale('pt-br');
 const localizer = momentLocalizer(moment);
+
+const DnDCalendar = withDragAndDrop(Calendar);
+
+// Tradução manual dos dias da semana e meses
+const daysOfWeekPT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+const monthsPT = [
+  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+];
+
+const formats = {
+  weekdayFormat: (date) => daysOfWeekPT[date.getDay()],
+  monthHeaderFormat: (date) => `${monthsPT[date.getMonth()]} ${date.getFullYear()}`,
+  dayHeaderFormat: (date) => {
+    const dayName = daysOfWeekPT[date.getDay()];
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${dayName}, ${day}/${month}/${year}`;
+  },
+};
+
+const messages = {
+  allDay: 'Dia inteiro',
+  previous: 'Anterior',
+  next: 'Próximo',
+  today: 'Hoje',
+  month: 'Mês',
+  week: 'Semana',
+  day: 'Dia',
+  agenda: 'Agenda',
+  date: 'Data',
+  time: 'Hora',
+  event: 'Evento',
+  noEventsInRange: 'Nenhum evento neste período.',
+  showMore: (total) => `+ ${total} mais`,
+};
 
 function CalendarioTarefas() {
   const [eventos, setEventos] = useState([]);
   const [eventoSelecionado, setEventoSelecionado] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // **Estados controlados para data e view**
+  // Estados controlados para data e view
   const [view, setView] = useState("month");
   const [date, setDate] = useState(new Date());
 
@@ -58,13 +97,11 @@ function CalendarioTarefas() {
   });
 
   const handleMoveResize = async ({ event, start, end }) => {
-    // Atualização local
     setEventos(evts =>
       evts.map(e => (e.id === event.id ? { ...e, start, end } : e))
     );
 
     try {
-      // GET tarefa completa
       const getRes = await fetch(
         `https://localhost:7071/api/Tarefas/${event.id}`,
         { credentials: "include" }
@@ -75,7 +112,6 @@ function CalendarioTarefas() {
       }
       const tarefa = await getRes.json();
 
-      // PUT com datas atualizadas
       const payload = {
         ...tarefa,
         dataInicio: start.toISOString(),
@@ -102,6 +138,7 @@ function CalendarioTarefas() {
 
   return (
     <div className="calendar-container">
+      {/* Botão para atualizar o calendário (se quiser ativar) */}
       {/* <div className="botao-atualizar">
         <PriorityButton
           PriorityText="Atualizar Calendário"
@@ -111,26 +148,22 @@ function CalendarioTarefas() {
       </div> */}
 
       <DnDCalendar
-        /** Agora controlado pelo state **/
         date={date}
         view={view}
         onNavigate={newDate => setDate(newDate)}
         onView={newView => setView(newView)}
-
+        messages={messages}
         events={eventos}
         localizer={localizer}
+        formats={formats}  
         resizable
         onEventDrop={handleMoveResize}
         onEventResize={handleMoveResize}
         onSelectEvent={evt => setEventoSelecionado(evt)}
         eventPropGetter={eventStyleGetter}
-
-        /** As views que você quer exibir **/
         views={["month", "week", "day", "agenda"]}
         step={30}
         showMultiDayTimes
-
-        /** Exibe o toolbar padrão com botões de navegação */
         toolbar
       />
 
@@ -145,5 +178,3 @@ function CalendarioTarefas() {
 }
 
 export default CalendarioTarefas;
-
-

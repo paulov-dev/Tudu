@@ -1,50 +1,49 @@
-@import url(../../tokens/fontes.css);
+@import url("../../tokens/fontes.css");
 
 .containerFiltros {
-  margin: 20px auto;
-  padding: 20px 24px;
-  background-color: #fff;
+  /* Centraliza o bloco inteiro e limita largura */
   width: 90%;
   max-width: 1200px;
+  margin: 2rem auto;             
+  padding: 1rem 1.5rem;           
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 
-.containerFiltros h1 {
-  text-align: start;
-  padding-top: 10px;
-  padding-left: 20px;
-  font-weight: bold;
-  font-size: 18px;
-  font-family: var(--text);
-}
-
-/* Organiza os campos lado a lado, responsivamente */
-.containerFiltros {
+  /* Grid para posicionar os filtros */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  align-items: end;
+  gap: 1rem 1.5rem;   /* espaçamento vertical e horizontal */
+  align-items: end;   /* alinha todos pela base dos inputs */
 }
 
-/* Estilo dos grupos de campo (label + input/select) */
+/* Cada label+input é um bloco vertical */
 .fieldGroup {
   display: flex;
   flex-direction: column;
 }
 
+/* Label acima do input */
 .fieldGroup label {
-  font-weight: 500;
-  margin-bottom: 6px;
   font-family: var(--text);
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 
+/* Todos os inputs e selects iguais */
 .fieldGroup input,
 .fieldGroup select {
-  height: 36px;
+  height: 38px;
   padding: 0 10px;
-  border: 1.5px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 6px;
   font-family: var(--text);
   font-size: 1rem;
+  transition: border-color .2s;
+}
+
+.fieldGroup input:focus,
+.fieldGroup select:focus {
+  border-color: #0078d4;
+  outline: none;
 }
