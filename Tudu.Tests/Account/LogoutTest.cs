@@ -52,7 +52,6 @@ namespace Tudu.Tests.Account
             Assert.Contains("Logout realizado com sucesso", msg);
 
             mockSignInManager.Verify(s => s.SignOutAsync(), Times.Once);
-            // verificação de logger removida
         }
     }
 }
