@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Tudu.Tests.Tasks
 {
-    public class GetTarefasTest
+    public class GetTarefaTest
     {
         private AppDbContext GetInMemoryDbContext()
         {

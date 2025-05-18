@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Tudu.Tests.Tasks
 {
-    public class DeleteTarefasTest
+    public class DeleteTarefaTest
     {
         // ---------- helpers --------------------------------------------------
 
