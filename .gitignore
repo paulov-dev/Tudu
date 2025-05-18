@@ -54,3 +54,4 @@ bld/
 *.userosscache
 *.sln.docstates
 /Tudu.Tests/Tasks/GetTarefasById.cs
+/Tudu.Tests/Tasks/GetTarefasTest.cs
