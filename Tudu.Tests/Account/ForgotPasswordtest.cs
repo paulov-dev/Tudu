@@ -14,7 +14,7 @@ namespace Tudu.Tests.Account
     public class ForgotPasswordTest
     {
         // ---------- 1. Cenário de SUCESSO ----------
-        [Fact(DisplayName = "ForgotPassword envia e‑mail e retorna Ok")]
+        [Fact(DisplayName = "Envia e‑mail e retorna Ok")]
         public async Task ForgotPassword_UserFound_SendsEmail_ReturnsOk()
         {
             // Arrange ----------------------------------------------------------
@@ -75,7 +75,7 @@ namespace Tudu.Tests.Account
         }
 
         // ---------- 2. Usuário NÃO encontrado ----------
-        [Fact(DisplayName = "ForgotPassword usuário não encontrado retorna Ok sem e‑mail")]
+        [Fact(DisplayName = "Usuário não encontrado retorna Ok sem e‑mail")]
         public async Task ForgotPassword_UserNotFound_ReturnsOk_NoEmailSent()
         {
             // Arrange
@@ -112,7 +112,7 @@ namespace Tudu.Tests.Account
         }
 
         // ---------- 3. ModelState inválido ----------
-        [Fact(DisplayName = "ForgotPassword modelo inválido retorna BadRequest")]
+        [Fact(DisplayName = "Modelo inválido retorna BadRequest")]
         public async Task ForgotPassword_InvalidModel_ReturnsBadRequest()
         {
             // Arrange
