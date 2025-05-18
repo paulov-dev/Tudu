@@ -11,7 +11,7 @@ namespace Tudu.Tests.Account
 {
     public class ConfirmEmailTest
     {
-        [Fact(DisplayName = "Confirmar email com sucesso")]
+        [Fact(DisplayName = "Email confirmado com sucesso")]
         public async Task ConfirmEmail_Success_ReturnsOk()
         {
             // Arrange
@@ -54,7 +54,7 @@ namespace Tudu.Tests.Account
             mockUserManager.Verify(um => um.ConfirmEmailAsync(user, "validToken"), Times.Once);
         }
 
-        [Fact(DisplayName = "Confirmar email usuário não encontrado")]
+        [Fact(DisplayName = "Usuário não encontrado")]
         public async Task ConfirmEmail_UserNotFound_ReturnsNotFound()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace Tudu.Tests.Account
             mockUserManager.Verify(um => um.ConfirmEmailAsync(It.IsAny<Users>(), It.IsAny<string>()), Times.Never);
         }
 
-        [Fact(DisplayName = "Confirmar email falha na confirmação")]
+        [Fact(DisplayName = "Falha na confirmação")]
         public async Task ConfirmEmail_Fail_ReturnsBadRequest()
         {
             // Arrange
