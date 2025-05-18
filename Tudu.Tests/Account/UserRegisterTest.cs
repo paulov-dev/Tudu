@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Tudu.Tests.Account
 {
-    public class UserRegister
+    public class UserRegisterTest
     {
         [Fact(DisplayName = "Registra com sucesso um usuário")]
         public async Task Success()
