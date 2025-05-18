@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
-using Teste_tasks.Controllers; // Ajuste para o namespace do seu controller
-using Teste_tasks.Data;       // Ajuste para o namespace do seu DbContext
-using Teste_tasks.Models;     // Ajuste para o namespace dos seus models
+using Teste_tasks.Controllers; 
+using Teste_tasks.Data;       
+using Teste_tasks.Models;     
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Teste_tasks.Tests.Tasks
 {
-    public class TarefasControllerTests
+    public class GetTarefasTest
     {
         private AppDbContext GetInMemoryDbContext()
         {
@@ -35,7 +35,7 @@ namespace Teste_tasks.Tests.Tasks
             return context;
         }
 
-        [Fact]
+        [Fact(DisplayName = "Retorna Tarefas do Usuario Logado")]
         public async Task GetTarefas_RetornaApenasTarefasDoUsuarioAutenticado()
         {
             // Arrange
