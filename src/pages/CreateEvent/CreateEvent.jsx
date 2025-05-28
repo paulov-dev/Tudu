@@ -12,7 +12,14 @@ import './CreateEvent.css';
 const API_BASE = 'https://localhost:7071/api/Tarefas';
 
 export default function CreateEvent() {
-  const [tarefa, setTarefa] = useState({ titulo: '', descricao: '', dataInicio: '', dataEntrega: '', statusTarefa: 'A fazer', prioridade: 'Não urgente' });
+  const [tarefa, setTarefa] = useState({ 
+    titulo: '', 
+    descricao: '', 
+    dataInicio: '', 
+    dataEntrega: '', 
+    statusTarefa: 'A fazer', 
+    prioridade: 'Não urgente' 
+  });
   const [filtros, setFiltros] = useState({ titulo: '', dataEntrega: '', status: '', prioridade: '' });
   const [tarefas, setTarefas] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -38,7 +45,13 @@ export default function CreateEvent() {
 
   useEffect(() => { fetchTarefas(); }, [refresh, filtros]);
 
-  const formatarData = d => d ? new Date(d).toISOString() : null;
+  // Função corrigida para compensar o fuso horário local
+  const formatarData = (localDateStr) => {
+    if (!localDateStr) return null;
+    const date = new Date(localDateStr);
+    const correctedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return correctedDate.toISOString();
+  };
 
   const AddEvent = async () => {
     if (!tarefa.titulo || !tarefa.dataInicio || !tarefa.dataEntrega) return alert('Preencha todos os campos!');
@@ -48,11 +61,22 @@ export default function CreateEvent() {
       dataEntrega: formatarData(tarefa.dataEntrega)
     };
     try {
-      const res = await fetch(API_BASE, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) });
-      if (res.ok) { setTarefa({ titulo: '', descricao: '', dataInicio: '', dataEntrega: '', statusTarefa: 'A fazer', prioridade: 'Não urgente' }); setRefresh(r => !r); setIsOpen(false); }
+      const res = await fetch(API_BASE, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+        body: JSON.stringify(body) 
+      });
+      if (res.ok) {
+        setTarefa({ titulo: '', descricao: '', dataInicio: '', dataEntrega: '', statusTarefa: 'A fazer', prioridade: 'Não urgente' });
+        setRefresh(r => !r);
+        setIsOpen(false);
+      }
       else if (res.status === 401) alert('Faça login para criar tarefas.');
       else alert(`Erro ${res.status}`);
-    } catch (err) { alert('Falha na criação'); }
+    } catch (err) {
+      alert('Falha na criação');
+    }
   };
 
   return (
@@ -72,17 +96,31 @@ export default function CreateEvent() {
             <LoginsInput textoInput="Título da tarefa" name="titulo" value={tarefa.titulo} onChange={handleChange} />
             <Desciption description="Descrição" name="descricao" value={tarefa.descricao} onChange={handleChange} />
             <div className="form-row two-cols">
-              <div className="field"><label>Data de início</label><InputDate name="dataInicio" value={tarefa.dataInicio} onChange={handleChange} /></div>
-              <div className="field"><label>Data de entrega</label><InputDate name="dataEntrega" value={tarefa.dataEntrega} onChange={handleChange} /></div>
+              <div className="field">
+                <label>Data de início</label>
+                <InputDate name="dataInicio" value={tarefa.dataInicio} onChange={handleChange} />
+              </div>
+              <div className="field">
+                <label>Data de entrega</label>
+                <InputDate name="dataEntrega" value={tarefa.dataEntrega} onChange={handleChange} />
+              </div>
             </div>
             <div className="form-row two-cols">
               <div className="field">
                 <label>Status</label>
-                <select name="statusTarefa" value={tarefa.statusTarefa} onChange={handleChange}><option>A fazer</option><option>Em processo</option><option>Concluído</option></select>
+                <select name="statusTarefa" value={tarefa.statusTarefa} onChange={handleChange}>
+                  <option>A fazer</option>
+                  <option>Em processo</option>
+                  <option>Concluído</option>
+                </select>
               </div>
               <div className="field">
                 <label>Prioridade</label>
-                <select name="prioridade" value={tarefa.prioridade} onChange={handleChange}><option>Muito urgente</option><option>Pouco urgente</option><option>Não urgente</option></select>
+                <select name="prioridade" value={tarefa.prioridade} onChange={handleChange}>
+                  <option>Muito urgente</option>
+                  <option>Pouco urgente</option>
+                  <option>Não urgente</option>
+                </select>
               </div>
             </div>
             <div className="buttons-row">

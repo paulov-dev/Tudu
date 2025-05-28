@@ -58,29 +58,71 @@ namespace Teste_tasks.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
+			// ✅ Adição feita aqui
+			tarefa.DataEntrega = DateTime.SpecifyKind(tarefa.DataEntrega, DateTimeKind.Utc);
+			tarefa.DataInicio = DateTime.SpecifyKind(tarefa.DataInicio, DateTimeKind.Utc);
+
 			_context.TarefaModel.Add(tarefa);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetTarefa), new { id = tarefa.Id }, tarefa);
 		}
 
+
+		//// PUT: api/Tarefas/5
+		//[HttpPut("{id}")]
+		//public async Task<IActionResult> PutTarefa(int id, TarefaModel tarefa)
+		//{
+		//	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+		//	var existing = await _context.TarefaModel
+		//		.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
+
+		//	if (existing == null)
+		//		return NotFound(new { Message = "Tarefa não encontrada ou acesso negado." });
+
+		//	// Atualiza campos permitidos
+		//	existing.Titulo = tarefa.Titulo;
+		//	existing.Descricao = tarefa.Descricao;
+		//	existing.DataEntrega = tarefa.DataEntrega;
+		//	existing.StatusTarefa = tarefa.StatusTarefa;
+		//	existing.Prioridade = tarefa.Prioridade;
+
+		//	try
+		//	{
+		//		await _context.SaveChangesAsync();
+		//	}
+		//	catch (DbUpdateConcurrencyException)
+		//	{
+		//		if (!_context.TarefaModel.Any(e => e.Id == id))
+		//			return NotFound();
+		//		throw;
+		//	}
+
+		//	return NoContent();
+		//}
+
+
 		// PUT: api/Tarefas/5
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutTarefa(int id, TarefaModel tarefa)
 		{
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 			var existing = await _context.TarefaModel
 				.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
 
 			if (existing == null)
 				return NotFound(new { Message = "Tarefa não encontrada ou acesso negado." });
 
-			// Atualiza campos permitidos
+			// Atualiza os dados
 			existing.Titulo = tarefa.Titulo;
 			existing.Descricao = tarefa.Descricao;
-			existing.DataEntrega = tarefa.DataEntrega;
 			existing.StatusTarefa = tarefa.StatusTarefa;
 			existing.Prioridade = tarefa.Prioridade;
+
+			// Corrigir o fuso aqui
+			existing.DataEntrega = DateTime.SpecifyKind(tarefa.DataEntrega, DateTimeKind.Utc);
+			existing.DataInicio = DateTime.SpecifyKind(tarefa.DataInicio, DateTimeKind.Utc);
 
 			try
 			{
@@ -95,6 +137,9 @@ namespace Teste_tasks.Controllers
 
 			return NoContent();
 		}
+
+
+
 
 		// PATCH: api/Tarefas/5/status
 		[HttpPatch("{id}/status")]

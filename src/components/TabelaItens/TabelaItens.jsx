@@ -1,4 +1,4 @@
-// TabelaItens.jsx (integrado e mantendo edição completa)
+// TabelaItens.jsx (com conversão de datas corrigida)
 import React, { useEffect, useState } from "react";
 import "./TabelaItens.css";
 import PriorityButton from "../buttons/PriorityButton/PriorityButton";
@@ -44,8 +44,8 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
       id: tarefa.id,
       titulo: tarefa.titulo,
       descricao: tarefa.descricao,
-      dataInicio: tarefa.dataInicio?.slice(0,16),
-      dataEntrega: tarefa.dataEntrega?.slice(0,16),
+      dataInicio: tarefa.dataInicio?.slice(0, 16),
+      dataEntrega: tarefa.dataEntrega?.slice(0, 16),
       statusTarefa: tarefa.statusTarefa,
       prioridade: tarefa.prioridade
     });
@@ -57,12 +57,19 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
     setEditingTarefa((prev) => ({ ...prev, [name]: value }));
   };
 
+  const toUtcISOString = (localDateStr) => {
+    const date = new Date(localDateStr);
+    const correctedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return correctedDate.toISOString();
+  };
+
   const updateTarefa = async () => {
     const body = {
       ...editingTarefa,
-      dataInicio: editingTarefa.dataInicio ? new Date(editingTarefa.dataInicio).toISOString() : null,
-      dataEntrega: editingTarefa.dataEntrega ? new Date(editingTarefa.dataEntrega).toISOString() : null
+      dataInicio: editingTarefa.dataInicio ? toUtcISOString(editingTarefa.dataInicio) : null,
+      dataEntrega: editingTarefa.dataEntrega ? toUtcISOString(editingTarefa.dataEntrega) : null
     };
+
     try {
       const response = await fetch(
         `https://localhost:7071/api/Tarefas/${editingTarefa.id}`,
@@ -103,11 +110,14 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
               <td>{item.titulo}</td>
               <td>
                 {item.dataEntrega
-                  ? new Date(item.dataEntrega).toLocaleString('pt-BR', {
-                      day: '2-digit', month: '2-digit', year: 'numeric',
-                      hour: '2-digit', minute: '2-digit'
+                  ? new Date(item.dataEntrega).toLocaleString("pt-BR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit"
                     })
-                  : ''}
+                  : ""}
               </td>
               <td>{item.statusTarefa}</td>
               <td>{item.prioridade}</td>
@@ -206,3 +216,4 @@ export default function TabelaItens({ tarefasList, onUpdate }) {
     </div>
   );
 }
+
